@@ -1,0 +1,278 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CommandManager
+{
+    public static void SendCMD(string address, string CMD_Key, byte[] setdata)
+    {
+        switch (CMD_Key)
+        {
+            case "01":
+                RCToolPlugin.SendData(address, cmd_01(), "01");
+                break;
+            case "02":
+                RCToolPlugin.SendData(address, cmd_02(), "01");
+                break;
+            case "03":
+                RCToolPlugin.SendData(address, cmd_03(), "01");
+                break;
+            case "05":
+                RCToolPlugin.SendData(address, cmd_05(), "01");
+                break;
+            case "09":
+                RCToolPlugin.SendData(address, cmd_09(), "01");
+                break;
+            case "0B":
+                RCToolPlugin.SendData(address, cmd_0B(), "01");
+                break;
+            case "0C":
+                RCToolPlugin.SendData(address, cmd_0C(), "01");
+                break;
+            case "0D":
+                RCToolPlugin.SendData(address, cmd_0D(), "01");
+                break;
+            case "13":
+                RCToolPlugin.SendData(address, cmd_13(), "01");
+                break;
+            case "16":
+                RCToolPlugin.SendData(address, cmd_16(), "01");
+                break;
+            case "19":
+                RCToolPlugin.SendData(address, cmd_19(), "01");
+                break;
+            case "20":
+                RCToolPlugin.SendData(address, cmd_20(), "01");
+                break;
+            case "21":
+                RCToolPlugin.SendData(address, cmd_21(), "01");
+                break;
+            case "23ON":
+                RCToolPlugin.SendData(address, cmd_23ON(), "00");
+                break;
+            case "23OFF":
+                RCToolPlugin.SendData(address, cmd_23OFF(), "00");
+                break;
+            case "34,04":
+                RCToolPlugin.SendData(address, cmd_34_04(), "01");
+                break;
+            case "34,03":
+                RCToolPlugin.SendData(address, cmd_34_03(), "01");
+                break;
+            case "90":
+                RCToolPlugin.SendData(address, cmd_90(), "01");
+                break;
+            case "91":
+                RCToolPlugin.SendData(address, cmd_91(), "01");
+                break;
+            case "A0":
+                RCToolPlugin.SendData(address, cmd_A0(), "01");
+                break;
+            case "A1":
+                RCToolPlugin.SendData(address, cmd_A1(), "04");
+                break;
+            case "D1":
+                RCToolPlugin.SendData(address, cmd_D1(), "01");
+                break;
+            case "D2":
+                RCToolPlugin.SendData(address, cmd_D2(), "01");
+                break;
+            case "D3":
+                RCToolPlugin.SendData(address, cmd_D3(), "01");
+                break;
+            case "D4":
+                RCToolPlugin.SendData(address, cmd_D4(), "01");
+                break;
+            case "UIBLE_Version":
+                RCToolPlugin.SendData(address, UIBle_Ver(), "00");
+                break;
+            default:
+                Debug.Log("No such command key...");
+                break;
+        }
+    }
+    #region [指令集]
+    /// <summary>
+    /// Service Platform連線
+    /// </summary>
+    private static byte[] cmd_01()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+    /// <summary>
+    /// App藍牙連線
+    /// </summary>
+    private static byte[] cmd_02()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_03()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_05()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x05, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_09()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x09, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_0B()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x0B, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_0C()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x0C, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_0D()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x0D, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_13()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x13, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_16()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x16, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_19()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x19, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+    /// <summary>
+    /// Service Platform離線
+    /// </summary>
+    private static byte[] cmd_20()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x20, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+    /// <summary>
+    /// App藍牙離線
+    /// </summary>
+    private static byte[] cmd_21()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x21, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_23ON()
+    {
+        byte[] send_byte = new byte[4] { 0xFB, 0x22, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_23OFF()
+    {
+        byte[] send_byte = new byte[4] { 0xFB, 0x22, 0x00, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_34_03()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x34, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_34_04()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x34, 0x01, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_90()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x90, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_91()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x91, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_A0()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xA0, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_A1()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xA1, 0x04, 0x01, (byte)(500/256), (byte)(500%256), 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_D1()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xD1, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_D2()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xD2, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_D3()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xD3, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_D4()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xD4, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+    /// <summary>
+    /// 藍牙韌體版本
+    /// </summary>
+    private static byte[] UIBle_Ver()
+    {
+        byte[] send_byte = new byte[3] { 0xFB, 0x11, 0x00 };
+        return send_byte;
+    }
+
+    private static void Cmd_02()
+    {
+        //BitArray bar = new BitArray(new byte[3] { 0x00,0x00,0x00});
+
+        //byte[] aes_data = new byte[20] { 0x02, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+        //byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        //aes_data[0] = 0x02;
+        //aes_data[1] = 0x01;
+        //aes_data = RCToolPlugin.Encode(aes_data, 0x01);
+        //for (int i = 0; i < 16; i++)
+        //    send_byte[2 + i] = aes_data[i];
+        //send_byte[18] = 0x01;
+        //send_byte[19] = AES.creat_crc(send_byte, 19);
+        //Debug.Log("On Unity encode:" + RCToolPlugin.ByteArr_To_ByteString(send_byte));
+    }
+    #endregion
+}
