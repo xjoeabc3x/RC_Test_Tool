@@ -1,0 +1,45 @@
+# =============== #
+# Unity generated #
+# =============== #
+Temp/
+Library/
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+obj/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+.vs/
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Assets/UGUI/S2-lesson-05/BG.meta
+# ============ #
+# Cold generated #
+# ============ #
+Assets/local_data/
+Assets/Source/NeedPack/NewLittleHelper/Videos/
+Assets/Source/NeedPack/NewLittleHelper/Videos.meta
+Assets/Source/NeedPack/NewLittleHelper/old_Videos/
+Assets/Source/NeedPack/NewLittleHelper/old_Videos.meta
+local_data.meta
+EditorCourseDataSetting.asset
+EditorCourseDataSetting.asset.meta
+Resources.meta
+*.apk
