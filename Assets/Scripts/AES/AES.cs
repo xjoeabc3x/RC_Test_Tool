@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Security.Cryptography;
+using System.Text;
+using System.IO;
 
 public class AES : MonoBehaviour
 {
@@ -280,5 +283,77 @@ public class AES : MonoBehaviour
         key = AES_ExpandKey(key, keyLen);
         block = AES_Decrypt(block, key, expandKeyLen);
         return block;
+    }
+
+
+
+
+
+
+
+
+
+    /// <summary>
+    /// AES 128 CBC加解密測試
+    /// </summary>
+    private void AES_128_CBC()
+    {
+        RijndaelManaged rijalg = new RijndaelManaged();
+
+        //-----------------
+        //設定 cipher 格式 AES-256-CBC
+        rijalg.BlockSize = 128;
+        rijalg.KeySize = 256;
+        rijalg.FeedbackSize = 128;
+        rijalg.Padding = PaddingMode.PKCS7;
+        rijalg.Mode = CipherMode.CBC;
+
+        rijalg.Key = (new SHA256Managed()).ComputeHash(Encoding.ASCII.GetBytes("IHazSekretKey"));
+        rijalg.IV = Encoding.ASCII.GetBytes("1234567890123456");
+
+        //-----------------
+        //加密
+        ICryptoTransform encryptor = rijalg.CreateEncryptor(rijalg.Key, rijalg.IV);
+
+        byte[] encrypted;
+        // Create the streams used for encryption.
+        using (MemoryStream msEncrypt = new MemoryStream())
+        {
+            using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+            {
+                using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                {
+                    //Write all data to the stream.
+                    swEncrypt.Write("text to be encrypted");
+                }
+                encrypted = msEncrypt.ToArray();
+            }
+        }
+
+        //-----------------
+        //加密後的 base64 字串 :
+        //eiLbdhFSFrDqvUJmjbUgwD8REjBRoRWWwHHImmMLNZA=
+        Debug.Log(Convert.ToBase64String(encrypted));
+
+        //-----------------
+        //解密
+        ICryptoTransform decryptor = rijalg.CreateDecryptor(rijalg.Key, rijalg.IV);
+
+        string plaintext;
+        // Create the streams used for decryption. 
+        using (MemoryStream msDecrypt = new MemoryStream(encrypted))
+        {
+            using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+            {
+                using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                {
+
+                    // Read the decrypted bytes from the decrypting stream 
+                    // and place them in a string.
+                    plaintext = srDecrypt.ReadToEnd();
+                }
+            }
+        }
+        Debug.Log(plaintext);
     }
 }

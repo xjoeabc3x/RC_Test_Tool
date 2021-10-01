@@ -20,67 +20,103 @@ namespace ParseRCCallback
         /// <returns>各指令相對應結果</returns>
         public static string CallbackInfo(string address, string datas)
         {
+            //Debug.Log(string.Format("OnUnity CallbackInfo :{0}|||{1}", address, datas));
             string[] data = datas.Split(',');
             if (data[0] == "FC")
             {
                 if (data.Length >= 20)
                 {
                     packagecounter = PackageCompute(data[3]);
-                    switch (data[2])
-                    {//{ "05", "09", "32", "30", "D4", "D1", "D2", "D3", "0D", "13", "0E", "37", "38", "39" }
-                        case "05":
+                    switch (((byte)int.Parse(data[2], NumberStyles.HexNumber))&0xFF)
+                    {//{ "02", "05", "09", "32", "12", "0A", "D4", "D1", "D2", "D3", "0D", "13", "0E", "37", "38", "39", "DD" }
+                        case 0x01:
+                            return address + "|01|" + Parse_01(datas);
+                        case 0x02:
+                            return address + "|02|" + Parse_02(datas);
+                        case 0x05:
                             return address + "|05|" + Parse_05(datas);
-                        case "09":
+                        case 0x09:
                             return address + "|09|" + Parse_09(datas);
-                        case "0D":
+                        case 0x0A:
+                            return address + "|0A|" + Parse_0A(datas);
+                        case 0x0D:
                             return address + "|0D|" + Parse_0D(datas);
-                        case "0E":
+                        case 0x0E:
                             return address + "|0E|" + Parse_0E(datas);
-                        case "13":
+                        case 0x12:
+                            return address + "|12|" + Parse_12(datas);
+                        case 0x13:
                             return address + "|13|" + Parse_13(datas);
-                        case "30":
+                        case 0x30:
                             return address + "|30|" + Parse_30(datas);
-                        case "32":
+                        case 0x32:
                             return address + "|32|" + Parse_32(datas);
-                        case "37":
+                        case 0x37:
                             return address + "|37|" + Parse_37(datas);
-                        case "38":
+                        case 0x38:
                             return address + "|38|" + Parse_38(datas);
-                        case "39":
+                        case 0x39:
                             return address + "|39|" + Parse_39(datas);
-                        case "D1":
+                        case 0xD1:
                             return address + "|D1|" + Parse_D1(datas);
-                        case "D2":
+                        case 0xD2:
                             return address + "|D2|" + Parse_D2(datas);
-                        case "D3":
+                        case 0xD3:
                             return address + "|D3|" + Parse_D3(datas);
-                        case "D4":
+                        case 0xD4:
                             return address + "|D4|" + Parse_D4(datas);
+                        case 0xDD:
+                            return address + "|DD|" + Parse_DD(datas);
                         default:
-                            Debug.Log("Unknown TD.");
-                            return null;
+                            Debug.Log("Unknown TD :" + datas);
+                            return "Unknown TD :" + datas;
                     }
                 }
                 else
                 {
-                    switch (data[1])
+                    switch (((byte)int.Parse(data[2], NumberStyles.HexNumber)) & 0xFF)
                     {
-                        case "":
-                            break;
+                        case 0x22:
+                            return address + "|23|23ONOFF";
                         default:
-                            Debug.Log("Unknown callback.");
-                            break;
+                            Debug.Log("Unknown callback :" + datas);
+                            return "Unknown callback :" + datas;
                     }
                 }
             }
-            return null;
+            else if (data[0] == "FB")
+            {
+                Debug.Log("Send success :" + datas);
+                return "";
+            }
+            Debug.Log("Unknown callback :" + datas);
+            return "Unknown callback :" + datas;
         }
 
         #region [Parse]
 
         //Callback暫存
         public static string[] DataCache = null;
-
+        /// <summary>
+        /// [01]Service Platform連線訊息
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>00:Fail, 01:success</returns>
+        private static string Parse_01(string input)
+        {
+            string[] aes = GetAES(input);
+            return aes[0];
+        }
+        /// <summary>
+        /// [02]藍牙連線訊息
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>00:Fail, 01:success</returns>
+        private static string Parse_02(string input)
+        {
+            string[] aes = GetAES(input);
+            return aes[0];
+        }
         /// <summary>
         /// 解析[05]RC/SG,UI韌體版本,UI硬體版本,ctg1,ctg2
         /// </summary>
@@ -89,7 +125,7 @@ namespace ParseRCCallback
         private static string Parse_05(string input)
         {
             if (string.IsNullOrEmpty(input))
-                return null;
+                return "";
             string[] datas = GetAES(input);
             string rc_type = GetRCType(BitChoose_string(datas[0], 0, 2) + BitChoose_string(datas[4], 0, 2));
             string ui_fw_ver = "2" + ByteToInt_string(datas[2], 3) + ByteToInt_string(datas[1], 2) + BitChoose_int(datas[0], 3, 7).ToString() + ByteToInt_string(datas[3], 3);
@@ -126,16 +162,16 @@ namespace ParseRCCallback
                     switch (DUFW)
                     {
                         case "0SC":
-                            DUType = "DU1";
+                            DUType = "DU1 CAN-BIC PW-SE";
                             break;
                         case "0PA":
-                            DUType = "DU2";
+                            DUType = "DU2 PCB-BIC PW-X";
                             break;
                         case "0SE":
-                            DUType = "DU3";
+                            DUType = "DU3 CAN-BIC2 PW-SE";
                             break;
                         case "1RA":
-                            DUType = "DU4";
+                            DUType = "DU4 Comfort-BIC";
                             break;
                         case "1RB":
                             //DU4,6
@@ -146,28 +182,28 @@ namespace ParseRCCallback
                             DUType = DU4orDU6(DataCache);
                             break;
                         case "0SG":
-                            DUType = "DU5";
+                            DUType = "DU5 JPN-BIC PW-SE";
                             break;
                         case "0PB":
-                            DUType = "DU7";
+                            DUType = "DU7 PCB-BIC2 PW-X2";
                             break;
                         case "0PD":
-                            DUType = "DU7";
+                            DUType = "DU7 PCB-BIC2 PW-X2";
                             break;
                         case "0PC":
-                            DUType = "DU8";
+                            DUType = "DU8 JPN-PCB PW-X2";
                             break;
                         case "CAN":
                             DUType = "DU9";
                             break;
                         case "2SA":
-                            DUType = "DU10";
+                            DUType = "DU10 ICB-BIC standard";
                             break;
                         case "2SB":
-                            DUType = "DU11";
+                            DUType = "DU11 ICB-BIC coaster";
                             break;
                         case "1RD":
-                            DUType = "DU12";
+                            DUType = "DU12 JPN-SCB";
                             break;
                         case "GR1":
                             DUType = "DU13";
@@ -176,17 +212,17 @@ namespace ParseRCCallback
                             DUType = "DU14";
                             break;
                         case "2YA":
-                            DUType = "DU15";
+                            DUType = "DU15 PCB BIC3";
                             break;
                         case "GR3":
-                            DUType = "DU18";
+                            DUType = "DU18 G370";
                             break;
                         case "2SE":
-                            DUType = "DU119";
+                            DUType = "DU19";
                             break;
                         case "EP8": //Shimano
                             DUFW = "EP800";
-                            DUType = "DU16";
+                            DUType = "DU16 EP8";
                             SN = GetShimanoSN(DataCache[5], DataCache[6], DataCache[7]);
                             break;
                         default:
@@ -205,11 +241,55 @@ namespace ParseRCCallback
                     return "09_wait";
                 default:
                     Debug.Log("[09] parse Error." + packagecounter);
-                    return null;
+                    return "";
             }
         }
         /// <summary>
-        /// 解析[0D]電池Cell版本韌體版本生產流水號
+        /// 解析[0A]馬達資訊stct代表Service tool連線的次數
+        /// lstc代表距離上一次Service tool連線隔多久
+        /// fstc代表距離上一次Service tool連線隔多遠
+        /// baac代表Boost助力模式的平均電流
+        /// paac代表Power助力模式的平均電流
+        /// caac代表Climb助力模式的平均電流
+        /// naac代表Normal助力模式的平均電流
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>stct,lstc,fstc,baac,paac,caac,naac,taac,eaac</returns>
+        private static string Parse_0A(string input)
+        {
+            switch (packagecounter)
+            {
+                //最後一包
+                case 1:
+                    //添加新的
+                    DataCache = AddNewDatas(DataCache, GetAES(input));
+                    //解析
+                    string stct = CombineByteToInt(DataCache[1] + "," + DataCache[0]).ToString();
+                    string lstc = CombineByteToInt(DataCache[3] + "," + DataCache[2]).ToString() + "hr";
+                    string fstc = CombineByteToInt(DataCache[5] + "," + DataCache[4]).ToString() + "km";
+                    string baac = string.Format("{0:.00}A", ((decimal)CombineByteToInt(DataCache[7] + "," + DataCache[6])) / 10);
+                    string paac = string.Format("{0:.00}A", ((decimal)CombineByteToInt(DataCache[9] + "," + DataCache[8])) / 10);
+                    string caac = string.Format("{0:.00}A", ((decimal)CombineByteToInt(DataCache[11] + "," + DataCache[10])) / 10);
+                    string naac = string.Format("{0:.00}A", ((decimal)CombineByteToInt(DataCache[13] + "," + DataCache[12])) / 10);
+                    string taac = string.Format("{0:.00}A", ((decimal)CombineByteToInt(DataCache[15] + "," + DataCache[14])) / 10);
+                    string eaac = string.Format("{0:.00}A", ((decimal)CombineByteToInt(DataCache[17] + "," + DataCache[16])) / 10);
+                    //清空暫存
+                    DataCache = null;
+                    //packagecounter歸零
+                    packagecounter = 0;
+                    return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}", stct, lstc, fstc, baac, paac, caac, naac, taac, eaac);
+                //第一包
+                case 2:
+                    //作暫存
+                    DataCache = GetAES(input);
+                    return "0A_wait";
+                default:
+                    Debug.Log("[0A] parse Error." + packagecounter);
+                    return "";
+            }
+        }
+        /// <summary>
+        /// 解析[0D]主電池Cell版本韌體版本生產流水號
         /// </summary>
         /// <param name="input"></param>
         /// <returns>minor,major,SN</returns>
@@ -235,7 +315,7 @@ namespace ParseRCCallback
             return string.Format("{0},{1},{2}", minor, major, SN);
         }
         /// <summary>
-        /// 解析[0E]充電循環次數,充電次數,大電流放電比例100%
+        /// 解析[0E]主電池充電循環次數,充電次數,大電流放電比例100%
         /// </summary>
         /// <param name="input"></param>
         /// <returns>ccy,cchg,hrd</returns>
@@ -244,18 +324,45 @@ namespace ParseRCCallback
             string[] aes = GetAES(input);
             string ccy = CombineByteToInt(aes[1] + "," + aes[0]).ToString();
             string cchg = CombineByteToInt(aes[3] + "," + aes[2]).ToString();
-            string hrd = string.Format("{0}%", (int)((((decimal)(int.Parse(ByteToInt_string(aes[4], 0))))/255)*100));
+            string hrd = string.Format("{0}%", ByteToInt_string(aes[4], 0));
             return string.Format("{0},{1},{2}", ccy, cchg, hrd);
         }
-
+        /// <summary>
+        /// 解析[12]取得馬達ODO,總使用時間
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>odo,tut</returns>
+        private static string Parse_12(string input)
+        {
+            string[] aes = GetAES(input);
+            string odo = CombineByteToInt(aes[1] + "," + aes[0]).ToString() + "km";
+            string tut = CombineByteToInt(aes[3] + "," + aes[2]).ToString() + "hr";
+            return string.Format("{0},{1}", odo, tut);
+        }
+        /// <summary>
+        /// 解析[13]主(+副)電池容量,主電池壽命,前次充飽容量
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>rsoc(%),eplife(%),fcc(Wh)</returns>
         private static string Parse_13(string input)
         {
-            return null;
+            string[] aes = GetAES(input);
+            string rsoc = string.Format("{0}%", ByteToInt_string(aes[0], 0));
+            string eplife = string.Format("{0}%", ByteToInt_string(aes[1], 0));
+            string fcc = string.Format("{0:.0}Wh", (decimal)CombineByteToInt(aes[3] + "," + aes[2])/10);
+            return string.Format("{0},{1},{2}", rsoc, eplife, fcc);
         }
-
+        /// <summary>
+        /// 解析[30]總里程,上次回廠
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>dodo,serin</returns>
         private static string Parse_30(string input)
         {
-            return null;
+            string[] aes = GetAES(input);
+            string dodo = string.Format("{0}km", CombineByteToInt(aes[1] + "," + aes[0]));
+            string serin = string.Format("{0}km", CombineByteToInt(aes[3] + "," + aes[2]));
+            return string.Format("{0},{1}", dodo, serin);
         }
         /// <summary>
         /// 解析[32]車架號碼ASCII to String
@@ -272,7 +379,7 @@ namespace ParseRCCallback
                     DataCache = AddNewDatas(DataCache, GetAES(input));
                     //解析
                     string result = "";
-                    for (int i = 0; i < DataCache.Length; i++)
+                    for (int i = 0; i < 18; i++)
                     {
                         result += (char)(int.Parse(DataCache[i], NumberStyles.HexNumber));
                     }
@@ -287,23 +394,60 @@ namespace ParseRCCallback
                     DataCache = GetAES(input);
                     return "32_wait";
                 default:
-                    return null;
+                    return "";
             }
         }
-
+        /// <summary>
+        /// 解析[37]副電池容量,副電池壽命,前次充飽容量
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>rsoc(%),eplife(%),fcc(Wh)</returns>
         private static string Parse_37(string input)
         {
-            return null;
+            string[] aes = GetAES(input);
+            string rsoc = string.Format("{0}%", ByteToInt_string(aes[0], 0));
+            string eplife = string.Format("{0}%", ByteToInt_string(aes[1], 0));
+            string fcc = string.Format("{0:.0}Wh", (decimal)CombineByteToInt(aes[3] + "," + aes[2]) / 10);
+            return string.Format("{0},{1},{2}", rsoc, eplife, fcc);
         }
-
+        /// <summary>
+        /// 解析[38]副電池Cell版本韌體版本生產流水號
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>minor,major,SN</returns>
         private static string Parse_38(string input)
         {
-            return null;
+            string[] aes = GetAES(input);
+            string minor = "";
+            switch (aes[0])
+            {
+                case "00":
+                    minor = "PF";
+                    break;
+                case "01":
+                    minor = "GA";
+                    break;
+                default:
+                    minor = "Reserved";
+                    break;
+            }
+            string major = ByteToInt_string(aes[1], 3);
+            string SN = string.Format("2{0}{1}{2}{3:00000}", ByteToInt_string(aes[2], 3), ByteToInt_string(aes[3], 2), ByteToInt_string(aes[4], 2)
+                , CombineByteToInt(aes[6] + "," + aes[5]));
+            return string.Format("{0},{1},{2}", minor, major, SN);
         }
-
+        /// <summary>
+        /// 解析[39]副電池充電循環次數,充電次數,大電流放電比例100%
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>ccy,cchg,hrd</returns>
         private static string Parse_39(string input)
         {
-            return null;
+            string[] aes = GetAES(input);
+            string ccy = CombineByteToInt(aes[1] + "," + aes[0]).ToString();
+            string cchg = CombineByteToInt(aes[3] + "," + aes[2]).ToString();
+            string hrd = string.Format("{0}%", ByteToInt_string(aes[4], 0));
+            return string.Format("{0},{1},{2}", ccy, cchg, hrd);
         }
         /// <summary>
         /// 解析[D1]Remote-1版本
@@ -476,6 +620,24 @@ namespace ParseRCCallback
                 , byte0[2].ToString(), byte0[1].ToString(), byte0[0].ToString()
                 , byte1);
         }
+        /// <summary>
+        /// 解析[DD]Ring是否存在以及按鈕狀態
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>left,right,left1,left2,left3,right1,right2,right3</returns>
+        private static string Parse_DD(string input)
+        {
+            string[] aes = GetAES(input);
+            string byte0 = BitChoose_string(aes[0], 6, 7);
+            string left1 = GetRingButton(aes[1]);
+            string left2 = GetRingButton(aes[2]);
+            string left3 = GetRingButton(aes[3]);
+            string right1 = GetRingButton(aes[4]);
+            string right2 = GetRingButton(aes[5]);
+            string right3 = GetRingButton(aes[6]);
+            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7}", byte0[0].ToString(), byte0[1].ToString()
+                , left1, left2, left3, right1, right2, right3);
+        }
         #endregion
 
         #region [Tools]
@@ -586,6 +748,28 @@ namespace ParseRCCallback
                 else
                 {
                     str = string.Format("{0},{1:00}", str, bytes[i].ToString("X"));
+                }
+            }
+            return str;
+        }
+
+        public static string ByteArr_To_ByteString(string[] bytes)
+        {
+            if (bytes == null || bytes.Length <= 0)
+            {
+                Debug.LogError("bytes is null or Empty.");
+                return null;
+            }
+            string str = "";
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                if (i == 0)
+                {
+                    str = bytes[0];
+                }
+                else
+                {
+                    str = string.Format("{0},{1}", str, bytes[i]);
                 }
             }
             return str;
@@ -797,9 +981,9 @@ namespace ParseRCCallback
             switch (RCID[RCID.Length - 2].ToString())
             {
                 case "3":
-                    return "DU4";
+                    return "DU4 Comfort-BIC PW-TE";
                 case "5":
-                    return "DU6";
+                    return "DU6 Comfort-BIC2 PW ST";
             }
             return null;
         }
@@ -858,6 +1042,27 @@ namespace ParseRCCallback
                     return "Remote ON/OFF";
                 default:
                     return "Unknow remote type.";
+            }
+        }
+
+        private static string GetRingButton(string input)
+        {
+            switch (int.Parse(input, NumberStyles.HexNumber))
+            {
+                case 1:
+                    return "Up";
+                case 2:
+                    return "Down";
+                case 3:
+                    return "Info";
+                case 4:
+                    return "Light";
+                case 5:
+                    return "Walk assist";
+                case 6:
+                    return "Smart assist";
+                default:
+                    return "Unknow Ring Button.";
             }
         }
         #endregion

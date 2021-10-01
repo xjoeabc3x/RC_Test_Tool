@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Android;
 using ParseRCCallback;
+using System.Data;
 
 public class AppManager : MonoSingletonExtend<AppManager>
 {
@@ -27,7 +28,9 @@ public class AppManager : MonoSingletonExtend<AppManager>
         InitPages();
         //Debug.Log(ParseCallBack.CallbackInfo("test", "FC,21,32,12,61,62,63,64,65,66,67,68,69,6A,6B,6C,6D,6E,0E,93"));
         //Debug.Log(ParseCallBack.CallbackInfo("test", "FC,21,32,12,6F,70,71,72,00,00,00,00,00,00,00,00,00,00,04,3D"));
-        //Debug.Log(string.Format("{0}", (int)((((decimal)83) / 255)*100)));
+        //Debug.Log(ParseCallBack.CallbackInfo("test", "FC,21,DD,07,03,01,05,02,04,06,03,00,00,00,00,00,00,00,07,3C"));
+        
+        //Debug.Log(System.Linq.);
     }
 
     //private void Update()
@@ -100,4 +103,5 @@ public class AppManager : MonoSingletonExtend<AppManager>
         }
     }
     #endregion
+
 }

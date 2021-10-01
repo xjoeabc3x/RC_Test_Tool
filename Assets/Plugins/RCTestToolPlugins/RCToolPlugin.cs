@@ -90,19 +90,20 @@ public class RCToolPlugin : MonoBehaviour
         SendDataWithDelay();
     }
     /// <summary>
-    /// 每0.5秒送一次指令
+    /// 每0.5秒送一次指令,有callback即送下一個
     /// </summary>
     private void SendDataWithDelay()
     {
         if (WaitToSend.Count > 0)
         {
-            if (senddelay > 0)
+            if (senddelay >= 0)
             {
-                senddelay -= Time.deltaTime;
+                senddelay -= Time.deltaTime * 1;
             }
             else if (senddelay < 0)
             {
                 SendInfo info = WaitToSend.Dequeue();
+                Debug.Log("OnUnity SendDataWithDelay :" + info.data);
                 _SendData(info.Address, info.data, info.Key);
                 senddelay = 0.5f;
             }
@@ -302,6 +303,16 @@ public class RCToolPlugin : MonoBehaviour
         string[] info = str.Split('|');
         onReceiveDecodeRawData(info[0], info[1]);
     }
+
+    //private bool IsFCcallback(string input)
+    //{
+    //    if (input.Split(',')[0] == "FC")
+    //    {
+    //        senddelay = 0;
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
     #endregion
 

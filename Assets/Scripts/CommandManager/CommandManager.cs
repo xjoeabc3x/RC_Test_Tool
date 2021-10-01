@@ -7,7 +7,7 @@ public class CommandManager
     public static void SendCMD(string address, string CMD_Key, byte[] setdata)
     {
         switch (CMD_Key)
-        {
+        {//"02", "05", "09", "32", "12", "0A", "D4", "D1", "D2", "D3", "0D", "13", "0E", "37", "38", "39"
             case "01":
                 RCToolPlugin.SendData(address, cmd_01(), "01");
                 break;
@@ -23,6 +23,9 @@ public class CommandManager
             case "09":
                 RCToolPlugin.SendData(address, cmd_09(), "01");
                 break;
+            case "0A":
+                RCToolPlugin.SendData(address, cmd_0A(), "01");
+                break;
             case "0B":
                 RCToolPlugin.SendData(address, cmd_0B(), "01");
                 break;
@@ -31,6 +34,12 @@ public class CommandManager
                 break;
             case "0D":
                 RCToolPlugin.SendData(address, cmd_0D(), "01");
+                break;
+            case "0E":
+                RCToolPlugin.SendData(address, cmd_0E(), "01");
+                break;
+            case "12":
+                RCToolPlugin.SendData(address, cmd_12(), "01");
                 break;
             case "13":
                 RCToolPlugin.SendData(address, cmd_13(), "01");
@@ -41,6 +50,9 @@ public class CommandManager
             case "19":
                 RCToolPlugin.SendData(address, cmd_19(), "01");
                 break;
+            //case "1A_normal":
+            //    RCToolPlugin.SendData(address, cmd_1A_normal(), "01");
+            //    break;
             case "20":
                 RCToolPlugin.SendData(address, cmd_20(), "01");
                 break;
@@ -53,11 +65,23 @@ public class CommandManager
             case "23OFF":
                 RCToolPlugin.SendData(address, cmd_23OFF(), "00");
                 break;
+            case "32":
+                RCToolPlugin.SendData(address, cmd_32(), "01");
+                break;
             case "34,04":
                 RCToolPlugin.SendData(address, cmd_34_04(), "01");
                 break;
             case "34,03":
                 RCToolPlugin.SendData(address, cmd_34_03(), "01");
+                break;
+            case "37":
+                RCToolPlugin.SendData(address, cmd_37(), "01");
+                break;
+            case "38":
+                RCToolPlugin.SendData(address, cmd_38(), "01");
+                break;
+            case "39":
+                RCToolPlugin.SendData(address, cmd_39(), "01");
                 break;
             case "90":
                 RCToolPlugin.SendData(address, cmd_90(), "01");
@@ -82,6 +106,9 @@ public class CommandManager
                 break;
             case "D4":
                 RCToolPlugin.SendData(address, cmd_D4(), "01");
+                break;
+            case "DD":
+                RCToolPlugin.SendData(address, cmd_DD(), "01");
                 break;
             case "UIBLE_Version":
                 RCToolPlugin.SendData(address, UIBle_Ver(), "00");
@@ -127,6 +154,12 @@ public class CommandManager
         return send_byte;
     }
 
+    private static byte[] cmd_0A()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x0A, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
     private static byte[] cmd_0B()
     {
         byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x0B, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
@@ -142,6 +175,18 @@ public class CommandManager
     private static byte[] cmd_0D()
     {
         byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x0D, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_0E()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x0E, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_12()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x12, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
         return send_byte;
     }
 
@@ -161,6 +206,11 @@ public class CommandManager
     {
         byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x19, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
         return send_byte;
+    }
+
+    private static byte[] cmd_1A_normal()
+    {
+        return null;
     }
     /// <summary>
     /// Service PlatformÂ÷½u
@@ -191,6 +241,12 @@ public class CommandManager
         return send_byte;
     }
 
+    private static byte[] cmd_32()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x32, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
     private static byte[] cmd_34_03()
     {
         byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x34, 0x01, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
@@ -200,6 +256,24 @@ public class CommandManager
     private static byte[] cmd_34_04()
     {
         byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x34, 0x01, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_37()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x37, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_38()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x38, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_39()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x39, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
         return send_byte;
     }
 
@@ -248,6 +322,12 @@ public class CommandManager
     private static byte[] cmd_D4()
     {
         byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xD4, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_DD()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xDD, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
         return send_byte;
     }
     /// <summary>
