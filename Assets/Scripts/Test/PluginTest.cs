@@ -83,6 +83,6 @@ public class PluginTest : MonoBehaviour
         //    return;
         //}
 
-        CommandManager.SendCMD(ConnectedAddress, "02", null);
+        CommandManager.SendCMD(ConnectedAddress, "02", null, null);
     }
 }

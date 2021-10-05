@@ -65,6 +65,10 @@ namespace ParseRCCallback
                             return address + "|D3|" + Parse_D3(datas);
                         case 0xD4:
                             return address + "|D4|" + Parse_D4(datas);
+                        case 0xD9:
+                            return address + "|D9|" + Parse_D9(datas);
+                        case 0xDA:
+                            return address + "|DA|" + Parse_DA(datas);
                         case 0xDD:
                             return address + "|DD|" + Parse_DD(datas);
                         default:
@@ -621,6 +625,33 @@ namespace ParseRCCallback
                 , byte1);
         }
         /// <summary>
+        /// 解析[D9]EVO背光Level,EVO背光數值,ONOFF背光Level,ONOFF背光數值,車燈開關狀態
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>EVOLevel,EVOLevel1_value,EVOLevel2_value,EVOLevel3_value,ONOFFLevel,ONOFFHigh_Value,ONOFFLow_Value,Light_Level</returns>
+        private static string Parse_D9(string input)
+        {
+            string[] aes = GetAES(input);
+            string evo_level = int.Parse(aes[0], NumberStyles.HexNumber).ToString();
+            string evo_level1 = int.Parse(aes[1], NumberStyles.HexNumber).ToString();
+            string evo_level2 = int.Parse(aes[2], NumberStyles.HexNumber).ToString();
+            string evo_level3 = int.Parse(aes[3], NumberStyles.HexNumber).ToString();
+            string onoff_level = int.Parse(aes[4], NumberStyles.HexNumber).ToString();
+            string onoff_high = int.Parse(aes[5], NumberStyles.HexNumber).ToString();
+            string onoff_low = int.Parse(aes[6], NumberStyles.HexNumber).ToString();
+            string light = int.Parse(aes[7], NumberStyles.HexNumber).ToString();
+            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7}", evo_level, evo_level1, evo_level2, evo_level3, onoff_level, onoff_high, onoff_low, light);
+        }
+        /// <summary>
+        /// 解析[DA]設置是否成功
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>0/1</returns>
+        private static string Parse_DA(string input)
+        {
+            return int.Parse(GetAES(input)[0], NumberStyles.HexNumber).ToString();
+        }
+        /// <summary>
         /// 解析[DD]Ring是否存在以及按鈕狀態
         /// </summary>
         /// <param name="input"></param>
@@ -1065,6 +1096,7 @@ namespace ParseRCCallback
                     return "Unknow Ring Button.";
             }
         }
+
         #endregion
     }
 }

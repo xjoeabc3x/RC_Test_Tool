@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CommandManager
 {
-    public static void SendCMD(string address, string CMD_Key, byte[] setdata)
+    public static void SendCMD(string address, string CMD_Key, byte[] setdata, string[] _setdata)
     {
         switch (CMD_Key)
         {//"02", "05", "09", "32", "12", "0A", "D4", "D1", "D2", "D3", "0D", "13", "0E", "37", "38", "39"
@@ -106,6 +106,12 @@ public class CommandManager
                 break;
             case "D4":
                 RCToolPlugin.SendData(address, cmd_D4(), "01");
+                break;
+            case "D9":
+                RCToolPlugin.SendData(address, cmd_D9(), "01");
+                break;
+            case "DA":
+                RCToolPlugin.SendData(address, cmd_DA(_setdata), "01");
                 break;
             case "DD":
                 RCToolPlugin.SendData(address, cmd_DD(), "01");
@@ -323,6 +329,30 @@ public class CommandManager
     {
         byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xD4, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
         return send_byte;
+    }
+
+    private static byte[] cmd_D9()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xD9, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static string cmd_DA(string[] data)
+    {
+        string[] send_byte = new string[20] { "FB", "21", "DA", "08", "01", "01", "04", "07", "01", "64", "0A", "01", "00", "00", "00", "00", "00", "00", "01", "00" };
+        if (data != null)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                send_byte[i + 4] = data[i];
+            }
+        }
+        string result = send_byte[0];
+        for (int i = 1; i < send_byte.Length; i++)
+        {
+            result = string.Format("{0},{1}", result, send_byte[i]);
+        }
+        return result;
     }
 
     private static byte[] cmd_DD()

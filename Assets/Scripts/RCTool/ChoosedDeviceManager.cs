@@ -113,9 +113,9 @@ public class ChoosedDeviceManager : MonoBehaviour
     List<GameObject> ChildPages = new List<GameObject>();
     [SerializeField, Header("[功能表按鈕]")]
     GameObject ToDoListButton;
-    //
+    //標題
     public static string DeviceTittle = "";
-    //
+    //所選裝置位址
     public static string DeviceAddress = "";
 
     private Dictionary<string, string> callback_dic = new Dictionary<string, string>();
@@ -236,7 +236,7 @@ public class ChoosedDeviceManager : MonoBehaviour
         string[] cmdList = { "02", "05", "09", "32", "12", "0A", "D4", "D1", "D2", "D3", "0D", "13", "0E", "37", "38", "39", "DD" };
         for (int i = 0; i < cmdList.Length; i++)
         {
-            CommandManager.SendCMD(DeviceAddress, cmdList[i], null);
+            CommandManager.SendCMD(DeviceAddress, cmdList[i], null, null);
         }
         yield return new WaitForSeconds(10f);
         ParseBikeDetail();
@@ -250,7 +250,10 @@ public class ChoosedDeviceManager : MonoBehaviour
         string Value = input.Split('|')[2];
         if (!Value.EndsWith("wait"))
         {
-            callback_dic.Add(Key, Value);
+            if (!callback_dic.ContainsKey(Key))
+                callback_dic.Add(Key, Value);
+            else if (callback_dic.ContainsKey(Key))
+                callback_dic[Key] = Value;
         }
     }
     private void ParseBikeDetail()
@@ -453,7 +456,7 @@ public class ChoosedDeviceManager : MonoBehaviour
             Debug.Log("Device is not Connected.");
             return;
         }
-        CommandManager.SendCMD(DeviceAddress, cmdNum, null);
+        CommandManager.SendCMD(DeviceAddress, cmdNum, null, null);
     }
 
     public void Connect()

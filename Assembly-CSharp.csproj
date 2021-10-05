@@ -59,20 +59,32 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Test\URLImage.cs" />
+    <Compile Include="Assets\Scripts\Net\NetBridge.cs" />
     <Compile Include="Assets\Scripts\Test\DisableTest.cs" />
     <Compile Include="Assets\Scripts\CommandManager\ParseCallBack.cs" />
     <Compile Include="Assets\Scripts\MonoSingletonExtend.cs" />
+    <Compile Include="Assets\Scripts\Net\ColdWebRequest.cs" />
+    <Compile Include="Assets\Scripts\RCTool\OnOffLightSet.cs" />
+    <Compile Include="Assets\Scripts\RCTool\RawDataView.cs" />
     <Compile Include="Assets\Scripts\Test\FileTest.cs" />
     <Compile Include="Assets\Scripts\RCTool\ChoosedDeviceManager.cs" />
+    <Compile Include="Assets\Scripts\Net\ServerCommunicate.cs" />
     <Compile Include="Assets\Scripts\Test\DeviceButton.cs" />
     <Compile Include="Assets\Scripts\RCTool\Loading.cs" />
     <Compile Include="Assets\Scripts\AppManager.cs" />
     <Compile Include="Assets\Scripts\AES\AES.cs" />
     <Compile Include="Assets\Scripts\CommandManager\CommandManager.cs" />
+    <Compile Include="Assets\Scripts\Setting\ServerConfig.cs" />
     <Compile Include="Assets\Scripts\Test\PluginTest.cs" />
     <Compile Include="Assets\Scripts\RCTool\HomeManager.cs" />
+    <Compile Include="Assets\Scripts\Setting\AppSetting.cs" />
     <Compile Include="Assets\Final Form Studio\Cliff-scene\Scripts\SimpleCameraController.cs" />
-    <Compile Include="Assets\Scripts\RCTool\RawDataView.cs" />
+    <Compile Include="Assets\Scripts\Setting\ServerSetting.cs" />
+    <Compile Include="Assets\Scripts\Tools\MySlider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\LitJson\LitJson.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -296,6 +308,9 @@
     </Reference>
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity 2021.1.17f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="LitJson">
+      <HintPath>Assets\LitJson\LitJson.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.6.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
