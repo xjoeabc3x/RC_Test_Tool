@@ -96,7 +96,7 @@ public class ChoosedDeviceManager : MonoBehaviour
         public string right3 = "null";
     }
 
-    private static ChoosedDeviceManager Instance = null;
+    public static ChoosedDeviceManager Instance = null;
     private static Dictionary<string, BikeDetail> BikeDetail_Dic = new Dictionary<string, BikeDetail>();
     private RawDataView rawDataView;
     [SerializeField, Header("[標題文字]")]
@@ -156,18 +156,12 @@ public class ChoosedDeviceManager : MonoBehaviour
     //收到的callback(Encode)
     private void RCToolPlugin_onReceiveRawData(string address, string data)
     {
-        //Debug.Log("OnUnityReceiveRawData :" + address + "|||" + data);
         rawDataView.AddEncodeCallback(address, data);
-        //string input = string.Format("[{0}]{1} :{2}", DateTime.Now, address, data);
-        //CallbackText.text = string.Format("{0}\n{1}", input, CallbackText.text);
         //{23}會送到這裡
     }
     //收到的callback(Decode)
     private void RCToolPlugin_onReceiveDecodeRawData(string address, string data)
     {
-        //Debug.Log("OnUnity RCToolPlugin_onReceiveDecodeRawData :" + data);
-        //string input = string.Format("<color=red>[{0}]{1} :{2}</color>", DateTime.Now, address, data);
-        //CallbackText.text = string.Format("{0}\n{1}", input, CallbackText.text);
         rawDataView.AddDecodeCallback(address, data);
         string callback = ParseCallBack.CallbackInfo(address, data);
         Debug.Log("After parse callback :" + callback);
@@ -256,7 +250,7 @@ public class ChoosedDeviceManager : MonoBehaviour
                 callback_dic[Key] = Value;
         }
     }
-    private void ParseBikeDetail()
+    public void ParseBikeDetail()
     {
         try
         {
@@ -414,7 +408,7 @@ public class ChoosedDeviceManager : MonoBehaviour
             Debug.Log("ParseBikeDetail() Error!!!");
         }
     }
-    private void ShowBikeDetail()
+    public void ShowBikeDetail()
     {
         try
         {
@@ -437,7 +431,7 @@ public class ChoosedDeviceManager : MonoBehaviour
             str += string.Format("\n\n<color=yellow>[0E]</color>主電池充電循環次數 :{0}\n充電次數 :{1}\n大電流放電比例 :{2}", info.ccy, info.cchg, info.hrd);
             str += string.Format("\n\n<color=yellow>[37]</color>副電池容量 :{0}\n副電池壽命 :{1}\n前次充飽容量 :{2}", info.sub_rsoc, info.sub_eplife, info.sub_fcc);
             str += string.Format("\n\n<color=yellow>[38]</color>副電池Cell版本 :{0}\n副電池韌體版本 :{1}\n副電池生產流水號 :{2}", info.sub_minor, info.sub_major, info.sub_BATTSN);
-            str += string.Format("\n\n<color=yellow>[39]</color>副電池充電循環次數 :{0}\n充電次數 :{1}\n大電流放電比例 :{2}\n\n", info.sub_ccy, info.sub_cchg, info.sub_hrd);
+            str += string.Format("\n\n<color=yellow>[39]</color>副電池充電循環次數 :{0}\n充電次數 :{1}\n大電流放電比例 :{2}", info.sub_ccy, info.sub_cchg, info.sub_hrd);
             str += string.Format("\n\n<color=yellow>[DD]</color>Left Ring :{0}, Right Ring :{1}\nLeft1 :{2}\nLeft2 :{3}\nLeft3 :{4}\nRight1 :{5}\nRight2 :{6}\nRight3 :{7}",
                 info.left, info.right, info.left1, info.left2, info.left3, info.right1, info.right2, info.right3);
             BikeDetailText.text = str;
@@ -475,6 +469,13 @@ public class ChoosedDeviceManager : MonoBehaviour
         {
             ChildPages[i].SetActive(false);
         }
+    }
+
+    public static BikeDetail GetBikeDetail(string address)
+    {
+        if (BikeDetail_Dic.ContainsKey(address))
+            return BikeDetail_Dic[address];
+        return null;
     }
     #endregion
 }

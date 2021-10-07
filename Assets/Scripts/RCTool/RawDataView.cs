@@ -35,7 +35,7 @@ public class RawDataView : MonoBehaviour
 
     public void AddEncodeCallback(string address, string data)
     {
-        string input = string.Format("<color=yellow>[{0}]{1} :</color>{2}", DateTime.Now, address, data);
+        string input = string.Format("<color=black>[{0}] :{1}</color>", DateTime.Now, data);
         var newtext = Instantiate(CallbackText_prefab, CallbackList_pos);
         Text CallbackText = newtext.GetComponent<Text>();
         CallbackText.text = string.Format("{0}", input);
@@ -45,7 +45,7 @@ public class RawDataView : MonoBehaviour
 
     public void AddDecodeCallback(string address, string data)
     {
-        string input = string.Format("<color=yellow>[{0}]{1} :</color><color=red>{2}</color>", DateTime.Now, address, data);
+        string input = string.Format("<color=yellow>[{0}] :{1}</color>", DateTime.Now, data);
         var newtext = Instantiate(CallbackText_prefab, CallbackList_pos);
         Text CallbackText = newtext.GetComponent<Text>();
         CallbackText.text = string.Format("{0}", input);

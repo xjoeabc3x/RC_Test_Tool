@@ -116,6 +116,9 @@ public class CommandManager
             case "DD":
                 RCToolPlugin.SendData(address, cmd_DD(), "01");
                 break;
+            case "DE":
+                RCToolPlugin.SendData(address, cmd_DE(_setdata), "01");
+                break;
             case "UIBLE_Version":
                 RCToolPlugin.SendData(address, UIBle_Ver(), "00");
                 break;
@@ -359,6 +362,24 @@ public class CommandManager
     {
         byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xDD, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
         return send_byte;
+    }
+
+    private static string cmd_DE(string[] data)
+    {
+        string[] send_byte = new string[20] { "FB", "21", "DE", "07", "40", "01", "02", "03", "05", "05", "06", "00", "00", "00", "00", "00", "00", "00", "01", "00" };
+        if (data != null)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                send_byte[i + 4] = data[i];
+            }
+        }
+        string result = send_byte[0];
+        for (int i = 1; i < send_byte.Length; i++)
+        {
+            result = string.Format("{0},{1}", result, send_byte[i]);
+        }
+        return result;
     }
     /// <summary>
     /// ÂÅ¤ú¶´Åéª©¥»

@@ -66,16 +66,16 @@ public class OnOffLightSet : MonoBehaviour
                 callback_dic[Key] = Value;
         }
     }
-    string current_low = "";
-    string current_high = "";
+    string current_low = "01";
+    string current_high = "01";
     private void ParseCallback()
     {
         if (callback_dic.ContainsKey("D9"))
         {
             //EVOLevel, EVOLevel1_value, EVOLevel2_value, EVOLevel3_value, ONOFFLevel, ONOFFHigh_Value, ONOFFLow_Value, Light_Level
             string[] data = callback_dic["D9"].Split(',');
-            current_high = string.Format("", int.Parse(data[5]));
-            current_low = string.Format("", int.Parse(data[6]));
+            current_high = int.Parse(data[5]).ToString("X2");
+            current_low = int.Parse(data[6]).ToString("X2");
             if (DayNightSwitch.isOn)//night
             {
                 LightSlider.value = int.Parse(data[6]);
@@ -115,7 +115,7 @@ public class OnOffLightSet : MonoBehaviour
         CommandManager.SendCMD(ChoosedDeviceManager.DeviceAddress, "D9", null, null);
         yield return new WaitForSeconds(1f);
         ParseCallback();
-        _SetLight();
+        SetLight();
     }
 
     private void SetLight()
@@ -128,15 +128,15 @@ public class OnOffLightSet : MonoBehaviour
         Loading.Instance.ShowLoading(1f);
         string[] send_byte = new string[8] { "01", "01", "04", "07", "00", current_high, current_low, "00" };
         string lightvalue = ((int)LightSlider.value).ToString("X2");
-        if (DayNightSwitch.isOn)
-        {
-            send_byte[7] = "00";
-            send_byte[5] = lightvalue;
-        }
-        else
+        if (DayNightSwitch.isOn) //night
         {
             send_byte[7] = "01";
             send_byte[6] = lightvalue;
+        }
+        else //day
+        {
+            send_byte[7] = "00";
+            send_byte[5] = lightvalue;
         }
 
         //[DA]

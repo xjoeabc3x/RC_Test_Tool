@@ -63,7 +63,7 @@ public class AppManager : MonoSingletonExtend<AppManager>
         if (!ManagedPages_Dic.ContainsKey(obj.name))
         {
             ManagedPages_Dic.Add(obj.name, obj);
-            Debug.Log("RegistPage :" + obj.name);
+            //Debug.Log("RegistPage :" + obj.name);
             return true;
         }
         return false;

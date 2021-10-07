@@ -669,6 +669,15 @@ namespace ParseRCCallback
             return string.Format("{0},{1},{2},{3},{4},{5},{6},{7}", byte0[0].ToString(), byte0[1].ToString()
                 , left1, left2, left3, right1, right2, right3);
         }
+        /// <summary>
+        /// 解析[DE]設置是否成功
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>0/1</returns>
+        private static string Parse_DE(string input)
+        {
+            return int.Parse(GetAES(input)[0], NumberStyles.HexNumber).ToString();
+        }
         #endregion
 
         #region [Tools]

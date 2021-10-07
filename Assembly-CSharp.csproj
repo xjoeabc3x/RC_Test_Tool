@@ -60,28 +60,45 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Test\URLImage.cs" />
+    <Compile Include="Assets\Scripts\Tools\ColliderElement2DChecker.cs" />
     <Compile Include="Assets\Scripts\Net\NetBridge.cs" />
+    <Compile Include="Assets\Scripts\Tools\Position.cs" />
     <Compile Include="Assets\Scripts\Test\DisableTest.cs" />
     <Compile Include="Assets\Scripts\CommandManager\ParseCallBack.cs" />
     <Compile Include="Assets\Scripts\MonoSingletonExtend.cs" />
     <Compile Include="Assets\Scripts\Net\ColdWebRequest.cs" />
+    <Compile Include="Assets\Scripts\Tools\ColliderElement2D.cs" />
     <Compile Include="Assets\Scripts\RCTool\OnOffLightSet.cs" />
     <Compile Include="Assets\Scripts\RCTool\RawDataView.cs" />
+    <Compile Include="Assets\Scripts\Tools\ColliderElement.cs" />
     <Compile Include="Assets\Scripts\Test\FileTest.cs" />
+    <Compile Include="Assets\Scripts\Tools\Base.cs" />
     <Compile Include="Assets\Scripts\RCTool\ChoosedDeviceManager.cs" />
+    <Compile Include="Assets\Scripts\Tools\ColliderElementCollection.cs" />
     <Compile Include="Assets\Scripts\Net\ServerCommunicate.cs" />
+    <Compile Include="Assets\Scripts\Tools\UnityEventX.cs" />
     <Compile Include="Assets\Scripts\Test\DeviceButton.cs" />
+    <Compile Include="Assets\Scripts\Tools\ColliderCheckManager.cs" />
+    <Compile Include="Assets\Scripts\Tools\ColliderChecker.cs" />
     <Compile Include="Assets\Scripts\RCTool\Loading.cs" />
+    <Compile Include="Assets\Scripts\Tools\ColdMath.cs" />
     <Compile Include="Assets\Scripts\AppManager.cs" />
+    <Compile Include="Assets\Scripts\RCTool\RingView.cs" />
     <Compile Include="Assets\Scripts\AES\AES.cs" />
     <Compile Include="Assets\Scripts\CommandManager\CommandManager.cs" />
+    <Compile Include="Assets\Scripts\Tools\ColliderElementChecker.cs" />
+    <Compile Include="Assets\Scripts\Tools\ThreeDDragger.cs" />
+    <Compile Include="Assets\Scripts\Tools\ColliderElement2DCollection.cs" />
     <Compile Include="Assets\Scripts\Setting\ServerConfig.cs" />
+    <Compile Include="Assets\Scripts\Tools\BaseT.cs" />
     <Compile Include="Assets\Scripts\Test\PluginTest.cs" />
     <Compile Include="Assets\Scripts\RCTool\HomeManager.cs" />
+    <Compile Include="Assets\Scripts\Tools\MySlider.cs" />
     <Compile Include="Assets\Scripts\Setting\AppSetting.cs" />
+    <Compile Include="Assets\Scripts\RCTool\Toast.cs" />
     <Compile Include="Assets\Final Form Studio\Cliff-scene\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\Scripts\Setting\ServerSetting.cs" />
-    <Compile Include="Assets\Scripts\Tools\MySlider.cs" />
+    <Compile Include="Assets\Scripts\Tools\ItemKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\LitJson\LitJson.dll" />
