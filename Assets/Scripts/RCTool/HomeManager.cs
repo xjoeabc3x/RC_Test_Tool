@@ -42,12 +42,12 @@ public class HomeManager : MonoBehaviour
     #endregion
 
     #region --Events--
-    private void RCToolPlugin_onRceiveDevice(string address, string name)
+    private void RCToolPlugin_onRceiveDevice(string address, string name, string rssi)
     {
         if (!ButtonDic.ContainsKey(address))
         {
             var NewButton = Instantiate(ButtonPrefab, ButtonPos);
-            NewButton.GetComponent<DeviceButton>().SetButtonInfo(name + "|" + address, address);
+            NewButton.GetComponent<DeviceButton>().SetButtonInfo(name + "|" + address + "|" + rssi, address);
             ButtonDic.Add(address, NewButton);
         }
     }

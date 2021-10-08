@@ -71,6 +71,8 @@ namespace ParseRCCallback
                             return address + "|DA|" + Parse_DA(datas);
                         case 0xDD:
                             return address + "|DD|" + Parse_DD(datas);
+                        case 0xDE:
+                            return address + "|DE|" + Parse_DE(datas);
                         default:
                             Debug.Log("Unknown TD :" + datas);
                             return "Unknown TD :" + datas;

@@ -21,6 +21,7 @@ public class RCToolPlugin : MonoBehaviour
     {
         public string Address = "";
         public string DeviceName = "";
+        public string rssi = "";
         public bool Connected = false;
     }
 
@@ -47,7 +48,7 @@ public class RCToolPlugin : MonoBehaviour
     /// <summary>
     /// 搜尋事件
     /// </summary>
-    public delegate void EventType_NewDevice(string address, string name);
+    public delegate void EventType_NewDevice(string address, string name, string rssi);
     public static event EventType_NewDevice onRceiveDevice;
     /// <summary>
     /// 裝置連接狀態事件
@@ -257,16 +258,17 @@ public class RCToolPlugin : MonoBehaviour
     /// <summary>
     /// 接收到新裝置
     /// </summary>
-    public void OnReceiveDevice(string str) //address|name
+    public void OnReceiveDevice(string str) //address|name|rssi
     {
         Debug.Log("OnReceiveDevice:" + str);
         string[] info = str.Split('|');
-        onRceiveDevice(info[0], info[1]);
+        onRceiveDevice(info[0], info[1], info[2]);
         if (!Devices_Dic.ContainsKey(info[0]))
         {
             BLEDevice newDevice = new BLEDevice();
             newDevice.Address = info[0];
             newDevice.DeviceName = info[1];
+            newDevice.rssi = info[2];
             Devices_Dic.Add(info[0], newDevice);
         }
     }

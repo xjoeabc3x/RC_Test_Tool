@@ -366,7 +366,7 @@ public class CommandManager
 
     private static string cmd_DE(string[] data)
     {
-        string[] send_byte = new string[20] { "FB", "21", "DE", "07", "40", "01", "02", "03", "05", "05", "06", "00", "00", "00", "00", "00", "00", "00", "01", "00" };
+        string[] send_byte = new string[20] { "FB", "21", "DE", "07", "04", "01", "02", "03", "04", "05", "06", "00", "00", "00", "00", "00", "00", "00", "01", "00" };
         if (data != null)
         {
             for (int i = 0; i < data.Length; i++)

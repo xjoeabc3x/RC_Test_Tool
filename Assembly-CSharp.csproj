@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\RCTool\OnOffLightSet.cs" />
     <Compile Include="Assets\Scripts\RCTool\RawDataView.cs" />
     <Compile Include="Assets\Scripts\Tools\ColliderElement.cs" />
+    <Compile Include="Assets\Scripts\Tools\ItemKey.cs" />
     <Compile Include="Assets\Scripts\Test\FileTest.cs" />
     <Compile Include="Assets\Scripts\Tools\Base.cs" />
     <Compile Include="Assets\Scripts\RCTool\ChoosedDeviceManager.cs" />
@@ -98,7 +99,6 @@
     <Compile Include="Assets\Scripts\RCTool\Toast.cs" />
     <Compile Include="Assets\Final Form Studio\Cliff-scene\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\Scripts\Setting\ServerSetting.cs" />
-    <Compile Include="Assets\Scripts\Tools\ItemKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\LitJson\LitJson.dll" />
