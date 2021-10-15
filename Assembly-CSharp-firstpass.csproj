@@ -59,10 +59,12 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Plugins\NativeShare\NativeShare.cs" />
     <Compile Include="Assets\Plugins\RCTestToolPlugins\RCToolPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\NativeShare\README.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -287,11 +289,23 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity 2021.1.17f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>Assets\GoogleMaps\PPlugins\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Maps.Proto">
+      <HintPath>Assets\GoogleMaps\PPlugins\Google.Maps.Proto.dll</HintPath>
+    </Reference>
     <Reference Include="LitJson">
       <HintPath>Assets\LitJson\LitJson.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.6.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Maps.Editor">
+      <HintPath>Assets\GoogleMaps\PPlugins\Google.Maps.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Maps">
+      <HintPath>Assets\GoogleMaps\PPlugins\Google.Maps.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
@@ -685,6 +699,9 @@
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="NatSuite.Sharing">
+      <HintPath>Library\ScriptAssemblies\NatSuite.Sharing.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>

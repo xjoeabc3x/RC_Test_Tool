@@ -51,6 +51,7 @@ public class RawDataView : MonoBehaviour
         CallbackText.text = string.Format("{0}", input);
         newtext.transform.SetAsFirstSibling();
         CallbackObj_List.Add(newtext);
+        HomeManager.AddNewLog(address, string.Format("\n[{0}] :{1}", DateTime.Now, data));
     }
 
 }

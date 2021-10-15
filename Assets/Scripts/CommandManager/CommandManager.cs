@@ -68,6 +68,10 @@ public class CommandManager
             case "32":
                 RCToolPlugin.SendData(address, cmd_32(), "01");
                 break;
+            case "33":
+                RCToolPlugin.SendData(address, cmd_33_part1(setdata), "01");
+                RCToolPlugin.SendData(address, cmd_33_part2(setdata), "01");
+                break;
             case "34,04":
                 RCToolPlugin.SendData(address, cmd_34_04(), "01");
                 break;
@@ -253,6 +257,26 @@ public class CommandManager
     private static byte[] cmd_32()
     {
         byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x32, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_33_part1(byte[] input)
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x33, 0x0E, 0x45, 0x41, 0x43, 0x54, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x01, 0x00 };
+        for (int i = 0; i < 14; i++)
+        {
+            send_byte[i + 4] = input[i];
+        }
+        return send_byte;
+    }
+
+    private static byte[] cmd_33_part2(byte[] input)
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x33, 0x0E, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x01, 0x00 };
+        for (int i = 0; i < 4; i++)
+        {
+            send_byte[i + 4] = input[i + 14];
+        }
         return send_byte;
     }
 

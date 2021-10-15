@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using System;
 
 public class HomeManager : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class HomeManager : MonoBehaviour
     RectTransform ButtonPos;
 
     Dictionary<string, GameObject> ButtonDic = new Dictionary<string, GameObject>();
+    public static Dictionary<string, List<string>> DeviceLogDic = new Dictionary<string, List<string>>();
     #endregion
 
     private void Awake()
@@ -39,6 +42,48 @@ public class HomeManager : MonoBehaviour
         AppManager.Instance.SetPage("ChoosedDevice");
     }
 
+    public static void AddNewLog(string address, string content)
+    {
+        if (DeviceLogDic.ContainsKey(address))
+        {
+            DeviceLogDic[address].Add(content);
+        }
+        else
+        {
+            List<string> log = new List<string>();
+            log.Add(content);
+            DeviceLogDic.Add(address, log);
+        }
+    }
+
+    private static void SaveLog(string address)
+    {
+        if (DeviceLogDic.ContainsKey(address))
+        {
+            if (DeviceLogDic[address].Count > 0)
+            {
+                //save Logs
+                string str = ChoosedDeviceManager.GetBikeDetail_Log(address);
+                string date = DateTime.Now.ToString().Replace('/', '_');
+                string path = Path.Combine(Application.persistentDataPath, string.Format("{0}-{1}.txt", address.Replace(':', '_'), date));
+                //File.Create(path);
+                for (int i = 0; i < DeviceLogDic[address].Count; i++)
+                {
+                    str += DeviceLogDic[address][i];
+                }
+
+                DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath);
+
+                using (StreamWriter file = new StreamWriter(path))
+                {
+                    file.WriteLine(str);
+                }
+
+                //clear after save
+                DeviceLogDic[address].Clear();
+            }
+        }
+    }
     #endregion
 
     #region --Events--
@@ -64,6 +109,8 @@ public class HomeManager : MonoBehaviour
                     break;
                 default:
                     deviceButton.SetConnectStatus(false);
+                    //Â_½u¦sLog
+                    SaveLog(address);
                     break;
             }
         }

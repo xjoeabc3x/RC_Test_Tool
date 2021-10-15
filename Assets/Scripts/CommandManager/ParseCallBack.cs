@@ -51,6 +51,8 @@ namespace ParseRCCallback
                             return address + "|30|" + Parse_30(datas);
                         case 0x32:
                             return address + "|32|" + Parse_32(datas);
+                        case 0x33:
+                            return address + "|33|" + Parse_33(datas);
                         case 0x37:
                             return address + "|37|" + Parse_37(datas);
                         case 0x38:
@@ -134,7 +136,8 @@ namespace ParseRCCallback
                 return "";
             string[] datas = GetAES(input);
             string rc_type = GetRCType(BitChoose_string(datas[0], 0, 2) + BitChoose_string(datas[4], 0, 2));
-            string ui_fw_ver = "2" + ByteToInt_string(datas[2], 3) + ByteToInt_string(datas[1], 2) + BitChoose_int(datas[0], 3, 7).ToString() + ByteToInt_string(datas[3], 3);
+            //string ui_fw_ver = "2" + ByteToInt_string(datas[2], 3) + ByteToInt_string(datas[1], 2) + BitChoose_int(datas[0], 3, 7).ToString() + ByteToInt_string(datas[3], 3);
+            string ui_fw_ver = string.Format("2{0}{1}{2:00}{3}", ByteToInt_string(datas[2], 3), ByteToInt_string(datas[1], 2), BitChoose_int(datas[0], 3, 7), ByteToInt_string(datas[3], 3));
             string ui_hw_ver = string.Format("2{0}{1:00}{2:00000}", ByteToInt_string(datas[5], 3), BitChoose_int(datas[4], 4, 7), CombineByteToInt(datas[7] + "," + datas[6]));
             string ev_ctg1 = ByteToInt_string(datas[8], 3);
             string ev_ctg2 = ByteToInt_string(datas[9], 3);
@@ -402,6 +405,15 @@ namespace ParseRCCallback
                 default:
                     return "";
             }
+        }
+        /// <summary>
+        /// 解析[33]設置車架號碼是否成功
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>0/1</returns>
+        private static string Parse_33(string input)
+        {
+            return int.Parse(GetAES(input)[0], NumberStyles.HexNumber).ToString();
         }
         /// <summary>
         /// 解析[37]副電池容量,副電池壽命,前次充飽容量
