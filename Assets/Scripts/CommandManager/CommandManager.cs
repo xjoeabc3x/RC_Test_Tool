@@ -50,9 +50,12 @@ public class CommandManager
             case "19":
                 RCToolPlugin.SendData(address, cmd_19(), "01");
                 break;
-            //case "1A_normal":
-            //    RCToolPlugin.SendData(address, cmd_1A_normal(), "01");
-            //    break;
+            case "1A_normal":
+                RCToolPlugin.SendData(address, cmd_1A_normal(), "01");
+                break;
+            case "1A_tuning":
+                RCToolPlugin.SendData(address, cmd_1A_tuning(), "01");
+                break;
             case "20":
                 RCToolPlugin.SendData(address, cmd_20(), "01");
                 break;
@@ -64,6 +67,12 @@ public class CommandManager
                 break;
             case "23OFF":
                 RCToolPlugin.SendData(address, cmd_23OFF(), "00");
+                break;
+            case "2C":
+                RCToolPlugin.SendData(address, cmd_2C(), "01");
+                break;
+            case "2D":
+                RCToolPlugin.SendData(address, cmd_2D(_setdata), "01");
                 break;
             case "32":
                 RCToolPlugin.SendData(address, cmd_32(), "01");
@@ -223,7 +232,14 @@ public class CommandManager
 
     private static byte[] cmd_1A_normal()
     {
-        return null;
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x1A, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_1A_tuning()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x1A, 0x01, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
     }
     /// <summary>
     /// Service PlatformÂ÷½u
@@ -252,6 +268,30 @@ public class CommandManager
     {
         byte[] send_byte = new byte[4] { 0xFB, 0x22, 0x00, 0x00 };
         return send_byte;
+    }
+
+    private static byte[] cmd_2C()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x2C, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static string cmd_2D(string[] data)
+    {
+        string[] send_byte = new string[20] { "FB", "21", "2D", "03", "00", "00", "10", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "01", "00" };
+        if (data != null)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                send_byte[i + 4] = data[i];
+            }
+        }
+        string result = send_byte[0];
+        for (int i = 1; i < send_byte.Length; i++)
+        {
+            result = string.Format("{0},{1}", result, send_byte[i]);
+        }
+        return result;
     }
 
     private static byte[] cmd_32()

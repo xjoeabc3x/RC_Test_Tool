@@ -47,6 +47,12 @@ namespace ParseRCCallback
                             return address + "|12|" + Parse_12(datas);
                         case 0x13:
                             return address + "|13|" + Parse_13(datas);
+                        case 0x1A:
+                            return address + "|1A|" + Parse_1A(datas);
+                        case 0x2C:
+                            return address + "|2C|" + Parse_2C(datas);
+                        case 0x2D:
+                            return address + "|2D|" + Parse_2D(datas);
                         case 0x30:
                             return address + "|30|" + Parse_30(datas);
                         case 0x32:
@@ -360,6 +366,39 @@ namespace ParseRCCallback
             string eplife = string.Format("{0}%", ByteToInt_string(aes[1], 0));
             string fcc = string.Format("{0:.0}Wh", (decimal)CombineByteToInt(aes[3] + "," + aes[2])/10);
             return string.Format("{0},{1},{2}", rsoc, eplife, fcc);
+        }
+        /// <summary>
+        /// 解析[1A]設置是否成功
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>0/1</returns>
+        private static string Parse_1A(string input)
+        {
+            return int.Parse(GetAES(input)[0], NumberStyles.HexNumber).ToString();
+        }
+        /// <summary>
+        /// 解析[2C]馬達段數
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>power,sport,active,tour,eco</returns>
+        private static string Parse_2C(string input)
+        {
+            string[] aes = GetAES(input);
+            string asmo1 = aes[0][1].ToString();
+            string asmo2 = aes[0][0].ToString();
+            string asmo3 = aes[1][1].ToString();
+            string asmo4 = aes[1][0].ToString();
+            string asmo5 = aes[2][1].ToString();
+            return string.Format("{0},{1},{2},{3},{4}", asmo1, asmo2, asmo3, asmo4, asmo5);
+        }
+        /// <summary>
+        /// 解析[2D]設置是否成功
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>0/1</returns>
+        private static string Parse_2D(string input)
+        {
+            return int.Parse(GetAES(input)[0], NumberStyles.HexNumber).ToString();
         }
         /// <summary>
         /// 解析[30]總里程,上次回廠
