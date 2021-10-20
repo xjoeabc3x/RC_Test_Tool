@@ -39,6 +39,8 @@ namespace ParseRCCallback
                             return address + "|09|" + Parse_09(datas);
                         case 0x0A:
                             return address + "|0A|" + Parse_0A(datas);
+                        case 0x0C:
+                            return address + "|0C|" + Parse_0C(datas);
                         case 0x0D:
                             return address + "|0D|" + Parse_0D(datas);
                         case 0x0E:
@@ -150,18 +152,19 @@ namespace ParseRCCallback
             return string.Format("{0},{1},{2},{3},{4}", rc_type, ui_fw_ver, ui_hw_ver, ev_ctg1, ev_ctg2);
         }
         /// <summary>
-        /// 解析[09]馬達型號,馬達韌體版本,馬達硬體版本,生產流水號,RCID
+        /// 解析[09]馬達型號,馬達韌體名稱,馬達硬體名稱,韌體版本,RCID,生產流水號
         /// </summary>
         /// <param name="input"></param>
         /// <param name="package"></param>
-        /// <returns>DUType(DU7),DU_FWversion(0PB),DU_HWversion(X0PB),SN,RCID/evymc(50810)</returns>
+        /// <returns>DUType(DU7),DU_FWname(0PB),DU_HWname(X0PB),DUFWVersion(202107030),RCID/evymc(50810),SN(202101)</returns>
         private static string Parse_09(string input)
         {
             string DUType = "";
+            string DUFW_MD = "";
+            string DUHW_MD = "";
             string DUFW = "";
-            string DUHW = "";
-            string SN = "";
             string evymc = "";
+            string SN = "";
             switch (packagecounter)
             {
                 //最後一包
@@ -170,11 +173,12 @@ namespace ParseRCCallback
                     DataCache = AddNewDatas(DataCache, GetAES(input));
                     //判斷馬達
                     //解析
-                    DUFW = GetASCIItoString(DataCache, 0, 2);
-                    DUHW = GetASCIItoString(DataCache, 8, 11);
-                    SN = GetYamahaSN(DataCache[4], DataCache[5], DataCache[6], DataCache[7]);
+                    DUFW_MD = GetASCIItoString(DataCache, 0, 2);
+                    DUHW_MD = GetASCIItoString(DataCache, 8, 11);
+                    DUFW = GetYamahaFWver(DataCache[4], DataCache[5], DataCache[6], DataCache[7]);
                     evymc = GetRCID(DataCache);
-                    switch (DUFW)
+                    SN = int.Parse(DataCache[17] + DataCache[16] + DataCache[15], NumberStyles.HexNumber).ToString();
+                    switch (DUFW_MD)
                     {
                         case "0SC":
                             DUType = "DU1 CAN-BIC PW-SE";
@@ -236,9 +240,9 @@ namespace ParseRCCallback
                             DUType = "DU19";
                             break;
                         case "EP8": //Shimano
-                            DUFW = "EP800";
+                            DUFW_MD = "EP800";
                             DUType = "DU16 EP8";
-                            SN = GetShimanoSN(DataCache[5], DataCache[6], DataCache[7]);
+                            DUFW = GetShimanoFWver(DataCache[5], DataCache[6], DataCache[7]);
                             break;
                         default:
                             Debug.Log("Unknow DU_Firmware.");
@@ -248,7 +252,7 @@ namespace ParseRCCallback
                     DataCache = null;
                     //packagecounter歸零
                     packagecounter = 0;
-                    return string.Format("{0},{1},{2},{3},{4}", DUType, DUFW, DUHW, SN, evymc);
+                    return string.Format("{0},{1},{2},{3},{4},{5}", DUType, DUFW_MD, DUHW_MD, DUFW, evymc, SN);
                 //第一包
                 case 2:
                     //作暫存
@@ -302,6 +306,20 @@ namespace ParseRCCallback
                     Debug.Log("[0A] parse Error." + packagecounter);
                     return "";
             }
+        }
+        /// <summary>
+        /// 解析[0C]ErrorCode,BBSS firmware version(目前只解析BBSS韌體版本)
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>ErrorCode,BBSSfw</returns>
+        private static string Parse_0C(string input)
+        {
+            string[] aes = GetAES(input);
+            int dd = BitChoose_int(aes[10], 3, 7);
+            int mm = int.Parse(aes[11], NumberStyles.HexNumber);
+            int yy = int.Parse(aes[12], NumberStyles.HexNumber);
+            int sn = int.Parse(aes[13], NumberStyles.HexNumber);
+            return string.Format("ErrorCode,2{0:000}{1:00}{2:00}{3:000}", yy, mm, dd, sn);
         }
         /// <summary>
         /// 解析[0D]主電池Cell版本韌體版本生產流水號
@@ -1087,16 +1105,16 @@ namespace ParseRCCallback
         {
             if (input.Length <= 0)
                 return null;
-            return int.Parse(input[14] + input[13], NumberStyles.HexNumber).ToString();
+            return string.Format("{0:00000}", int.Parse(input[14] + input[13], NumberStyles.HexNumber));
         }
 
-        public static string GetYamahaSN(string hexYY, string hexMM, string hexDD, string sn)
+        public static string GetYamahaFWver(string hexYY, string hexMM, string hexDD, string fsn)
         {
             
-            return string.Format("20{0}{1}{2}{3}", hexYY, hexMM, hexDD, (char)int.Parse(sn, NumberStyles.HexNumber));
+            return string.Format("20{0}{1}{2}{3}", hexYY, hexMM, hexDD, (char)int.Parse(fsn, NumberStyles.HexNumber));
         }
 
-        public static string GetShimanoSN(string svf1, string svf2, string svf3)
+        public static string GetShimanoFWver(string svf1, string svf2, string svf3)
         {
             int s1 = int.Parse(svf1, NumberStyles.HexNumber);
             int s2 = int.Parse(svf2, NumberStyles.HexNumber);

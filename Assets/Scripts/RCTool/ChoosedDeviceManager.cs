@@ -21,14 +21,19 @@ public class ChoosedDeviceManager : MonoBehaviour
         public string ctg2 = "null";
         //DU type
         public string DUType = "null";
-        //DU fw
-        public string DUFW = "null";
-        //DU hw
-        public string DUHW = "null";
-        //DU sn
-        public string DUSN = "null";
+        //DU fw name
+        public string DUFW_MD = "null";
+        //DU hw name
+        public string DUHW_MD = "null";
+        //DU fw version
+        public string DUFWver = "null";
         //DU rcid
         public string RCID = "null";
+        //DU SN
+        public string SN = "null";
+        //BBSS
+        public string BBSS = "null";
+
         //Bike name
         public string frameNumber = "null";
         //DU odo
@@ -223,18 +228,18 @@ public class ChoosedDeviceManager : MonoBehaviour
     }
     private IEnumerator _RequestBikeDetail()
     {
-        Loading.Instance.ShowLoading(12f);
+        Loading.Instance.ShowLoading(12.6f);
         callback_dic.Clear();
         BikeDetailText.text = "";
         yield return new WaitForSeconds(1.0f);
-        string[] cmdList = { "02", "05", "09", "32", "12", "0A", "D4", "D1", "D2", "D3", "0D", "13", "0E", "37", "38", "39", "DD" };
+        string[] cmdList = { "02", "05", "09", "32", "12", "0A", "0C", "D4", "D1", "D2", "D3", "0D", "13", "0E", "37", "38", "39", "DD" };
         for (int i = 0; i < cmdList.Length; i++)
         {
             CommandManager.SendCMD(DeviceAddress, cmdList[i], null, null);
         }
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(10.6f);
         ParseBikeDetail();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.6f);
         ShowBikeDetail();
         Loading.Instance.HideLoading();
     }
@@ -268,13 +273,14 @@ public class ChoosedDeviceManager : MonoBehaviour
             }
             if (callback_dic.TryGetValue("09", out str))
             {
-                //DUType(DU7),DU_FWversion(0PB),DU_HWversion(X0PB),SN,RCID/evymc(50810)
+                //DUType(DU7), DU_FWname(0PB), DU_HWname(X0PB), DUFWVersion(202107030), RCID/evymc(50810), SN(202101)
                 string[] data = str.Split(',');
                 info.DUType = data[0];
-                info.DUFW = data[1];
-                info.DUHW = data[2];
-                info.DUSN = data[3];
+                info.DUFW_MD = data[1];
+                info.DUHW_MD = data[2];
+                info.DUFWver = data[3];
                 info.RCID = data[4];
+                info.SN = data[5];
             }
             if (callback_dic.TryGetValue("32", out str))
             {
@@ -294,6 +300,12 @@ public class ChoosedDeviceManager : MonoBehaviour
                 string[] data = str.Split(',');
                 info.lstc = data[1];
                 info.fstc = data[2];
+            }
+            if (callback_dic.TryGetValue("0C", out str))
+            {
+                //ErrorCode,BBSSfw
+                string[] data = str.Split(',');
+                info.BBSS = data[1];
             }
             if (callback_dic.TryGetValue("D4", out str))
             {
@@ -417,7 +429,8 @@ public class ChoosedDeviceManager : MonoBehaviour
             BikeDetail info = BikeDetail_Dic[DeviceAddress];
             string str = "";
             str += string.Format("<color=yellow>[05]</color>RC類型 :{0}\nRC韌體版本 :{1}\nRC硬體版本 :{2}\nctg1 :{3}, ctg2 :{4}", info.RCType, info.RCFW, info.RCHW, info.ctg1, info.ctg2);
-            str += string.Format("\n\n<color=yellow>[09]</color>DU型號 :{0}(RCID :{4})\nDU韌體版本 :{1}\nDU硬體版本 :{2}\nDU生產流水號 :{3}", info.DUType, info.DUFW, info.DUHW, info.DUSN, info.RCID);
+            str += string.Format("\n\n<color=yellow>[09]</color>DU型號 :{0}(RCID :{4})\nDU韌體名稱 :{1}({3})\nDU硬體名稱 :{2}\nDU生產流水號 :{5}", info.DUType, info.DUFW_MD, info.DUHW_MD, info.DUFWver, info.RCID, info.SN);
+            str += string.Format("\n\n<color=yellow>[0C]</color>BBSS韌體版本 :{0}", info.BBSS);
             str += string.Format("\n\n<color=yellow>[32]</color>車架號碼 :{0}", info.frameNumber);
             str += string.Format("\n\n<color=yellow>[12]</color>馬達總里程 :{0}\n總騎乘時間 :{1}", info.odo, info.tut);
             str += string.Format("\n\n<color=yellow>[0A]</color>距離上次回廠時間 :{0}\n距離上次回廠距離 :{1}", info.lstc, info.fstc);
@@ -450,7 +463,8 @@ public class ChoosedDeviceManager : MonoBehaviour
             BikeDetail info = BikeDetail_Dic[address];
             string str = "";
             str += string.Format("[05]RC類型 :{0}\nRC韌體版本 :{1}\nRC硬體版本 :{2}\nctg1 :{3}, ctg2 :{4}", info.RCType, info.RCFW, info.RCHW, info.ctg1, info.ctg2);
-            str += string.Format("\n\n[09]DU型號 :{0}(RCID :{4})\nDU韌體版本 :{1}\nDU硬體版本 :{2}\nDU生產流水號 :{3}", info.DUType, info.DUFW, info.DUHW, info.DUSN, info.RCID);
+            str += string.Format("\n\n[09]DU型號 :{0}(RCID :{4})\nDU韌體名稱 :{1}({3})\nDU硬體名稱 :{2}\nDU生產流水號 :{5}", info.DUType, info.DUFW_MD, info.DUHW_MD, info.DUFWver, info.RCID, info.SN);
+            str += string.Format("\n\n[0C]BBSS韌體版本 :{0}", info.BBSS);
             str += string.Format("\n\n[32]車架號碼 :{0}", info.frameNumber);
             str += string.Format("\n\n[12]馬達總里程 :{0}\n總騎乘時間 :{1}", info.odo, info.tut);
             str += string.Format("\n\n[0A]距離上次回廠時間 :{0}\n距離上次回廠距離 :{1}", info.lstc, info.fstc);

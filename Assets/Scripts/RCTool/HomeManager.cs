@@ -84,6 +84,11 @@ public class HomeManager : MonoBehaviour
             }
         }
     }
+
+    public void OpenFile(string filename)
+    {
+        Application.OpenURL(Path.Combine(Application.streamingAssetsPath, filename));
+    }
     #endregion
 
     #region --Events--
@@ -101,6 +106,7 @@ public class HomeManager : MonoBehaviour
     {
         if (ButtonDic.ContainsKey(address))
         {
+            Toast.Instance.ShowToast(string.Format("[{0}] connection status change :{1}", address, status));
             DeviceButton deviceButton = ButtonDic[address].GetComponent<DeviceButton>();
             switch (status)
             {

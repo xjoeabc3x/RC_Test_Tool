@@ -343,6 +343,7 @@
     <Compile Include="Assets\NGUI\Scripts\Internal\NGUIDebug.cs" />
     <Compile Include="Assets\Scripts\Setting\ServerSetting.cs" />
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenRotation.cs" />
+    <Compile Include="Assets\Scripts\RCTool\DisplayView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GoogleMaps\Examples\SharedAssets\Shaders\ScrollingTextureShader.shader" />
