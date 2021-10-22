@@ -87,7 +87,8 @@ public class HomeManager : MonoBehaviour
 
     public void OpenFile(string filename)
     {
-        Application.OpenURL(Path.Combine(Application.streamingAssetsPath, filename));
+        //Application.OpenURL(Path.Combine(Application.streamingAssetsPath, filename));
+        Application.OpenURL("https://drive.google.com/file/d/1hVSwbe9yc1bU0P8jQrVmZeFN9xeCqJHd/view?usp=sharing");
     }
     #endregion
 

@@ -75,6 +75,14 @@ namespace ParseRCCallback
                             return address + "|D3|" + Parse_D3(datas);
                         case 0xD4:
                             return address + "|D4|" + Parse_D4(datas);
+                        case 0xD5:
+                            return address + "|D5|" + Parse_D5(datas);
+                        case 0xD6:
+                            return address + "|D6|" + Parse_D6(datas);
+                        case 0xD7:
+                            return address + "|D7|" + Parse_D7(datas);
+                        case 0xD8:
+                            return address + "|D8|" + Parse_D8(datas);
                         case 0xD9:
                             return address + "|D9|" + Parse_D9(datas);
                         case 0xDA:
@@ -694,6 +702,75 @@ namespace ParseRCCallback
                 , byte0[5].ToString(), byte0[4].ToString(), byte0[3].ToString()
                 , byte0[2].ToString(), byte0[1].ToString(), byte0[0].ToString()
                 , byte1);
+        }
+        /// <summary>
+        /// 解析[D5]New EVO顯示數值Layout
+        /// 0x01 Clock (from App)
+        /// 0x02 Calories(from App)
+        /// 0x03 Elevation(from App)
+        /// 0x04 Phone Battery(from App)
+        /// 0x05 Estimated time of arrival(from App)
+        /// 0x06 Estimated Distance of arrival(from App)
+        /// 0x00,0x07~0x0F Rvd
+        /// 0x10 Trip Time (from SG)
+        /// 0x11 Trip distance(from SG)
+        /// 0x12 Speed(from SG)
+        /// 0x13 AVG Speed(from SG)
+        /// 0x14 Cadence(from SG)
+        /// 0x15 AVG Cadence(from SG)
+        /// 0x16 Power(from SG)
+        /// 0x17 AVG power(from SG)
+        /// 0x18 Battery-level(from SG)
+        /// 0x19 Battery-main(from SG)
+        /// 0x1A Battery-sub(from SG)
+        /// 0x1B Remain Range(from SG)
+        /// 0x1C ODO(from SG)
+        /// 0x1D Service interval(from SG)
+        /// 0x1E Assist mode(from SG)
+        /// 0x1F Heart rate(from SG)
+        /// 0x20 Max Speed(from SG)
+        /// 0x21 Max Power(from SG)
+        /// 0x22 Max Cadence(from SG)
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>page1_main,page1_left,page1_right,page2_main,page2_left,page2_right,page3_main,page3_left,page3_right,page4_main,page4_left,page4_right</returns>
+        private static string Parse_D5(string input)
+        {
+            string[] aes = GetAES(input);
+            string result = aes[0];
+            for (int i = 1; i < 12; i++)
+            {
+                result = string.Format("{0},{1}", result, aes[i]);
+            }
+            return result;
+        }
+        /// <summary>
+        /// 解析[D6]設置是否成功
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>0/1</returns>
+        private static string Parse_D6(string input)
+        {
+            return int.Parse(GetAES(input)[0], NumberStyles.HexNumber).ToString();
+        }
+        /// <summary>
+        /// 解析[D7]語言, 開機畫面
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>language("00" English),brand_type("00" Giant)</returns>
+        private static string Parse_D7(string input)
+        {
+            string[] aes = GetAES(input);
+            return string.Format("{0},{1}", aes[0], aes[1]); ;
+        }
+        /// <summary>
+        /// 解析[D8]設置是否成功
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>0/1</returns>
+        private static string Parse_D8(string input)
+        {
+            return int.Parse(GetAES(input)[0], NumberStyles.HexNumber).ToString();
         }
         /// <summary>
         /// 解析[D9]EVO背光Level,EVO背光數值,ONOFF背光Level,ONOFF背光數值,車燈開關狀態

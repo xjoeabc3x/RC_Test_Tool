@@ -120,6 +120,18 @@ public class CommandManager
             case "D4":
                 RCToolPlugin.SendData(address, cmd_D4(), "01");
                 break;
+            case "D5":
+                RCToolPlugin.SendData(address, cmd_D5(), "01");
+                break;
+            case "D6":
+                RCToolPlugin.SendData(address, cmd_D6(setdata), "01");
+                break;
+            case "D7":
+                RCToolPlugin.SendData(address, cmd_D7(), "01");
+                break;
+            case "D8":
+                RCToolPlugin.SendData(address, cmd_D8(setdata), "01");
+                break;
             case "D9":
                 RCToolPlugin.SendData(address, cmd_D9(), "01");
                 break;
@@ -395,6 +407,44 @@ public class CommandManager
     private static byte[] cmd_D4()
     {
         byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xD4, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_D5()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xD5, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_D6(byte[] input)
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xD6, 0x0C, 0x12, 0x1B, 0x1C, 0x12, 0x11, 0x10, 0x12, 0x13, 0x20, 0x12, 0x14, 0x1B, 0x00, 0x00, 0x01, 0x00 };
+        if (input != null)
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+                send_byte[i + 4] = input[i];
+            }
+        }
+        return send_byte;
+    }
+
+    private static byte[] cmd_D7()
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xD7, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        return send_byte;
+    }
+
+    private static byte[] cmd_D8(byte[] input)
+    {
+        byte[] send_byte = new byte[20] { 0xFB, 0x21, 0xD8, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        if (input != null)
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+                send_byte[i + 4] = input[i];
+            }
+        }
         return send_byte;
     }
 
