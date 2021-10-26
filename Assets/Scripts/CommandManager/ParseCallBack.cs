@@ -24,15 +24,19 @@ namespace ParseRCCallback
             string[] data = datas.Split(',');
             if (data[0] == "FC")
             {
-                if (data.Length >= 20)
+                if (data.Length >= 20 && data[1] == "21")
                 {
                     packagecounter = PackageCompute(data[3]);
-                    switch (((byte)int.Parse(data[2], NumberStyles.HexNumber))&0xFF)
+                    switch (((byte)int.Parse(data[2], NumberStyles.HexNumber)) & 0xFF)
                     {//{ "02", "05", "09", "32", "12", "0A", "D4", "D1", "D2", "D3", "0D", "13", "0E", "37", "38", "39", "DD" }
                         case 0x01:
                             return address + "|01|" + Parse_01(datas);
                         case 0x02:
                             return address + "|02|" + Parse_02(datas);
+                        case 0x03:
+                            return address + "|03|" + Parse_03(datas);
+                        case 0x04:
+                            return address + "|04|" + Parse_04(datas);
                         case 0x05:
                             return address + "|05|" + Parse_05(datas);
                         case 0x09:
@@ -96,6 +100,15 @@ namespace ParseRCCallback
                             return "Unknown TD :" + datas;
                     }
                 }
+                else if (data.Length >= 20 && data[1] == "23") //{23} 22byte/25byte
+                {
+                    packagecounter = PackageCompute(data[3]);
+                    return address + "|23|" + Parse_23(datas);
+                }
+                else if (data[1] == "11")
+                {
+                    //String str = "2"+String.format("%03d", BLE_RX[4]&0xFF)+String.format("%02d", BLE_RX[3]&0xFF)+String.format("%02d ", BLE_RX[2]&0xFF)+String.format("%03d", BLE_RX[5]&0xFF);
+                }
                 else
                 {
                     switch (((byte)int.Parse(data[2], NumberStyles.HexNumber)) & 0xFF)
@@ -140,6 +153,27 @@ namespace ParseRCCallback
         {
             string[] aes = GetAES(input);
             return aes[0];
+        }
+        /// <summary>
+        /// 解析[03]限速,輪徑(其他參數暫時不使用)
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>SpeedLimit(0~255)km/hr,輪周長(0~65535)mm</returns>
+        private static string Parse_03(string input)
+        {
+            string[] aes = GetAES(input);
+            int spdlim = int.Parse(aes[0], NumberStyles.HexNumber);
+            int ccfr = int.Parse(aes[2] + aes[1], NumberStyles.HexNumber);
+            return string.Format("{0},{1}", spdlim, ccfr);
+        }
+        /// <summary>
+        /// 解析[04]設置是否成功
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>0/1</returns>
+        private static string Parse_04(string input)
+        {
+            return int.Parse(GetAES(input)[0], NumberStyles.HexNumber).ToString();
         }
         /// <summary>
         /// 解析[05]RC/SG,UI韌體版本,UI硬體版本,ctg1,ctg2
@@ -401,6 +435,15 @@ namespace ParseRCCallback
         private static string Parse_1A(string input)
         {
             return int.Parse(GetAES(input)[0], NumberStyles.HexNumber).ToString();
+        }
+        /// <summary>
+        /// 解析{23}
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private static string Parse_23(string input)
+        {
+            return "";
         }
         /// <summary>
         /// 解析[2C]馬達段數

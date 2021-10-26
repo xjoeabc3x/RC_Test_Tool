@@ -224,6 +224,11 @@ public class ChoosedDeviceManager : MonoBehaviour
     #region [車子資訊流程]
     public void RequestBikeDetail()
     {
+        //if (!RCToolPlugin.IsConnected(DeviceAddress))
+        //{
+        //    Toast.Instance.ShowToast("請先連接");
+        //    return;
+        //}
         StartCoroutine("_RequestBikeDetail");
     }
     private IEnumerator _RequestBikeDetail()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Globalization;
 using ParseRCCallback;
 
 /// <summary>
@@ -87,6 +88,11 @@ public class DisplayView : MonoBehaviour
     private void OnEnable()
     {
         RCToolPlugin.onReceiveDecodeRawData += RCToolPlugin_onReceiveDecodeRawData;
+        mainInfo.onValueChanged.AddListener(MainInfoSet);
+        leftInfo.onValueChanged.AddListener(LeftInfoSet);
+        rightInfo.onValueChanged.AddListener(RightInfoSet);
+        language.onValueChanged.AddListener(LanguageSet);
+        launchScreen.onValueChanged.AddListener(LaunchScreenSet);
         Init();
     }
 
@@ -120,17 +126,181 @@ public class DisplayView : MonoBehaviour
         }
         if (Key == "D5")
         {
-            //
+            ParseD5_sync(Value);
         }
         if (Key == "D7")
         {
-            //
+            ParseD7_sync(Value);
         }
+    }
+
+    private void ParseD5_sync(string str)
+    {
+        //page1_main,page1_left,page1_right,page2_main,page2_left,page2_right,page3_main,page3_left,page3_right,page4_main,page4_left,page4_right
+        string[] data = str.Split(',');
+        evoset.Main1 = GetD5_type(data[0]);
+        evoset.Left1 = GetD5_type(data[1]);
+        evoset.Right1 = GetD5_type(data[2]);
+
+        evoset.Main2 = GetD5_type(data[3]);
+        evoset.Left2 = GetD5_type(data[4]);
+        evoset.Right2 = GetD5_type(data[5]);
+
+        evoset.Main3 = GetD5_type(data[6]);
+        evoset.Left3 = GetD5_type(data[7]);
+        evoset.Right3 = GetD5_type(data[8]);
+
+        evoset.Main4 = GetD5_type(data[9]);
+        evoset.Left4 = GetD5_type(data[10]);
+        evoset.Right4 = GetD5_type(data[11]);
+        D5_Sync();
+    }
+
+    private void D5_Sync()
+    {
+        if (evoset != null)
+        {
+            SetPage();
+        }
+    }
+
+    private int GetD5_type(string str)
+    {
+        switch (str)
+        {
+            case "01":
+                return 0;
+            case "02":
+                return 1;
+            case "03":
+                return 2;
+            case "04":
+                return 3;
+            case "05":
+                return 4;
+            case "06":
+                return 5;
+            case "10":
+                return 6;
+            case "11":
+                return 7;
+            case "12":
+                return 8;
+            case "13":
+                return 9;
+            case "14":
+                return 10;
+            case "15":
+                return 11;
+            case "16":
+                return 12;
+            case "17":
+                return 13;
+            case "18":
+                return 14;
+            case "19":
+                return 15;
+            case "1A":
+                return 16;
+            case "1B":
+                return 17;
+            case "1C":
+                return 18;
+            case "1D":
+                return 19;
+            case "1E":
+                return 20;
+            case "1F":
+                return 21;
+            case "20":
+                return 22;
+            case "21":
+                return 23;
+            case "22":
+                return 24;
+            default:
+                return 0;
+        }
+    }
+
+    private byte GetD5_type(int num)
+    {
+        switch (num)
+        {
+            case 0:
+                return 0x01;
+            case 1:
+                return 0x02;
+            case 2:
+                return 0x03;
+            case 3:
+                return 0x04;
+            case 4:
+                return 0x05;
+            case 5:
+                return 0x06;
+            case 6:
+                return 0x10;
+            case 7:
+                return 0x11;
+            case 8:
+                return 0x12;
+            case 9:
+                return 0x13;
+            case 10:
+                return 0x14;
+            case 11:
+                return 0x15;
+            case 12:
+                return 0x16;
+            case 13:
+                return 0x17;
+            case 14:
+                return 0x18;
+            case 15:
+                return 0x19;
+            case 16:
+                return 0x1A;
+            case 17:
+                return 0x1B;
+            case 18:
+                return 0x1C;
+            case 19:
+                return 0x1D;
+            case 20:
+                return 0x1E;
+            case 21:
+                return 0x1F;
+            case 22:
+                return 0x20;
+            case 23:
+                return 0x21;
+            case 24:
+                return 0x22;
+            default:
+                return 0x00;
+        }
+    }
+
+    private void ParseD7_sync(string str)
+    {
+        //language("00" English),brand_type("00" Giant)
+        string[] data = str.Split(',');
+        evoset.Language = int.Parse(data[0], NumberStyles.HexNumber);
+        evoset.LaunchScreen = int.Parse(data[1], NumberStyles.HexNumber);
+        //Sync
+        language.value = evoset.Language;
+        launchScreen.value = evoset.LaunchScreen;
     }
 
     private void OnDisable()
     {
         RCToolPlugin.onReceiveDecodeRawData -= RCToolPlugin_onReceiveDecodeRawData;
+        mainInfo.onValueChanged.RemoveListener(MainInfoSet);
+        leftInfo.onValueChanged.RemoveListener(LeftInfoSet);
+        rightInfo.onValueChanged.RemoveListener(RightInfoSet);
+        language.onValueChanged.RemoveListener(LanguageSet);
+        launchScreen.onValueChanged.RemoveListener(LaunchScreenSet);
         DisplayReset();
     }
 
@@ -150,7 +320,7 @@ public class DisplayView : MonoBehaviour
 
     #region [Button]
 
-    private void SetPage(int num)
+    private void SetCurrent(int num)
     {
         currentPage += num;
         //overflow
@@ -164,16 +334,150 @@ public class DisplayView : MonoBehaviour
             currentPage = maxPage;
         }
         currentPage_text.text = currentPage.ToString();
+        SetPage();
+    }
+
+    private void SetPage()
+    {
+        switch (currentPage)
+        {
+            case 1:
+                mainInfo.value = evoset.Main1;
+                leftInfo.value = evoset.Left1;
+                rightInfo.value = evoset.Right1;
+                break;
+            case 2:
+                mainInfo.value = evoset.Main2;
+                leftInfo.value = evoset.Left2;
+                rightInfo.value = evoset.Right2;
+                break;
+            case 3:
+                mainInfo.value = evoset.Main3;
+                leftInfo.value = evoset.Left3;
+                rightInfo.value = evoset.Right3;
+                break;
+            case 4:
+                mainInfo.value = evoset.Main4;
+                leftInfo.value = evoset.Left4;
+                rightInfo.value = evoset.Right4;
+                break;
+            default:
+                mainInfo.value = 0;
+                leftInfo.value = 0;
+                rightInfo.value = 0;
+                break;
+        }
     }
 
     public void NextPage()
     {
-        SetPage(1);
+        SetCurrent(1);
     }
 
     public void PreviousPage()
     {
-        SetPage(-1);
+        SetCurrent(-1);
+    }
+
+    public void SetDefault()
+    {
+        evoset.Main1 = 8;
+        evoset.Left1 = 17;
+        evoset.Right1 = 18;
+        evoset.Main2 = 8;
+        evoset.Left2 = 7;
+        evoset.Right2 = 6;
+        evoset.Main3 = 8;
+        evoset.Left3 = 9;
+        evoset.Right3 = 22;
+        evoset.Main4 = 8;
+        evoset.Left4 = 17;
+        evoset.Right4 = 10;
+        SetPage();
+    }
+
+    public void SetEVO()
+    {
+        byte[] senddata = new byte[12] { GetD5_type(evoset.Main1), GetD5_type(evoset.Left1), GetD5_type(evoset.Right1),
+        GetD5_type(evoset.Main2), GetD5_type(evoset.Left2), GetD5_type(evoset.Right2),
+        GetD5_type(evoset.Main3), GetD5_type(evoset.Left3), GetD5_type(evoset.Right3),
+        GetD5_type(evoset.Main4), GetD5_type(evoset.Left4), GetD5_type(evoset.Right4)};
+        CommandManager.SendCMD(ChoosedDeviceManager.DeviceAddress, "D6", senddata, null);
+        byte[] senddata02 = new byte[2] { (byte)evoset.Language, (byte)evoset.LaunchScreen };
+        CommandManager.SendCMD(ChoosedDeviceManager.DeviceAddress, "D8", senddata02, null);
+        //CommandManager.SendCMD(ChoosedDeviceManager.DeviceAddress, "D5", null, null);
+        //CommandManager.SendCMD(ChoosedDeviceManager.DeviceAddress, "D7", null, null);
+    }
+    
+    #endregion
+
+    #region [DropDownEvent]
+
+    private void MainInfoSet(int id)
+    {
+        switch (currentPage)
+        {
+            case 1:
+                evoset.Main1 = id;
+                break;
+            case 2:
+                evoset.Main2 = id;
+                break;
+            case 3:
+                evoset.Main3 = id;
+                break;
+            case 4:
+                evoset.Main4 = id;
+                break;
+        }
+    }
+
+    private void LeftInfoSet(int id)
+    {
+        switch (currentPage)
+        {
+            case 1:
+                evoset.Main1 = id;
+                break;
+            case 2:
+                evoset.Main2 = id;
+                break;
+            case 3:
+                evoset.Main3 = id;
+                break;
+            case 4:
+                evoset.Main4 = id;
+                break;
+        }
+    }
+
+    private void RightInfoSet(int id)
+    {
+        switch (currentPage)
+        {
+            case 1:
+                evoset.Main1 = id;
+                break;
+            case 2:
+                evoset.Main2 = id;
+                break;
+            case 3:
+                evoset.Main3 = id;
+                break;
+            case 4:
+                evoset.Main4 = id;
+                break;
+        }
+    }
+
+    private void LanguageSet(int id)
+    {
+        evoset.Language = id;
+    }
+
+    private void LaunchScreenSet(int id)
+    {
+        evoset.LaunchScreen = id;
     }
 
     #endregion
