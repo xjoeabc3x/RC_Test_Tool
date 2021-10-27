@@ -103,6 +103,7 @@
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Miscellaneous\Scripts\SliderController.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Miscellaneous\Scripts\SunAndMoonController.cs" />
     <Compile Include="Assets\Scripts\RCTool\DisplayView.cs" />
+    <Compile Include="Assets\Scripts\RCTool\NaviView.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Miscellaneous\Scripts\LatLngPrefabStampingExample.cs" />
     <Compile Include="Assets\Scripts\CommandManager\ParseCallBack.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIDragDropContainer.cs" />
