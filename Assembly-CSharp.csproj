@@ -94,7 +94,7 @@
     <Compile Include="Assets\Scripts\Test\DisableTest.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\RoadLattice\Scripts\RoadLatticeTools.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\Other\LookAtTarget.cs" />
-    <Compile Include="Assets\Scripts\RCTool\WheelSizeView.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\WheelSizeView.cs" />
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenFOV.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\NGUIAtlas.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UICenterOnClick.cs" />
@@ -102,8 +102,8 @@
     <Compile Include="Assets\NGUI\Examples\Scripts\Other\LagPosition.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Miscellaneous\Scripts\SliderController.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Miscellaneous\Scripts\SunAndMoonController.cs" />
-    <Compile Include="Assets\Scripts\RCTool\DisplayView.cs" />
-    <Compile Include="Assets\Scripts\RCTool\NaviView.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\DisplayView.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\NaviView.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Miscellaneous\Scripts\LatLngPrefabStampingExample.cs" />
     <Compile Include="Assets\Scripts\CommandManager\ParseCallBack.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIDragDropContainer.cs" />
@@ -138,7 +138,7 @@
     <Compile Include="Assets\GoogleMaps\Examples\SharedAssets\Scripts\GyroController.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIProgressBar.cs" />
-    <Compile Include="Assets\Scripts\RCTool\OnOffLightSet.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\OnOffLightSet.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Miscellaneous\Scripts\LocationFollower.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIDragDropItem.cs" />
     <Compile Include="Assets\NGUI\Scripts\Internal\PropertyReference.cs" />
@@ -147,7 +147,7 @@
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenOrthoSize.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\EditTimePreview\Scripts\EditTimePreviewExample.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Intersections\Scripts\TrafficSystem.cs" />
-    <Compile Include="Assets\Scripts\RCTool\RawDataView.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\RawDataView.cs" />
     <Compile Include="Assets\NGUI\Scripts\Internal\ActiveAnimation.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\MoreStyling\Scripts\BuildingSquashing.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\MoreStyling\Scripts\NineSlicing.cs" />
@@ -196,7 +196,7 @@
     <Compile Include="Assets\NGUI\Scripts\Internal\SpringPanel.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\RoadLattice\Scripts\PathFindingExample.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\SharedAssets\Scripts\InstructionsButton.cs" />
-    <Compile Include="Assets\Scripts\RCTool\ChoosedDeviceManager.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\ChoosedDeviceManager.cs" />
     <Compile Include="Assets\Scripts\Tools\ColliderElementCollection.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UIOrthoCamera.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\URPExample\Scripts\URPExample.cs" />
@@ -217,7 +217,7 @@
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Miscellaneous\Scripts\PrivateRoads.cs" />
     <Compile Include="Assets\Scripts\Tools\ColliderChecker.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIButton.cs" />
-    <Compile Include="Assets\Scripts\RCTool\FrameNameView.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\FrameNameView.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\SharedAssets\Scripts\MeshCleaner.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\SharedAssets\Scripts\FloatingOriginUpdater.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UISpriteData.cs" />
@@ -225,7 +225,7 @@
     <Compile Include="Assets\NGUI\Examples\Scripts\Other\Tutorial5.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UISpriteCollection.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\System\InvGameItem.cs" />
-    <Compile Include="Assets\Scripts\RCTool\Loading.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\Loading.cs" />
     <Compile Include="Assets\NGUI\Scripts\Internal\UIWidget.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\SharedAssets\Scripts\ErrorHandling.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIDragScrollView.cs" />
@@ -257,7 +257,7 @@
     <Compile Include="Assets\NGUI\Examples\Scripts\Other\ChatInput.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\Other\OpenURLOnClick.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIPopupList.cs" />
-    <Compile Include="Assets\Scripts\RCTool\RingView.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\RingView.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\Other\WindowDragTilt.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\Other\LoadLevelOnClick.cs" />
     <Compile Include="Assets\Scripts\AES\AES.cs" />
@@ -283,7 +283,7 @@
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIDragDropRoot.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIToggledComponents.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\02_Fundamentals\Scripts\Updaters\BuildingLabelsCreator.cs" />
-    <Compile Include="Assets\Scripts\RCTool\TuningView.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\TuningView.cs" />
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenColor.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIWidgetContainer.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Fencing\Scripts\FollowCameraController.cs" />
@@ -315,7 +315,7 @@
     <Compile Include="Assets\XCharts\Scripts\LineChart.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Fencing\Scripts\LightFader.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
-    <Compile Include="Assets\Scripts\RCTool\HomeManager.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\HomeManager.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIButtonKeys.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\Other\PerspectivePixelPerfect.cs" />
     <Compile Include="Assets\Scripts\Tools\MySlider.cs" />
@@ -335,9 +335,9 @@
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenLetters.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\System\InvBaseItem.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\SharedAssets\Scripts\DynamicMapsService.cs" />
-    <Compile Include="Assets\Scripts\RCTool\Toast.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\Toast.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\02_Fundamentals\Scripts\Updaters\MapLabeller.cs" />
-    <Compile Include="Assets\Scripts\RCTool\TuningType.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\TuningType.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\SharedAssets\Scripts\CameraController.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UI2DSprite.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\RoadLattice\Scripts\PathingAgent.cs" />

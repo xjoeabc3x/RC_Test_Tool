@@ -71,6 +71,9 @@ public class CommandManager
             case "1A_workout":
                 RCToolPlugin.SendData(address, cmd_1A_workout(), "01");
                 break;
+            case "1D":
+                RCToolPlugin.SendData(address, cmd_1D(_setdata), "01");
+                break;
             case "20":
                 RCToolPlugin.SendData(address, cmd_20(), "01");
                 break;
@@ -158,6 +161,9 @@ public class CommandManager
                 break;
             case "DE":
                 RCToolPlugin.SendData(address, cmd_DE(_setdata), "01");
+                break;
+            case "E0":
+                RCToolPlugin.SendData(address, cmd_E0(_setdata), "01");
                 break;
             case "UIBLE_Version":
                 RCToolPlugin.SendData(address, UIBle_Ver(), "00");
@@ -309,6 +315,24 @@ public class CommandManager
     {
         byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x1A, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
         return send_byte;
+    }
+
+    private static string cmd_1D(string[] data)
+    {
+        string[] send_byte = new string[20] { "FB", "21", "1D", "08", "01", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "01", "00" };
+        if (data != null)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                send_byte[i + 4] = data[i];
+            }
+        }
+        string result = send_byte[0];
+        for (int i = 1; i < send_byte.Length; i++)
+        {
+            result = string.Format("{0},{1}", result, send_byte[i]);
+        }
+        return result;
     }
     /// <summary>
     /// Service PlatformÂ÷½u
@@ -538,6 +562,24 @@ public class CommandManager
     private static string cmd_DE(string[] data)
     {
         string[] send_byte = new string[20] { "FB", "21", "DE", "07", "04", "01", "02", "03", "04", "05", "06", "00", "00", "00", "00", "00", "00", "00", "01", "00" };
+        if (data != null)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                send_byte[i + 4] = data[i];
+            }
+        }
+        string result = send_byte[0];
+        for (int i = 1; i < send_byte.Length; i++)
+        {
+            result = string.Format("{0},{1}", result, send_byte[i]);
+        }
+        return result;
+    }
+
+    private static string cmd_E0(string[] data)
+    {
+        string[] send_byte = new string[20] { "FB", "21", "E0", "08", "01", "01", "00", "00", "0", "0", "0", "00", "00", "00", "00", "00", "00", "00", "01", "00" };
         if (data != null)
         {
             for (int i = 0; i < data.Length; i++)

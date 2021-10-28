@@ -279,12 +279,12 @@ public class RCToolPlugin : MonoBehaviour
     {
         Debug.Log("DeviceStateChange:" + str);
         string[] info = str.Split('|');
-        onDeviceStatusChanged(info[0], info[1]);
         if (Devices_Dic.ContainsKey(info[0]))
         {
             Devices_Dic[info[0]].Connected = (info[1] == "Connected") ? true : false;
             Debug.Log("Devices_Dic[info[0]].Connected :" + Devices_Dic[info[0]].Connected);
         }
+        onDeviceStatusChanged(info[0], info[1]);
     }
     /// <summary>
     /// 接收到裝置回傳訊息(加密)
