@@ -436,23 +436,23 @@ public class ChoosedDeviceManager : MonoBehaviour
                 return;
             BikeDetail info = BikeDetail_Dic[DeviceAddress];
             string str = "";
-            str += string.Format("<color=yellow>[05]</color>RC類型 :{0}\nRC韌體版本 :{1}\nRC硬體版本 :{2}\nctg1 :{3}, ctg2 :{4}", info.RCType, info.RCFW, info.RCHW, info.ctg1, info.ctg2);
-            str += string.Format("\n\n<color=yellow>[09]</color>DU型號 :{0}(RCID :{4})\nDU韌體名稱 :{1}({3})\nDU硬體名稱 :{2}\nDU生產流水號 :{5}", info.DUType, info.DUFW_MD, info.DUHW_MD, info.DUFWver, info.RCID, info.SN);
-            str += string.Format("\n\n<color=yellow>[0C]</color>BBSS韌體版本 :{0}", info.BBSS);
-            str += string.Format("\n\n<color=yellow>[32]</color>車架號碼 :{0}", info.frameNumber);
-            str += string.Format("\n\n<color=yellow>[12]</color>馬達總里程 :{0}\n總騎乘時間 :{1}", info.odo, info.tut);
-            str += string.Format("\n\n<color=yellow>[0A]</color>距離上次回廠時間 :{0}\n距離上次回廠距離 :{1}", info.lstc, info.fstc);
-            str += string.Format("\n\n<color=yellow>[D4]</color>0:不存在, 1:存在\n馬達 :{0}\n主電池 :{1}\n副電池 :{2}\nRemote-1 :{3}\nRemote-2 :{4}\n螢幕 :{5}\nShimano Front-Derailleur :{6}\nShimano Rear-Derailleur :{7}\nShimano Switch/Shifter :{8}"
+            str += string.Format("<color=yellow>[05]</color>RC Type :{0}\nRC firmware version :{1}\nRC hardware version :{2}\nctg1 :{3}, ctg2 :{4}", info.RCType, info.RCFW, info.RCHW, info.ctg1, info.ctg2);
+            str += string.Format("\n\n<color=yellow>[09]</color>DU Type :{0}(RCID :{4})\nDU firmware name :{1}({3})\nDU hardware name :{2}\nDU SN number :{5}", info.DUType, info.DUFW_MD, info.DUHW_MD, info.DUFWver, info.RCID, info.SN);
+            str += string.Format("\n\n<color=yellow>[0C]</color>BBSS firmware version :{0}", info.BBSS);
+            str += string.Format("\n\n<color=yellow>[32]</color>Frame Number :{0}", info.frameNumber);
+            str += string.Format("\n\n<color=yellow>[12]</color>DU ODO :{0}\nTotal Ride Time :{1}", info.odo, info.tut);
+            str += string.Format("\n\n<color=yellow>[0A]</color>Last Service Time :{0}\nLast Service Distance :{1}", info.lstc, info.fstc);
+            str += string.Format("\n\n<color=yellow>[D4]</color>0:Not Exist, 1:Exist\nDU :{0}\nMain EnergyPak :{1}\nSub EnergyPak :{2}\nRemote-1 :{3}\nRemote-2 :{4}\nDisplay :{5}\nShimano Front-Derailleur :{6}\nShimano Rear-Derailleur :{7}\nShimano Switch/Shifter :{8}"
                 , info.exist_DU, info.exist_BATT, info.exist_SBATT, info.exist_RMO1, info.exist_RMO2, info.exist_DSP, info.exist_SFD, info.exist_SRD, info.exist_SSWS);
-            str += string.Format("\n\n<color=yellow>[D1]</color>Remote-1 型號 :{0}\nRemote-1韌體版本 :{1}\nRemote-1硬體版本 :{2}", info.rmo1Type, info.rmo1FW, info.rmo1HW);
-            str += string.Format("\n\n<color=yellow>[D2]</color>Remote-2 型號 :{0}\nRemote-2韌體版本 :{1}\nRemote-2硬體版本 :{2}", info.rmo2Type, info.rmo2FW, info.rmo2HW);
-            str += string.Format("\n\n<color=yellow>[D3]</color>Display 型號 :{0}\nDisplay韌體版本 :{1}\nDisplay硬體版本 :{2}", info.dspType, info.dspFW, info.dspHW);
-            str += string.Format("\n\n<color=yellow>[0D]</color>主電池Cell版本 :{0}\n主電池韌體版本 :{1}\n主電池生產流水號 :{2}", info.minor, info.major, info.BATTSN);
-            str += string.Format("\n\n<color=yellow>[13]</color>總電量 :{0}\n電池健康度 :{1}\n前次充飽容量 :{2}", info.rsoc, info.eplife, info.fcc);
-            str += string.Format("\n\n<color=yellow>[0E]</color>主電池充電循環次數 :{0}\n充電次數 :{1}\n大電流放電比例 :{2}", info.ccy, info.cchg, info.hrd);
-            str += string.Format("\n\n<color=yellow>[37]</color>副電池容量 :{0}\n副電池壽命 :{1}\n前次充飽容量 :{2}", info.sub_rsoc, info.sub_eplife, info.sub_fcc);
-            str += string.Format("\n\n<color=yellow>[38]</color>副電池Cell版本 :{0}\n副電池韌體版本 :{1}\n副電池生產流水號 :{2}", info.sub_minor, info.sub_major, info.sub_BATTSN);
-            str += string.Format("\n\n<color=yellow>[39]</color>副電池充電循環次數 :{0}\n充電次數 :{1}\n大電流放電比例 :{2}", info.sub_ccy, info.sub_cchg, info.sub_hrd);
+            str += string.Format("\n\n<color=yellow>[D1]</color>Remote-1 type :{0}\nRemote-1 firmware version :{1}\nRemote-1 hardware version :{2}", info.rmo1Type, info.rmo1FW, info.rmo1HW);
+            str += string.Format("\n\n<color=yellow>[D2]</color>Remote-2 type :{0}\nRemote-2 firmware version :{1}\nRemote-2 hardware version :{2}", info.rmo2Type, info.rmo2FW, info.rmo2HW);
+            str += string.Format("\n\n<color=yellow>[D3]</color>Display type :{0}\nDisplay firmware version :{1}\nDisplay hardware version :{2}", info.dspType, info.dspFW, info.dspHW);
+            str += string.Format("\n\n<color=yellow>[0D]</color>Main EnergyPak Cell version :{0}\nMain EnergyPak firmware version :{1}\nMain EnergyPak SN number :{2}", info.minor, info.major, info.BATTSN);
+            str += string.Format("\n\n<color=yellow>[13]</color>Total Electricity :{0}\nEnergyPak Health :{1}\nLast full charge :{2}", info.rsoc, info.eplife, info.fcc);
+            str += string.Format("\n\n<color=yellow>[0E]</color>Main EnergyPak charge cycle :{0}\nCharge Times :{1}\nLarge current discharge ratio :{2}", info.ccy, info.cchg, info.hrd);
+            str += string.Format("\n\n<color=yellow>[37]</color>Sub EnergyPak Electricity :{0}\nSub EnergyPak Health :{1}\nLast full charge :{2}", info.sub_rsoc, info.sub_eplife, info.sub_fcc);
+            str += string.Format("\n\n<color=yellow>[38]</color>Sub EnergyPak Cell version :{0}\nSub EnergyPak firmware version :{1}\nSub EnergyPak SN number :{2}", info.sub_minor, info.sub_major, info.sub_BATTSN);
+            str += string.Format("\n\n<color=yellow>[39]</color>Sub EnergyPak charge cycle :{0}\nCharge Times :{1}\nLarge current discharge ratio :{2}", info.sub_ccy, info.sub_cchg, info.sub_hrd);
             str += string.Format("\n\n<color=yellow>[DD]</color>Left Ring :{0}, Right Ring :{1}\nLeft1 :{2}\nLeft2 :{3}\nLeft3 :{4}\nRight1 :{5}\nRight2 :{6}\nRight3 :{7}",
                 info.left, info.right, info.left1, info.left2, info.left3, info.right1, info.right2, info.right3);
             BikeDetailText.text = str;

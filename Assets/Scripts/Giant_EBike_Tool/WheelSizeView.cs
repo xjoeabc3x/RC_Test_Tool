@@ -48,7 +48,7 @@ public class WheelSizeView : MonoBehaviour
             }
             if (Key == "04")
             {
-                Toast.Instance.ShowToast("[04] Set Finished.");
+                Toast.Instance.ShowToast("[04] Set Finished :" + Value);
             }
         }
     }
@@ -74,7 +74,7 @@ public class WheelSizeView : MonoBehaviour
     {
         if (!RCToolPlugin.IsConnected(ChoosedDeviceManager.DeviceAddress))
         {
-            Toast.Instance.ShowToast("請先連接");
+            Toast.Instance.ShowToast("Device not connected");
             return;
         }
         else
@@ -90,12 +90,12 @@ public class WheelSizeView : MonoBehaviour
 
             if (int.Parse(speedLimit_input.text) > 255 || int.Parse(speedLimit_input.text) < 0)
             {
-                Toast.Instance.ShowToast("限速值輸入錯誤");
+                Toast.Instance.ShowToast("Speed Limit Input Error.");
                 return;
             }
             if (int.Parse(wheelsize_input.text) > 65535 || int.Parse(wheelsize_input.text) < 0)
             {
-                Toast.Instance.ShowToast("輪徑值輸入錯誤");
+                Toast.Instance.ShowToast("Wheel Size Input Error.");
                 return;
             }
 

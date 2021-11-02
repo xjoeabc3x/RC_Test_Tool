@@ -81,6 +81,7 @@
     <Compile Include="Assets\NGUI\Scripts\Internal\UIEventListener.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIDragObject.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\Other\PlayIdleAnimations.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\SpeedLimitView.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\SharedAssets\Scripts\Label.cs" />
     <Compile Include="Assets\Scripts\Net\NetBridge.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIButtonRotation.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Intersections\Scripts\TrafficSystem.cs" />
     <Compile Include="Assets\Scripts\Giant_EBike_Tool\RawDataView.cs" />
     <Compile Include="Assets\NGUI\Scripts\Internal\ActiveAnimation.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\OneButtonTestView.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\MoreStyling\Scripts\BuildingSquashing.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\MoreStyling\Scripts\NineSlicing.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\02_Fundamentals\Scripts\UI\MapsServiceView.cs" />
@@ -334,6 +336,7 @@
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIShowControlScheme.cs" />
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenLetters.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\System\InvBaseItem.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\PhoneTestView.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\SharedAssets\Scripts\DynamicMapsService.cs" />
     <Compile Include="Assets\Scripts\Giant_EBike_Tool\Toast.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\02_Fundamentals\Scripts\Updaters\MapLabeller.cs" />

@@ -247,11 +247,6 @@ public class RCToolPlugin : MonoBehaviour
         return "";
     }
 
-    //public static byte[] Encode(byte[] input, byte key_num)
-    //{
-    //    return _Encode(input, key_num);
-    //}
-
     #endregion
 
     #region [APIs : Plugin callback to Unity]
@@ -304,17 +299,18 @@ public class RCToolPlugin : MonoBehaviour
         Debug.Log("OnReceiveDecodeRawData:" + str);
         string[] info = str.Split('|');
         onReceiveDecodeRawData(info[0], info[1]);
+        //IsFCcallback(str);
     }
 
-    //private bool IsFCcallback(string input)
-    //{
-    //    if (input.Split(',')[0] == "FC")
-    //    {
-    //        senddelay = 0;
-    //        return true;
-    //    }
-    //    return false;
-    //}
+    private bool IsFCcallback(string input)
+    {
+        if (input.Split(',')[0] == "FC")
+        {
+            senddelay = 0;
+            return true;
+        }
+        return false;
+    }
 
     #endregion
 

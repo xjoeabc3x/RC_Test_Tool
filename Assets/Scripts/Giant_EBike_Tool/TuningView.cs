@@ -74,7 +74,7 @@ public class TuningView : MonoBehaviour
         string DUType = ChoosedDeviceManager.GetBikeDetail(ChoosedDeviceManager.DeviceAddress).DUType;
         if (NotTuningDU(DUType))
         {
-            Toast.Instance.ShowToast("不可Tuning的DU");
+            Toast.Instance.ShowToast("Not supported DU.");
             return;
         }
         //微調按鈕文字

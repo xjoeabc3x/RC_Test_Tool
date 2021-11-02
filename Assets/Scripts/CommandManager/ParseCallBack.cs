@@ -71,6 +71,10 @@ namespace ParseRCCallback
                             return address + "|38|" + Parse_38(datas);
                         case 0x39:
                             return address + "|39|" + Parse_39(datas);
+                        case 0xC0:
+                            return address + "|C0|" + Parse_C0(datas);
+                        case 0xC1:
+                            return address + "|C1|" + Parse_C1(datas);
                         case 0xD1:
                             return address + "|D1|" + Parse_D1(datas);
                         case 0xD2:
@@ -574,6 +578,25 @@ namespace ParseRCCallback
             string cchg = CombineByteToInt(aes[3] + "," + aes[2]).ToString();
             string hrd = string.Format("{0}%", ByteToInt_string(aes[4], 0));
             return string.Format("{0},{1},{2}", ccy, cchg, hrd);
+        }
+        /// <summary>
+        /// 解析[C0]有無限速, 單位
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>speedLimit(0/1),kph/mph(0/1)</returns>
+        private static string Parse_C0(string input)
+        {
+            string[] aes = GetAES(input);
+            return string.Format("{0},{1}", BitChoose_string(aes[0], 6, 6), BitChoose_string(aes[0], 7, 7));
+        }
+        /// <summary>
+        /// 解析[C1]設置是否成功
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>0/1</returns>
+        private static string Parse_C1(string input)
+        {
+            return int.Parse(GetAES(input)[0], NumberStyles.HexNumber).ToString();
         }
         /// <summary>
         /// 解析[D1]Remote-1版本

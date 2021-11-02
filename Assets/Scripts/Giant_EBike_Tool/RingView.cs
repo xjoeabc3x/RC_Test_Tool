@@ -234,7 +234,7 @@ public class RingView : MonoBehaviour
         {
             if (ButtonPos[i].childCount <= 0)
             {
-                Toast.Instance.ShowToast("不得有空值");
+                Toast.Instance.ShowToast("Empty not allowed.");
                 return;
             }
         }

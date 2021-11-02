@@ -91,17 +91,17 @@ public class NaviView : MonoBehaviour
     {
         if (int.Parse(NextAct_input.text) > 65535 || int.Parse(NextAct_input.text) < 0)
         {
-            Toast.Instance.ShowToast("下個點的距離值輸入錯誤");
+            Toast.Instance.ShowToast("Input Error.");
             return false;
         }
         if (float.Parse(GoalDis_input.text) > 6553.5f || float.Parse(GoalDis_input.text) < 0)
         {
-            Toast.Instance.ShowToast("距離目的地距離值輸入錯誤");
+            Toast.Instance.ShowToast("Input Error.");
             return false;
         }
         if (int.Parse(GoalTime_input.text) > 65535 || int.Parse(GoalTime_input.text) < 0)
         {
-            Toast.Instance.ShowToast("距離目的地時間值輸入錯誤");
+             Toast.Instance.ShowToast("Input Error.");
             return false;
         }
         return true;

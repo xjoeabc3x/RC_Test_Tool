@@ -296,7 +296,7 @@ public class AES : MonoBehaviour
     /// <summary>
     /// AES 128 CBC¥[¸Ñ±K´ú¸Õ
     /// </summary>
-    private void AES_128_CBC()
+    private static void AES_128_CBC()
     {
         RijndaelManaged rijalg = new RijndaelManaged();
 
