@@ -247,25 +247,27 @@ public class RingView : MonoBehaviour
         List<string> setData = new List<string>();
         //left only:0x02
         //right only:0x01
-        //both:0x04
+        //both:0x03
+        //default:0x04
         if (callback_dic.ContainsKey("DD"))
         {
             Debug.Log("_SetRing :" + callback_dic["DD"]);
             string[] data = callback_dic["DD"].Split(',');
             if (data[0] != "0" || data[1] != "0")
             {
-                if (data[0] == "1" && data[1] == "0")
-                {
-                    setData.Add("02");
-                }
-                else if (data[0] == "0" && data[1] == "1")
-                {
-                    setData.Add("01");
-                }
-                else if (data[0] == "1" && data[1] == "1")
-                {
-                    setData.Add("03");
-                }
+                //if (data[0] == "1" && data[1] == "0")
+                //{
+                //    setData.Add("02");
+                //}
+                //else if (data[0] == "0" && data[1] == "1")
+                //{
+                //    setData.Add("01");
+                //}
+                //else if (data[0] == "1" && data[1] == "1")
+                //{
+                //    setData.Add("03");
+                //}
+                setData.Add("03"); //目前都設置兩邊
                 //check each buttonpos
                 //if no child, set 0x00
                 for (int i = 0; i < ButtonPos.Count; i++)
