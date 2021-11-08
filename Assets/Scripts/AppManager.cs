@@ -25,6 +25,7 @@ public class AppManager : MonoSingletonExtend<AppManager>
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         Screen.SetResolution(1080, 1920, false);
         Permission.RequestUserPermissions(askPermissions);
+        Application.runInBackground = true;
         InitPages();
         //Debug.Log(ParseCallBack.CallbackInfo("test", "FC,21,32,12,61,62,63,64,65,66,67,68,69,6A,6B,6C,6D,6E,0E,93"));
         //Debug.Log(ParseCallBack.CallbackInfo("test", "FC,21,32,12,6F,70,71,72,00,00,00,00,00,00,00,00,00,00,04,3D"));

@@ -53,6 +53,12 @@ namespace ParseRCCallback
                             return address + "|12|" + Parse_12(datas);
                         case 0x13:
                             return address + "|13|" + Parse_13(datas);
+                        case 0x15:
+                            return address + "|15|" + Parse_15(datas);
+                        case 0x16:
+                            return address + "|16|" + Parse_16(datas);
+                        case 0x17:
+                            return address + "|17|" + Parse_17(datas);
                         case 0x1A:
                             return address + "|1A|" + Parse_1A(datas);
                         case 0x2C:
@@ -430,6 +436,36 @@ namespace ParseRCCallback
             string eplife = string.Format("{0}%", ByteToInt_string(aes[1], 0));
             string fcc = string.Format("{0:.0}Wh", (decimal)CombineByteToInt(aes[3] + "," + aes[2])/10);
             return string.Format("{0},{1},{2}", rsoc, eplife, fcc);
+        }
+        /// <summary>
+        /// 解析[15]RC error code檢測
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>OK(0x20)/error code(0x21...)</returns>
+        private static string Parse_15(string input)
+        {
+            string[] aes = GetAES(input);
+            return aes[0];
+        }
+        /// <summary>
+        /// 解析[16]error code檢測(Sensor, DU, EP, E-shifting)
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>OK(0x60)/error code(0x31...)</returns>
+        private static string Parse_16(string input)
+        {
+            string[] aes = GetAES(input);
+            return aes[0];
+        }
+        /// <summary>
+        /// 解析[17]EP error code檢測
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>OK(0xC0)/error code(0xC1...)</returns>
+        private static string Parse_17(string input)
+        {
+            string[] aes = GetAES(input);
+            return aes[0];
         }
         /// <summary>
         /// 解析[1A]設置是否成功

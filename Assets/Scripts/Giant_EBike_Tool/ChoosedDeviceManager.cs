@@ -229,7 +229,7 @@ public class ChoosedDeviceManager : MonoBehaviour
     {
         if (!RCToolPlugin.IsConnected(DeviceAddress))
         {
-            Toast.Instance.ShowToast("請先連接");
+            Toast.Instance.ShowToast("Device is not connected.");
             return;
         }
         StartCoroutine("_RequestBikeDetail");
