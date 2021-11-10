@@ -203,6 +203,7 @@
     <Compile Include="Assets\NGUI\Scripts\UI\UIOrthoCamera.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\URPExample\Scripts\URPExample.cs" />
     <Compile Include="Assets\Scripts\Net\ServerCommunicate.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\WorkoutView.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\02_Fundamentals\Scripts\BaseMapLoader.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\MoreStyling\Scripts\BuildingBorders.cs" />
     <Compile Include="Assets\Scripts\Tools\UnityEventX.cs" />
@@ -286,6 +287,7 @@
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIToggledComponents.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\02_Fundamentals\Scripts\Updaters\BuildingLabelsCreator.cs" />
     <Compile Include="Assets\Scripts\Giant_EBike_Tool\TuningView.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\DiagnoseView.cs" />
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenColor.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIWidgetContainer.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Fencing\Scripts\FollowCameraController.cs" />
@@ -358,7 +360,7 @@
     <Compile Include="Assets\NGUI\Scripts\Internal\NGUIDebug.cs" />
     <Compile Include="Assets\Scripts\Setting\ServerSetting.cs" />
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenRotation.cs" />
-    <Compile Include="Assets\Scripts\Giant_EBike_Tool\DiagnoseView.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\BBSSView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GoogleMaps\Examples\SharedAssets\Shaders\ScrollingTextureShader.shader" />

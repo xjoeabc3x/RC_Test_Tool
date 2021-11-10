@@ -85,10 +85,10 @@ public class HomeManager : MonoBehaviour
         }
     }
 
-    public void OpenFile(string filename)
+    public void OpenFile()
     {
         //Application.OpenURL(Path.Combine(Application.streamingAssetsPath, filename));
-        Application.OpenURL("https://drive.google.com/file/d/1hVSwbe9yc1bU0P8jQrVmZeFN9xeCqJHd/view?usp=sharing");
+        Application.OpenURL("https://drive.google.com/file/d/1RKV6En1W4Iokgh-PW02O160OgSZWXops/view?usp=sharing");
     }
     #endregion
 

@@ -77,6 +77,8 @@ namespace ParseRCCallback
                             return address + "|38|" + Parse_38(datas);
                         case 0x39:
                             return address + "|39|" + Parse_39(datas);
+                        case 0x40:
+                            return address + "|40|" + Parse_40(datas);
                         case 0xC0:
                             return address + "|C0|" + Parse_C0(datas);
                         case 0xC1:
@@ -614,6 +616,27 @@ namespace ParseRCCallback
             string cchg = CombineByteToInt(aes[3] + "," + aes[2]).ToString();
             string hrd = string.Format("{0}%", ByteToInt_string(aes[4], 0));
             return string.Format("{0},{1},{2}", ccy, cchg, hrd);
+        }
+        /// <summary>
+        /// 解析[40]BBSS磁通量(Wb)
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>成功,最大值,最小值</returns>
+        private static string Parse_40(string input)
+        {
+            string[] aes = GetAES(input);
+            int success = int.Parse(aes[0], NumberStyles.HexNumber);
+            int max = int.Parse(aes[2] + aes[1], NumberStyles.HexNumber);
+            if (max > 32767)
+            {
+                max -= 65536;
+            }
+            int min = int.Parse(aes[4] + aes[3], NumberStyles.HexNumber);
+            if (min > 32767)
+            {
+                min -= 65536;
+            }
+            return string.Format("{0},{1},{2}", success, max, min);
         }
         /// <summary>
         /// 解析[C0]有無限速, 單位

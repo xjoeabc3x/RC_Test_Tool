@@ -105,7 +105,8 @@ public class CommandManager
                 RCToolPlugin.SendData(address, cmd_2D(_setdata), "01");
                 break;
             case "2E":
-                RCToolPlugin.SendData(address, cmd_2E(_setdata), "01");
+                RCToolPlugin.SendData(address, cmd_2E_part1(_setdata), "01");
+                RCToolPlugin.SendData(address, cmd_2E_part2(_setdata), "01");
                 break;
             case "32":
                 RCToolPlugin.SendData(address, cmd_32(), "01");
@@ -130,7 +131,7 @@ public class CommandManager
                 RCToolPlugin.SendData(address, cmd_39(), "01");
                 break;
             case "40":
-                RCToolPlugin.SendData(address, cmd_40(), "01");
+                RCToolPlugin.SendData(address, cmd_40(setdata), "01");
                 break;
             case "90":
                 RCToolPlugin.SendData(address, cmd_90(), "01");
@@ -457,14 +458,32 @@ public class CommandManager
         return result;
     }
 
-    private static string cmd_2E(string[] data)
+    private static string cmd_2E_part1(string[] data)
     {
-        string[] send_byte = new string[20] { "FB", "21", "2E", "0E", "00", "00", "10", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "01", "00" };
+        string[] send_byte = new string[20] { "FB", "21", "2E", "13", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "01", "00" };
         if (data != null)
         {
-            for (int i = 0; i < data.Length; i++)
+            for (int i = 0; i < 14; i++)
             {
                 send_byte[i + 4] = data[i];
+            }
+        }
+        string result = send_byte[0];
+        for (int i = 1; i < send_byte.Length; i++)
+        {
+            result = string.Format("{0},{1}", result, send_byte[i]);
+        }
+        return result;
+    }
+
+    private static string cmd_2E_part2(string[] data)
+    {
+        string[] send_byte = new string[20] { "FB", "21", "2E", "13", "01", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "01", "00" };
+        if (data != null)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                send_byte[i + 4] = data[i + 14];
             }
         }
         string result = send_byte[0];
@@ -537,9 +556,16 @@ public class CommandManager
         return send_byte;
     }
 
-    private static byte[] cmd_40()
+    private static byte[] cmd_40(byte[] data)
     {
         byte[] send_byte = new byte[20] { 0xFB, 0x21, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00 };
+        if (data != null)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                send_byte[i + 4] = data[i];
+            }
+        }
         return send_byte;
     }
 
