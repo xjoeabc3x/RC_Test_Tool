@@ -11,12 +11,11 @@ public class BBSSView : MonoBehaviour
 
     private void OnEnable()
     {
-        RCToolPlugin.onReceiveDecodeRawData += RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.RegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
     }
 
-    private void RCToolPlugin_onReceiveDecodeRawData(string address, string data)
+    private void ParseCallBack_onReceiveDecodeParsedData(string callback)
     {
-        string callback = ParseCallBack.CallbackInfo(address, data);
         if (!string.IsNullOrEmpty(callback))
         {
             string Key = callback.Split('|')[1];
@@ -30,7 +29,7 @@ public class BBSSView : MonoBehaviour
 
     private void OnDisable()
     {
-        RCToolPlugin.onReceiveDecodeRawData -= RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.UnRegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
         CommandManager.SendCMD(ChoosedDeviceManager.DeviceAddress, "20", null, null);
     }
 
@@ -70,5 +69,12 @@ public class BBSSView : MonoBehaviour
             yield return new WaitForSeconds(1.0f);
         }
         CommandManager.SendCMD(ChoosedDeviceManager.DeviceAddress, "40", new byte[] { 0x00 }, null);
+    }
+
+    public void Cancel()
+    {
+        StopCoroutine("_Getting");
+        Magnetic_Flux.text = "<color=yellow>[40]Callback</color>";
+        CommandManager.SendCMD(ChoosedDeviceManager.DeviceAddress, "20", null, null);
     }
 }

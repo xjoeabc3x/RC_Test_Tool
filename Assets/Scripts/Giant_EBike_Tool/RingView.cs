@@ -22,20 +22,19 @@ public class RingView : MonoBehaviour
 
     private void OnEnable()
     {
-        RCToolPlugin.onReceiveDecodeRawData += RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.RegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
         GetRing();
     }
 
     private void OnDisable()
     {
-        RCToolPlugin.onReceiveDecodeRawData -= RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.UnRegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
         ResetRingView();
     }
 
     //¦¬¨ìªºcallback(Decode)
-    private void RCToolPlugin_onReceiveDecodeRawData(string address, string data)
+    private void ParseCallBack_onReceiveDecodeParsedData(string callback)
     {
-        string callback = ParseCallBack.CallbackInfo(address, data);
         if (!string.IsNullOrEmpty(callback))
         {
             AddNewCallback(callback);

@@ -15,12 +15,11 @@ public class DiagnoseView : MonoBehaviour
 
     private void OnEnable()
     {
-        RCToolPlugin.onReceiveDecodeRawData += RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.RegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
     }
 
-    private void RCToolPlugin_onReceiveDecodeRawData(string address, string data)
+    private void ParseCallBack_onReceiveDecodeParsedData(string callback)
     {
-        string callback = ParseCallBack.CallbackInfo(address, data);
         if (!string.IsNullOrEmpty(callback))
         {
             string Key = callback.Split('|')[1];
@@ -28,21 +27,25 @@ public class DiagnoseView : MonoBehaviour
             if (Key == "15")
             {
                 Parse_15(Value);
+                Handheld.Vibrate();
             }
             if (Key == "16")
             {
                 Parse_16(Value);
+                Handheld.Vibrate();
             }
             if (Key == "17")
             {
                 Parse_17(Value);
+                Handheld.Vibrate();
             }
+            //Handheld.Vibrate();
         }
     }
 
     private void OnDisable()
     {
-        RCToolPlugin.onReceiveDecodeRawData -= RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.UnRegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
     }
 
     public void StartDiagnose()

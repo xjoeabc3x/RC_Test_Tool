@@ -87,7 +87,7 @@ public class DisplayView : MonoBehaviour
 
     private void OnEnable()
     {
-        RCToolPlugin.onReceiveDecodeRawData += RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.RegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
         mainInfo.onValueChanged.AddListener(MainInfoSet);
         leftInfo.onValueChanged.AddListener(LeftInfoSet);
         rightInfo.onValueChanged.AddListener(RightInfoSet);
@@ -96,9 +96,8 @@ public class DisplayView : MonoBehaviour
         Init();
     }
 
-    private void RCToolPlugin_onReceiveDecodeRawData(string address, string data)
+    private void ParseCallBack_onReceiveDecodeParsedData(string callback)
     {
-        string callback = ParseCallBack.CallbackInfo(address, data);
         if (!string.IsNullOrEmpty(callback))
         {
             AddNewCallback(callback);
@@ -295,7 +294,7 @@ public class DisplayView : MonoBehaviour
 
     private void OnDisable()
     {
-        RCToolPlugin.onReceiveDecodeRawData -= RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.UnRegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
         mainInfo.onValueChanged.RemoveListener(MainInfoSet);
         leftInfo.onValueChanged.RemoveListener(LeftInfoSet);
         rightInfo.onValueChanged.RemoveListener(RightInfoSet);

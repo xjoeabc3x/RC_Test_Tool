@@ -26,14 +26,13 @@ public class TuningView : MonoBehaviour
 
     private void OnEnable()
     {
-        RCToolPlugin.onReceiveDecodeRawData += RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.RegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
         CommandManager.SendCMD(ChoosedDeviceManager.DeviceAddress, "1A_tuning", null, null);
         Init();
     }
 
-    private void RCToolPlugin_onReceiveDecodeRawData(string address, string data)
+    private void ParseCallBack_onReceiveDecodeParsedData(string callback)
     {
-        string callback = ParseCallBack.CallbackInfo(address, data);
         if (!string.IsNullOrEmpty(callback))
         {
             AddNewCallback(callback);
@@ -63,7 +62,7 @@ public class TuningView : MonoBehaviour
 
     private void OnDisable()
     {
-        RCToolPlugin.onReceiveDecodeRawData -= RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.UnRegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
         CommandManager.SendCMD(ChoosedDeviceManager.DeviceAddress, "1A_normal", null, null);
         ResetView();
     }

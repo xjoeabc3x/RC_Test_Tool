@@ -17,8 +17,26 @@ public class WheelSizeView : MonoBehaviour
     private void OnEnable()
     {
         RCToolPlugin.onReceiveDecodeRawData += RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.RegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
         RCToolPlugin.onDeviceStatusChanged += RCToolPlugin_onDeviceStatusChanged;
         Get03();
+    }
+
+    private void ParseCallBack_onReceiveDecodeParsedData(string callback)
+    {
+        if (!string.IsNullOrEmpty(callback))
+        {
+            string Key = callback.Split('|')[1];
+            string Value = callback.Split('|')[2];
+            if (Key == "03")
+            {
+                Sync03(Value);
+            }
+            if (Key == "04")
+            {
+                Toast.Instance.ShowToast("[04] Set Finished :" + Value);
+            }
+        }
     }
 
     private void RCToolPlugin_onDeviceStatusChanged(string address, string status)
@@ -36,26 +54,17 @@ public class WheelSizeView : MonoBehaviour
 
     private void RCToolPlugin_onReceiveDecodeRawData(string address, string data)
     {
-        string callback = ParseCallBack.CallbackInfo(address, data);
-        if (!string.IsNullOrEmpty(callback))
+        string[] d = data.Split(',');
+        if (d[0] == "FC" && d[1] == "21" && d[2] == "03")
         {
-            string Key = callback.Split('|')[1];
-            string Value = callback.Split('|')[2];
-            if (Key == "03")
-            {
-                cache = ParseCallBack.GetAES(data);
-                Sync03(Value);
-            }
-            if (Key == "04")
-            {
-                Toast.Instance.ShowToast("[04] Set Finished :" + Value);
-            }
+             cache = ParseCallBack.GetAES(data);
         }
     }
 
     private void OnDisable()
     {
         RCToolPlugin.onReceiveDecodeRawData -= RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.UnRegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
         RCToolPlugin.onDeviceStatusChanged -= RCToolPlugin_onDeviceStatusChanged;
         cache = null;
     }

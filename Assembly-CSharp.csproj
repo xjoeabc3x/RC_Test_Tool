@@ -150,6 +150,7 @@
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Intersections\Scripts\TrafficSystem.cs" />
     <Compile Include="Assets\Scripts\Giant_EBike_Tool\RawDataView.cs" />
     <Compile Include="Assets\NGUI\Scripts\Internal\ActiveAnimation.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\ShimanoView.cs" />
     <Compile Include="Assets\Scripts\Giant_EBike_Tool\OneButtonTestView.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\MoreStyling\Scripts\BuildingSquashing.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\MoreStyling\Scripts\NineSlicing.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Assets\NGUI\Scripts\Internal\UIRect.cs" />
     <Compile Include="Assets\XCharts\Scripts\ChartTheme.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Fencing\Scripts\FencingExample.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\EnergyPakView.cs" />
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenAlpha.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIWrapContent.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\UIItemStorage.cs" />
@@ -201,6 +203,7 @@
     <Compile Include="Assets\Scripts\Giant_EBike_Tool\ChoosedDeviceManager.cs" />
     <Compile Include="Assets\Scripts\Tools\ColliderElementCollection.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UIOrthoCamera.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\BBSSView.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\URPExample\Scripts\URPExample.cs" />
     <Compile Include="Assets\Scripts\Net\ServerCommunicate.cs" />
     <Compile Include="Assets\Scripts\Giant_EBike_Tool\WorkoutView.cs" />
@@ -360,7 +363,6 @@
     <Compile Include="Assets\NGUI\Scripts\Internal\NGUIDebug.cs" />
     <Compile Include="Assets\Scripts\Setting\ServerSetting.cs" />
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenRotation.cs" />
-    <Compile Include="Assets\Scripts\Giant_EBike_Tool\BBSSView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GoogleMaps\Examples\SharedAssets\Shaders\ScrollingTextureShader.shader" />
@@ -656,26 +658,26 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity 2021.1.17f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Protobuf">
-      <HintPath>Assets\GoogleMaps\PPlugins\Google.Protobuf.dll</HintPath>
-    </Reference>
     <Reference Include="Google.Maps.Proto">
       <HintPath>Assets\GoogleMaps\PPlugins\Google.Maps.Proto.dll</HintPath>
     </Reference>
     <Reference Include="LitJson">
       <HintPath>Assets\LitJson\LitJson.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.6.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Maps.Editor">
-      <HintPath>Assets\GoogleMaps\PPlugins\Google.Maps.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Google.Maps">
       <HintPath>Assets\GoogleMaps\PPlugins\Google.Maps.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>Assets\GoogleMaps\PPlugins\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
+      <HintPath>Library\PackageCache\com.unity.visualscripting@1.6.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Maps.Editor">
+      <HintPath>Assets\GoogleMaps\PPlugins\Google.Maps.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:\Program Files\Unity 2021.1.17f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -1040,6 +1042,9 @@
     <Reference Include="Unity.InternalAPIEditorBridge.003">
       <HintPath>Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.003.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Notifications">
+      <HintPath>Library\ScriptAssemblies\Unity.Notifications.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
@@ -1064,11 +1069,11 @@
     <Reference Include="Unity.VectorGraphics">
       <HintPath>Library\ScriptAssemblies\Unity.VectorGraphics.dll</HintPath>
     </Reference>
-    <Reference Include="VSSettingsProvider">
-      <HintPath>Library\ScriptAssemblies\VSSettingsProvider.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="VSSettingsProvider">
+      <HintPath>Library\ScriptAssemblies\VSSettingsProvider.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Flow">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
@@ -1087,6 +1092,12 @@
     </Reference>
     <Reference Include="NatSuite.Sharing">
       <HintPath>Library\ScriptAssemblies\NatSuite.Sharing.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Notifications.iOS">
+      <HintPath>Library\ScriptAssemblies\Unity.Notifications.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Notifications.Android">
+      <HintPath>Library\ScriptAssemblies\Unity.Notifications.Android.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>

@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using System.IO;
 using System;
+
 /// <summary>
 /// 1.初始化藍芽服務
 /// 2.掃描/停止掃描藍芽裝置
@@ -24,7 +25,6 @@ public class RCToolPlugin : MonoBehaviour
         public string rssi = "";
         public bool Connected = false;
     }
-
     /// <summary>
     /// 等待送出的指令class
     /// </summary>
@@ -34,7 +34,6 @@ public class RCToolPlugin : MonoBehaviour
         public string data = "";
         public string Key = "";
     }
-
     /// <summary>
     /// 等待送出的指令Queue
     /// </summary>
@@ -66,9 +65,6 @@ public class RCToolPlugin : MonoBehaviour
     public delegate void EventType_ReceiveDecodeRawData(string address, string data);
     public static event EventType_ReceiveDecodeRawData onReceiveDecodeRawData;
 
-    //public delegate void EventType_ReadySendData(bool ready);
-    //public static event EventType_ReadySendData onReadeySendData;
-
     //初始化
     private void Awake()
 	{
@@ -85,7 +81,7 @@ public class RCToolPlugin : MonoBehaviour
         _Init();
     }
     //指令延遲
-    private float senddelay = 0.5f;
+    private float senddelay = 0.05f;
     private void Update()
     {
         SendDataWithDelay();
@@ -97,16 +93,16 @@ public class RCToolPlugin : MonoBehaviour
     {
         if (WaitToSend.Count > 0)
         {
-            if (senddelay >= 0)
+            if (senddelay > 0)
             {
                 senddelay -= Time.deltaTime * 1;
             }
-            else if (senddelay < 0)
+            else if (senddelay <= 0)
             {
                 SendInfo info = WaitToSend.Dequeue();
                 Debug.Log("OnUnity SendDataWithDelay :" + info.data);
                 _SendData(info.Address, info.data, info.Key);
-                senddelay = 0.5f;
+                senddelay = 0.05f;
             }
         }
     }
@@ -289,7 +285,7 @@ public class RCToolPlugin : MonoBehaviour
         Debug.Log("OnReceiveEncodeRawData:" + str);
         string[] info = str.Split('|');
         onReceiveEncodeRawData(info[0], info[1]);
-        //onReadeySendData(true);
+        IsFCcallback(str);
     }
     /// <summary>
     /// 接收到裝置回傳訊息(解密)

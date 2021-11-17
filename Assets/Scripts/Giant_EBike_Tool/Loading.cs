@@ -41,7 +41,7 @@ public class Loading : MonoBehaviour
 
     public void ShowLoading()
     {
-        delay = 10f;
+        delay = 100000f;
         LoadingMask.SetActive(true);
     }
 

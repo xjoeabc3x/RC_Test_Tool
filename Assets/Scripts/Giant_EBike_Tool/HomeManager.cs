@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System;
+using ParseRCCallback;
+using UnityEngine.Events;
+using System.Globalization;
 
 public class HomeManager : MonoBehaviour
 {
@@ -15,7 +18,17 @@ public class HomeManager : MonoBehaviour
     RectTransform ButtonPos;
 
     Dictionary<string, GameObject> ButtonDic = new Dictionary<string, GameObject>();
-    public static Dictionary<string, List<string>> DeviceLogDic = new Dictionary<string, List<string>>();
+    private static Dictionary<string, List<string>> DeviceLogDic = new Dictionary<string, List<string>>();
+
+    //public delegate void EventType_ReceiveDecodeParsedData(string callback);
+    //public static event EventType_ReceiveDecodeParsedData onReceiveDecodeParsedData;
+
+    //public delegate void EventType_ReceiveEncodeParsedData(string callback);
+    //public static event EventType_ReceiveEncodeParsedData onReceiveEncodeParsedData;
+
+    private static UnityEvent<string> onReceiveDecodeParsedData = new UnityEvent<string>();
+    private static UnityEvent<string> onReceiveEncodeParsedData = new UnityEvent<string>();
+
     #endregion
 
     private void Awake()
@@ -31,6 +44,53 @@ public class HomeManager : MonoBehaviour
         //註冊接收事件
         RCToolPlugin.onRceiveDevice += RCToolPlugin_onRceiveDevice;
         RCToolPlugin.onDeviceStatusChanged += RCToolPlugin_onDeviceStatusChanged;
+        RCToolPlugin.onReceiveDecodeRawData += RCToolPlugin_onReceiveDecodeRawData;
+        RCToolPlugin.onReceiveEncodeRawData += RCToolPlugin_onReceiveEncodeRawData;
+
+        //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,DB,10,0A,11,13,0A,0E,0A,00,00,00,00,00,00,00,00,0E,F1");
+        //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,DB,10,00,00,00,00,00,00,00,00,00,00,00,00,00,00,02,1C");
+    }
+
+    private void RCToolPlugin_onReceiveEncodeRawData(string address, string data)
+    {
+        string callback = ParseCallBack.Parse_Encode(address, data);
+        if (callback != null)
+            onReceiveEncodeParsedData.Invoke(callback);
+    }
+
+    private void RCToolPlugin_onReceiveDecodeRawData(string address, string data)
+    {
+        string callback = ParseCallBack.Parse_Decode(address, data);
+        if (callback != null)
+            onReceiveDecodeParsedData.Invoke(callback);
+    }
+    /// <summary>
+    /// 註冊要接收解碼解析後的事件
+    /// </summary>
+    public static void RegistDecodeEvent(UnityAction<string> function)
+    {
+        onReceiveDecodeParsedData.AddListener(function);
+    }
+    /// <summary>
+    /// 註銷要接收解碼解析後的事件
+    /// </summary>
+    public static void UnRegistDecodeEvent(UnityAction<string> function)
+    {
+        onReceiveDecodeParsedData.RemoveListener(function);
+    }
+    /// <summary>
+    /// 註冊要接收明碼解析後的事件
+    /// </summary>
+    public static void RegistEncodeEvent(UnityAction<string> function)
+    {
+        onReceiveEncodeParsedData.AddListener(function);
+    }
+    /// <summary>
+    /// 註銷要接收明碼解析後的事件
+    /// </summary>
+    public static void UnRegistEncodeEvent(UnityAction<string> function)
+    {
+        onReceiveEncodeParsedData.RemoveListener(function);
     }
 
     #region --Functions--

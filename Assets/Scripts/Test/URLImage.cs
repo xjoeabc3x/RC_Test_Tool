@@ -13,7 +13,7 @@ public class URLImage : MonoBehaviour
 
     void Start()
     {
-        //StartCoroutine(DownloadImage("https://images.giant-bicycles.com/b_white,c_pad,h_400,q_80/zrakybzapdsh0uevyoep/MY19-Fathom-E+-3-29er_Color-A.jpg"));
+        StartCoroutine(DownloadImage("https://images.giant-bicycles.com/b_white,c_pad,h_400,q_80/zrakybzapdsh0uevyoep/MY19-Fathom-E+-3-29er_Color-A.jpg"));
         StartCoroutine(IETest());
     }
 

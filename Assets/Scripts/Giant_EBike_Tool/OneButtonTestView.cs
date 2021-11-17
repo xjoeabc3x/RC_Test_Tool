@@ -28,12 +28,11 @@ public class OneButtonTestView : MonoBehaviour
 
     private void OnEnable()
     {
-        RCToolPlugin.onReceiveDecodeRawData += RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.RegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
     }
 
-    private void RCToolPlugin_onReceiveDecodeRawData(string address, string data)
+    private void ParseCallBack_onReceiveDecodeParsedData(string callback)
     {
-        string callback = ParseCallBack.CallbackInfo(address, data);
         string Key = callback.Split('|')[1];
         string Value = callback.Split('|')[2];
         if (!callbacks.ContainsKey(Key))
@@ -44,7 +43,7 @@ public class OneButtonTestView : MonoBehaviour
 
     private void OnDisable()
     {
-        RCToolPlugin.onReceiveDecodeRawData -= RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.UnRegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
         //ResetView();
     }
 
@@ -61,12 +60,12 @@ public class OneButtonTestView : MonoBehaviour
             return;
         }
         ResetView();
-        float delay = BikeDetail.isOn ? 9f : 0;
-        delay += Tuning.isOn ? 2f : 0;
-        delay += Display.isOn ? 2f : 0;
-        delay += Ring.isOn ? 1f : 0;
-        delay += OnOff.isOn ? 1f : 0;
-        delay += SpeedLimit.isOn ? 1f : 0;
+        float delay = BikeDetail.isOn ? 3f : 0;
+        delay += Tuning.isOn ? 0.1f : 0;
+        delay += Display.isOn ? 0.1f : 0;
+        delay += Ring.isOn ? 0.1f : 0;
+        delay += OnOff.isOn ? 0.1f : 0;
+        delay += SpeedLimit.isOn ? 0.1f : 0;
         if (BikeDetail.isOn)
         {
             cmds.Add("Bike Detail", new List<string>() { "02", "05", "09", "32", "12", "0A", "0C", "D4", "D1", "D2", "D3", "0D", "13", "0E", "37", "38", "39", "DD" });
@@ -103,8 +102,8 @@ public class OneButtonTestView : MonoBehaviour
                 CommandManager.SendCMD(ChoosedDeviceManager.DeviceAddress, item.Value[i], null, null);
             }
         }
-        Loading.Instance.ShowLoading(delay + 2);
-        Toast.Instance.ShowToast("Wait for about :" + (int)delay + " sec");
+        Loading.Instance.ShowLoading(delay + 2f);
+        Toast.Instance.ShowToast("Wait for about :" + ((int)delay + 2).ToString() + " sec");
         yield return new WaitForSeconds(delay + 2);
         ShowResult();
     }

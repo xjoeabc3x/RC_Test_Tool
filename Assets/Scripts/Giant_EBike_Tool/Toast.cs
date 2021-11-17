@@ -33,7 +33,7 @@ public class Toast : MonoBehaviour
             }
             else if (delay <= 0)
             {
-                HideLoading();
+                HideToast();
                 delay = 10f;
             }
         }
@@ -41,13 +41,15 @@ public class Toast : MonoBehaviour
 
     public void ShowToast(string content)
     {
+        if (string.IsNullOrEmpty(content))
+            return;
         delay = 2f;
         InfoText.text = content;
         ToastMask.SetActive(false);
         ToastMask.SetActive(true);
     }
 
-    public void HideLoading()
+    public void HideToast()
     {
         InfoText.text = "-";
         ToastMask.SetActive(false);

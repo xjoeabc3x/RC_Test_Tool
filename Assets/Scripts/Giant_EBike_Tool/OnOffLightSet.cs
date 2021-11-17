@@ -25,8 +25,7 @@ public class OnOffLightSet : MonoBehaviour
 
     private void OnEnable()
     {
-        RCToolPlugin.onReceiveEncodeRawData += RCToolPlugin_onReceiveRawData;
-        RCToolPlugin.onReceiveDecodeRawData += RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.RegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
         LightSlider.onPointUpEvent += LightSlider_onPointUpEvent;
 
         GetLight(DayNightSwitch.isOn);
@@ -34,20 +33,13 @@ public class OnOffLightSet : MonoBehaviour
 
     private void OnDisable()
     {
-        RCToolPlugin.onReceiveEncodeRawData -= RCToolPlugin_onReceiveRawData;
-        RCToolPlugin.onReceiveDecodeRawData -= RCToolPlugin_onReceiveDecodeRawData;
+        HomeManager.UnRegistDecodeEvent(ParseCallBack_onReceiveDecodeParsedData);
         LightSlider.onPointUpEvent -= LightSlider_onPointUpEvent;
     }
 
-    //收到的callback(Encode)
-    private void RCToolPlugin_onReceiveRawData(string address, string data)
-    {
-
-    }
     //收到的callback(Decode)
-    private void RCToolPlugin_onReceiveDecodeRawData(string address, string data)
+    private void ParseCallBack_onReceiveDecodeParsedData(string callback)
     {
-        string callback = ParseCallBack.CallbackInfo(address, data);
         if (!string.IsNullOrEmpty(callback))
         {
             AddNewCallback(callback);
