@@ -19,6 +19,7 @@ public class HomeManager : MonoBehaviour
 
     Dictionary<string, GameObject> ButtonDic = new Dictionary<string, GameObject>();
     private static Dictionary<string, List<string>> DeviceLogDic = new Dictionary<string, List<string>>();
+    private static Dictionary<string, List<string>> RideRecordDic = new Dictionary<string, List<string>>();
 
     //public delegate void EventType_ReceiveDecodeParsedData(string callback);
     //public static event EventType_ReceiveDecodeParsedData onReceiveDecodeParsedData;
@@ -46,9 +47,22 @@ public class HomeManager : MonoBehaviour
         RCToolPlugin.onDeviceStatusChanged += RCToolPlugin_onDeviceStatusChanged;
         RCToolPlugin.onReceiveDecodeRawData += RCToolPlugin_onReceiveDecodeRawData;
         RCToolPlugin.onReceiveEncodeRawData += RCToolPlugin_onReceiveEncodeRawData;
-
+        RegistEncodeEvent(ParseCallBack_onReceiveEncodeParsedData);
+        //Debug.Log(string.Format("\r\n[{0}]", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss:ffff")));
         //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,DB,10,0A,11,13,0A,0E,0A,00,00,00,00,00,00,00,00,0E,F1");
         //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,DB,10,00,00,00,00,00,00,00,00,00,00,00,00,00,00,02,1C");
+    }
+
+    private void ParseCallBack_onReceiveEncodeParsedData(string input)
+    {
+        Debug.Log("HomeManager.ParseCallBack_onReceiveEncodeParsedData :" + input);
+        string address = input.Split('|')[0];
+        string Key = input.Split('|')[1];
+        string Value = input.Split('|')[2];
+        if (Key == "23")
+        {
+            AddNewRideRecord(address, Value);
+        }
     }
 
     private void RCToolPlugin_onReceiveEncodeRawData(string address, string data)
@@ -64,6 +78,7 @@ public class HomeManager : MonoBehaviour
         if (callback != null)
             onReceiveDecodeParsedData.Invoke(callback);
     }
+    #region [註冊事件]
     /// <summary>
     /// 註冊要接收解碼解析後的事件
     /// </summary>
@@ -92,7 +107,7 @@ public class HomeManager : MonoBehaviour
     {
         onReceiveEncodeParsedData.RemoveListener(function);
     }
-
+    #endregion
     #region --Functions--
 
     public void ButtonClicked(string address)
@@ -110,9 +125,43 @@ public class HomeManager : MonoBehaviour
         }
         else
         {
-            List<string> log = new List<string>();
-            log.Add(content);
-            DeviceLogDic.Add(address, log);
+            //List<string> log = new List<string>();
+            //log.Add(content);
+            DeviceLogDic.Add(address, new List<string>() { content });
+        }
+    }
+
+    public static void AddNewRideRecord(string address, string content)
+    {
+        Debug.Log("AddNewRideRecord :" + address + "|" + content);
+        //add time
+        //parse time,speed[], trq[], cde[], acur[], trid[], trit[], hpw[], rsoc[], ecode[], carr[], curast[], odo[]
+        //string.Format("\n[{0}] :{1}", DateTime.Now, data)
+        string[] datas = content.Split(',');
+        string result = string.Format("\r\n[{0}]", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss:ffff"));
+        switch (datas.Length)
+        {
+            case 2: //5 ecode,carr
+                result += string.Format(",,,,,,,,,{0},{1},,", datas[0], datas[1]);
+                break;
+            case 4: //8
+                result += string.Format(",,,,,,,,,{0},{1},{2},{3}", datas[0], datas[1], datas[2], datas[3]);
+                break;
+            case 8: //17
+                result += string.Format(",{0},{1},{2},{3},{4},{5},{6},{7},,,,", datas[0], datas[1], datas[2], datas[3], datas[4], datas[5], datas[6], datas[7]);
+                break;
+            default:
+                break;
+        }
+        if (RideRecordDic.ContainsKey(address))
+        {
+            Debug.Log("AddNewRideRecord 123456");
+            RideRecordDic[address].Add(result);
+        }
+        else
+        {
+            Debug.Log("AddNewRideRecord 1234567890");
+            RideRecordDic.Add(address, new List<string>() { result });
         }
     }
 
@@ -132,7 +181,7 @@ public class HomeManager : MonoBehaviour
                     str += DeviceLogDic[address][i];
                 }
 
-                DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath);
+                //DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath);
 
                 using (StreamWriter file = new StreamWriter(path))
                 {
@@ -141,6 +190,36 @@ public class HomeManager : MonoBehaviour
 
                 //clear after save
                 DeviceLogDic[address].Clear();
+            }
+        }
+    }
+
+    public static void SaveRideRecord(string address)
+    {
+        if (RideRecordDic.ContainsKey(address))
+        {
+            if (RideRecordDic[address].Count > 0)
+            {
+                //save Logs
+                string str = ChoosedDeviceManager.GetBikeDetail_RideRecord(address);
+                //time,speed[], trq[], cde[], acur[], trid[], trit[], hpw[], rsoc[], ecode[], carr[], curast[], odo[]
+                str += "\r\n\r\nTime(ms),Speed(km/hr),Trq(Nm),Cadance(RPM),Motor Current(A),Trid(km),Trit(min),Human Power(W),Battery(%),Ecode,carr(km),Current Assist,DU ODO(km)";
+                string date = DateTime.Now.ToString().Replace('/', '_');
+                string path = Path.Combine(Application.persistentDataPath, string.Format("REC_{0}-{1}.csv", address.Replace(':', '_'), date));
+                //File.Create(path);
+                for (int i = 0; i < RideRecordDic[address].Count; i++)
+                {
+                    str += RideRecordDic[address][i];
+                }
+                //DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath);
+
+                using (StreamWriter file = new StreamWriter(path))
+                {
+                    file.WriteLine(str);
+                }
+                //clear after save
+                RideRecordDic[address].Clear();
+                Toast.Instance.ShowToast("Ride Record saved.");
             }
         }
     }
@@ -178,6 +257,7 @@ public class HomeManager : MonoBehaviour
                     deviceButton.SetConnectStatus(false);
                     //斷線存Log
                     SaveLog(address);
+                    SaveRideRecord(address);
                     break;
             }
         }

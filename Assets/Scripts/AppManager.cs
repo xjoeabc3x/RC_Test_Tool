@@ -34,6 +34,11 @@ public class AppManager : MonoSingletonExtend<AppManager>
         //Debug.Log(System.Linq.);
     }
 
+    private void OnDestroy()
+    {
+        RCToolPlugin.Destroy();
+    }
+
     //private void Update()
     //{
     //    //∫ ≈•Android back button

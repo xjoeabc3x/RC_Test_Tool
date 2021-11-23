@@ -62,6 +62,7 @@
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenScale.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\System\InvDatabase.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UIAnchor.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\RideRecordView.cs" />
     <Compile Include="Assets\XCharts\Scripts\ChartUtils.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\Other\LagRotation.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIScrollView.cs" />
@@ -363,6 +364,7 @@
     <Compile Include="Assets\NGUI\Scripts\Internal\NGUIDebug.cs" />
     <Compile Include="Assets\Scripts\Setting\ServerSetting.cs" />
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenRotation.cs" />
+    <Compile Include="Assets\Scripts\Test\DFUTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GoogleMaps\Examples\SharedAssets\Shaders\ScrollingTextureShader.shader" />

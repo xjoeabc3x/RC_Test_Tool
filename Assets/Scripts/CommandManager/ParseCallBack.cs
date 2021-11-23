@@ -404,12 +404,12 @@ namespace ParseRCCallback
                     string stct = CombineByteToInt(DataCache[address][1] + "," + DataCache[address][0]).ToString();
                     string lstc = CombineByteToInt(DataCache[address][3] + "," + DataCache[address][2]).ToString() + "hr";
                     string fstc = CombineByteToInt(DataCache[address][5] + "," + DataCache[address][4]).ToString() + "km";
-                    string baac = string.Format("{0:.00}A", ((decimal)CombineByteToInt(DataCache[address][7] + "," + DataCache[address][6])) / 10);
-                    string paac = string.Format("{0:.00}A", ((decimal)CombineByteToInt(DataCache[address][9] + "," + DataCache[address][8])) / 10);
-                    string caac = string.Format("{0:.00}A", ((decimal)CombineByteToInt(DataCache[address][11] + "," + DataCache[address][10])) / 10);
-                    string naac = string.Format("{0:.00}A", ((decimal)CombineByteToInt(DataCache[address][13] + "," + DataCache[address][12])) / 10);
-                    string taac = string.Format("{0:.00}A", ((decimal)CombineByteToInt(DataCache[address][15] + "," + DataCache[address][14])) / 10);
-                    string eaac = string.Format("{0:.00}A", ((decimal)CombineByteToInt(DataCache[address][17] + "," + DataCache[address][16])) / 10);
+                    string baac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address][7] + "," + DataCache[address][6])) / 10);
+                    string paac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address][9] + "," + DataCache[address][8])) / 10);
+                    string caac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address][11] + "," + DataCache[address][10])) / 10);
+                    string naac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address][13] + "," + DataCache[address][12])) / 10);
+                    string taac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address][15] + "," + DataCache[address][14])) / 10);
+                    string eaac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address][17] + "," + DataCache[address][16])) / 10);
                     //清空暫存
                     DataCache = null;
                     //packagecounter歸零
@@ -500,7 +500,7 @@ namespace ParseRCCallback
             string[] aes = GetAES(input);
             string rsoc = string.Format("{0}%", ByteToInt_string(aes[0], 0));
             string eplife = string.Format("{0}%", ByteToInt_string(aes[1], 0));
-            string fcc = string.Format("{0:.0}Wh", (decimal)CombineByteToInt(aes[3] + "," + aes[2])/10);
+            string fcc = string.Format("{0:0.0}Wh", (decimal)CombineByteToInt(aes[3] + "," + aes[2])/10);
             return string.Format("{0},{1},{2}", rsoc, eplife, fcc);
         }
         /// <summary>
@@ -546,6 +546,7 @@ namespace ParseRCCallback
         /// 解析{23}
         /// </summary>
         /// <param name="input"></param>
+        /// |0.0 , 0.0 , 0.0 , 0.00 , 3.8 , 8.0 , 0.0 , 62
         /// <returns>[spd,trq,cde,acur,trid,trit,hpw,rsoc] or [ecode,carr] or [ecode,carr,cur_ast,odo]</returns>
         private static string Parse_23(string input)
         {
@@ -604,13 +605,13 @@ namespace ParseRCCallback
                     odo = string.Format("{0}", int.Parse(datas[7] + datas[6], NumberStyles.HexNumber));
                     return string.Format("{0},{1},{2},{3}", ecode, carr, cur_ast, odo);
                 case 17:
-                    spd = string.Format("{0:.0}", ((decimal)(int.Parse(datas[3] + datas[2], NumberStyles.HexNumber))) / 10);
-                    trq = string.Format("{0:.0}", ((decimal)(int.Parse(datas[5] + datas[4], NumberStyles.HexNumber))) / 10);
-                    cde = string.Format("{0:.0}", ((decimal)(int.Parse(datas[7] + datas[6], NumberStyles.HexNumber))) / 10);
-                    acur = string.Format("{0:.00}", ((decimal)(int.Parse(datas[9] + datas[8], NumberStyles.HexNumber))) / 100);
-                    trid = string.Format("{0:.0}", ((decimal)(int.Parse(datas[11] + datas[10], NumberStyles.HexNumber))) / 10);
-                    trit = string.Format("{0:.0}", int.Parse(datas[13] + datas[12], NumberStyles.HexNumber));
-                    hpw = string.Format("{0:.0}", ((decimal)(int.Parse(datas[15] + datas[14], NumberStyles.HexNumber))) / 10);
+                    spd = string.Format("{0:0.0}", ((decimal)(int.Parse(datas[3] + datas[2], NumberStyles.HexNumber))) / 10);
+                    trq = string.Format("{0:0.0}", ((decimal)(int.Parse(datas[5] + datas[4], NumberStyles.HexNumber))) / 10);
+                    cde = string.Format("{0:0.0}", ((decimal)(int.Parse(datas[7] + datas[6], NumberStyles.HexNumber))) / 10);
+                    acur = string.Format("{0:0.00}", ((decimal)(int.Parse(datas[9] + datas[8], NumberStyles.HexNumber))) / 100);
+                    trid = string.Format("{0:0.0}", ((decimal)(int.Parse(datas[11] + datas[10], NumberStyles.HexNumber))) / 10);
+                    trit = string.Format("{0:0}", int.Parse(datas[13] + datas[12], NumberStyles.HexNumber));
+                    hpw = string.Format("{0:0.0}", ((decimal)(int.Parse(datas[15] + datas[14], NumberStyles.HexNumber))) / 10);
                     rsoc = string.Format("{0}", int.Parse(datas[16], NumberStyles.HexNumber));
                     return string.Format("{0},{1},{2},{3},{4},{5},{6},{7}", spd, trq, cde, acur, trid, trit, hpw, rsoc);
             }
@@ -704,7 +705,7 @@ namespace ParseRCCallback
             string[] aes = GetAES(input);
             string rsoc = string.Format("{0}%", ByteToInt_string(aes[0], 0));
             string eplife = string.Format("{0}%", ByteToInt_string(aes[1], 0));
-            string fcc = string.Format("{0:.0}Wh", (decimal)CombineByteToInt(aes[3] + "," + aes[2]) / 10);
+            string fcc = string.Format("{0:0.0}Wh", (decimal)CombineByteToInt(aes[3] + "," + aes[2]) / 10);
             return string.Format("{0},{1},{2}", rsoc, eplife, fcc);
         }
         /// <summary>
@@ -1155,12 +1156,13 @@ namespace ParseRCCallback
         /// 解析[DF]Shimano馬達相關
         /// </summary>
         /// <param name="input"></param>
-        /// <returns>Device,Moduel,Major,Minor,SubMinor</returns>
+        /// <returns>Unit,Index,Model,Version</returns>
         private static string Parse_DF(string input)
         {
             string[] aes = GetAES(input);
             string Device = "";
-            string Moduel = "";
+            string Index = "";
+            string Model = "";
             string Major = "";
             string Minor = "";
             string SubMinor = "";
@@ -1185,34 +1187,38 @@ namespace ParseRCCallback
                 switch (aes[2])
                 {
                     case "09":
-                        Moduel = "RD-M9050";
+                        Model = "RD-M9050";
                         break;
                     case "10":
-                        Moduel = "RD-M8050";
+                        Model = "RD-M8050";
                         break;
                     case "16":
-                        Moduel = "RD-RX815/817";
+                        Model = "RD-RX815/817";
                         break;
                     case "14":
-                        Moduel = "RD-R8050/RX805";
+                        Model = "RD-R8050/RX805";
                         break;
                     case "20":
-                        Moduel = "MU-UR500";
+                        Model = "MU-UR500";
                         break;
                     case "06":
-                        Moduel = "MU-S705";
+                        Model = "MU-S705";
                         break;
                     case "FF":
-                        Moduel = "Invalid";
+                        Model = "Invalid";
                         break;
                     default:
-                        Moduel = "Unknow";
+                        Model = "Unknow";
                         break;
                 }
             }
+            else if (aes[3] == "01")
+            {
+                
+            }
             else if (aes[3] == "FF")
             {
-                Moduel = "Invalid";
+                Model = "Invalid";
             }
 
             switch (int.Parse(aes[4][0].ToString(), NumberStyles.HexNumber))
@@ -1245,7 +1251,7 @@ namespace ParseRCCallback
                     break;
             }
 
-            return string.Format("{0}{1}{2}{3}{4}", Device, Moduel, Major, Minor, SubMinor);
+            return string.Format("{0},{1},{2}.{3}.{4}", Device, Model, Major, Minor, SubMinor);
         }
         /// <summary>
         /// 解析[UIBle_Ver]
@@ -1572,7 +1578,7 @@ namespace ParseRCCallback
         public static string[] Get23Raw(string input)
         {
             string[] datas = input.Split(',');
-            string[] result = new string[int.Parse(datas[2])];
+            string[] result = new string[int.Parse(datas[2], NumberStyles.HexNumber)];
             for (int i = 0; i < result.Length; i++)
             {
                 result[i] = datas[i + 2];

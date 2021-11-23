@@ -290,6 +290,7 @@ public class ChoosedDeviceManager : MonoBehaviour
             ParseBikeDetail();
             ShowBikeDetail();
         }
+
     }
     /// <summary>
     /// 解析字典裡暫存的回應
@@ -459,9 +460,9 @@ public class ChoosedDeviceManager : MonoBehaviour
                 BikeDetail_Dic[DeviceAddress] = info;
             }
         }
-        catch
+        catch (Exception e)
         {
-            Debug.Log("ParseBikeDetail() Error!!!");
+            Debug.Log("ParseBikeDetail() Error!!!" + e.Message);
         }
     }
     /// <summary>
@@ -536,9 +537,41 @@ public class ChoosedDeviceManager : MonoBehaviour
         }
         catch
         {
-            Debug.Log("ShowBikeDetail() Error!!!");
+            Debug.Log("GetBikeDetail_Log() Error!!!");
         }
         return "";
+    }
+    /// <summary>
+    /// 獲取要存在RideRecord的文字
+    /// </summary>
+    public static string GetBikeDetail_RideRecord(string address)
+    {
+
+        if (!BikeDetail_Dic.ContainsKey(address))
+            return "";
+        BikeDetail info = BikeDetail_Dic[address];
+        string str = "";
+        str += string.Format("[05]RC類型 :{0}\r\nRC韌體版本 :{1}\r\nRC硬體版本 :{2}\r\nctg1 :{3}, ctg2 :{4}", info.RCType, info.RCFW, info.RCHW, info.ctg1, info.ctg2);
+        str += string.Format("\r\n\r\n[FB 11 00]藍牙版本 :{0}", info.UIBle_Ver);
+        str += string.Format("\r\n\r\n[09]DU型號 :{0}(RCID :{4})\r\nDU韌體名稱 :{1}({3})\r\nDU硬體名稱 :{2}\r\nDU生產流水號 :{5}", info.DUType, info.DUFW_MD, info.DUHW_MD, info.DUFWver, info.RCID, info.SN);
+        str += string.Format("\r\n\r\n[0C]BBSS韌體版本 :{0}", info.BBSS);
+        str += string.Format("\r\n\r\n[32]車架號碼 :{0}", info.frameNumber);
+        str += string.Format("\r\n\r\n[12]馬達總里程 :{0}\r\n總騎乘時間 :{1}", info.odo, info.tut);
+        str += string.Format("\r\n\r\n[0A]距離上次回廠時間 :{0}\r\n距離上次回廠距離 :{1}", info.lstc, info.fstc);
+        str += string.Format("\r\n\r\n[D4]0:不存在, 1:存在\r\n馬達 :{0}\r\n主電池 :{1}\r\n副電池 :{2}\r\nRemote-1 :{3}\r\nRemote-2 :{4}\r\n螢幕 :{5}\r\nShimano Front-Derailleur :{6}\r\nShimano Rear-Derailleur :{7}\r\nShimano Switch/Shifter :{8}"
+            , info.exist_DU, info.exist_BATT, info.exist_SBATT, info.exist_RMO1, info.exist_RMO2, info.exist_DSP, info.exist_SFD, info.exist_SRD, info.exist_SSWS);
+        str += string.Format("\r\n\r\n[D1]Remote-1 型號 :{0}\r\nRemote-1韌體版本 :{1}\r\nRemote-1硬體版本 :{2}", info.rmo1Type, info.rmo1FW, info.rmo1HW);
+        str += string.Format("\r\n\r\n[D2]Remote-2 型號 :{0}\r\nRemote-2韌體版本 :{1}\r\nRemote-2硬體版本 :{2}", info.rmo2Type, info.rmo2FW, info.rmo2HW);
+        str += string.Format("\r\n\r\n[D3]Display 型號 :{0}\r\nDisplay韌體版本 :{1}\r\nDisplay硬體版本 :{2}", info.dspType, info.dspFW, info.dspHW);
+        str += string.Format("\r\n\r\n[0D]主電池Cell版本 :{0}\r\n主電池韌體版本 :{1}\r\n主電池生產流水號 :{2}", info.minor, info.major, info.BATTSN);
+        str += string.Format("\r\n\r\n[13]總電量 :{0}\r\n電池健康度 :{1}\r\n前次充飽容量 :{2}", info.rsoc, info.eplife, info.fcc);
+        str += string.Format("\r\n\r\n[0E]主電池充電循環次數 :{0}\r\n充電次數 :{1}\r\n大電流放電比例 :{2}", info.ccy, info.cchg, info.hrd);
+        str += string.Format("\r\n\r\n[37]副電池容量 :{0}\r\n副電池壽命 :{1}\r\n前次充飽容量 :{2}", info.sub_rsoc, info.sub_eplife, info.sub_fcc);
+        str += string.Format("\r\n\r\n[38]副電池Cell版本 :{0}\r\n副電池韌體版本 :{1}\r\n副電池生產流水號 :{2}", info.sub_minor, info.sub_major, info.sub_BATTSN);
+        str += string.Format("\r\n\r\n[39]副電池充電循環次數 :{0}\r\n充電次數 :{1}\r\n大電流放電比例 :{2}", info.sub_ccy, info.sub_cchg, info.sub_hrd);
+        str += string.Format("\r\n\r\n[DD]Left Ring :{0}, Right Ring :{1}\r\nLeft1 :{2}\r\nLeft2 :{3}\r\nLeft3 :{4}\r\nRight1 :{5}\r\nRight2 :{6}\r\nRight3 :{7}",
+            info.left, info.right, info.left1, info.left2, info.left3, info.right1, info.right2, info.right3);
+        return str;
     }
     #endregion
 
@@ -548,7 +581,7 @@ public class ChoosedDeviceManager : MonoBehaviour
     {
         if (!RCToolPlugin.IsConnected(DeviceAddress))
         {
-            Debug.Log("Device is not Connected.");
+            Toast.Instance.ShowToast("Device is not connected.");
             return;
         }
         CommandManager.SendCMD(DeviceAddress, cmdNum, null, null);

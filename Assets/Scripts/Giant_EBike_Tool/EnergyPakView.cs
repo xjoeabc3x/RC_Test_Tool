@@ -57,6 +57,7 @@ public class EnergyPakView : MonoBehaviour
             Toast.Instance.ShowToast("Device is not connected.");
             return;
         }
+        Callback_Text.text = "<color=yellow>Callback...</color>";
         CommandManager.SendCMD(ChoosedDeviceManager.DeviceAddress, "DB", null, null);
     }
 }

@@ -64,6 +64,21 @@ public class RCToolPlugin : MonoBehaviour
     /// </summary>
     public delegate void EventType_ReceiveDecodeRawData(string address, string data);
     public static event EventType_ReceiveDecodeRawData onReceiveDecodeRawData;
+    /// <summary>
+    /// DFU狀態
+    /// </summary>
+    public delegate void EventType_DFUStatus(string address, string status);
+    public static event EventType_DFUStatus onReceiveDFUStatus;
+    /// <summary>
+    /// DFU更新進度
+    /// </summary>
+    public delegate void EventType_DFUProgress(string address, string percent);
+    public static EventType_DFUProgress onReceiveDFUProgress;
+    /// <summary>
+    /// DFU錯誤訊息
+    /// </summary>
+    public delegate void EventType_DFUError(string address, string errorcode, string errortype, string msg);
+    public static EventType_DFUError onReceiveDFUError;
 
     //初始化
     private void Awake()
@@ -108,6 +123,24 @@ public class RCToolPlugin : MonoBehaviour
     }
 
     #region [APIs for Unity call]
+    /// <summary>
+    /// 呼叫Plugin執行Destroy相關
+    /// </summary>
+    public static void Destroy()
+    {
+        Debug.Log("On Unity Destroy...");
+        _Destroy();
+    }
+    /// <summary>
+    /// 開始DFU更新
+    /// </summary>
+    /// <param name="address">macAddress</param>
+    /// <param name="filePath">檔名含副檔名</param>
+    public static void StartDFU(string address, string filePath)
+    {
+        Debug.Log(string.Format("On Unity StartDFU({0}, {1})...", address, filePath));
+        _StartDFU(address, filePath);
+    }
     /// <summary>
     /// 開始掃描
     /// </summary>
@@ -307,6 +340,42 @@ public class RCToolPlugin : MonoBehaviour
         }
         return false;
     }
+    /// <summary>
+    /// DFU更新狀態
+    /// </summary>
+    /// <param name="str">address|status</param>
+    public void DFUStatus(string str)
+    {
+        Debug.Log("On Unity DFUStatus :" + str);
+        if (string.IsNullOrEmpty(str) || str.Split('|').Length < 2)
+            return;
+        string[] info = str.Split('|');
+        onReceiveDFUStatus(info[0], info[1]);
+    }
+    /// <summary>
+    /// DFU更新進度百分比
+    /// </summary>
+    /// <param name="str">address|percent(int)</param>
+    public void DFUProgress(string str)
+    {
+        Debug.Log("On Unity DFUProgress :" + str);
+        if (string.IsNullOrEmpty(str) || str.Split('|').Length < 2)
+            return;
+        string[] info = str.Split('|');
+        onReceiveDFUProgress(info[0], info[1]);
+    }
+    /// <summary>
+    /// DFU更新錯誤訊息
+    /// </summary>
+    /// <param name="str">address|errorcode(int)|errortype(int)|msg(string)</param>
+    public void DFUError(string str)
+    {
+        Debug.Log("On Unity DFUProgress :" + str);
+        if (string.IsNullOrEmpty(str) || str.Split('|').Length < 4)
+            return;
+        string[] info = str.Split('|');
+        onReceiveDFUError(info[0], info[1], info[2], info[3]);
+    }
 
     #endregion
 
@@ -319,6 +388,24 @@ public class RCToolPlugin : MonoBehaviour
         using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
         {
             mjc.CallStatic("Init");
+        }
+    }
+
+    private static void _Destroy()
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("Destroy");
+        }
+    }
+
+    private static void _StartDFU(string address, string filepath)
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("StartDFU", address, filepath);
         }
     }
 
@@ -389,6 +476,10 @@ public class RCToolPlugin : MonoBehaviour
 #elif UNITY_EDITOR
     // 初始化藍牙
     private static void _Init(){}
+    // 呼叫Plugin執行Destroy相關
+    private static void _Destroy(){}
+    // 開始新的DFU更新
+    private static void _StartDFU(string address, string filepath){}
     // 開始掃描
     private static void _StartScan(){}
     // 停止掃描
