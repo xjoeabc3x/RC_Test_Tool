@@ -289,6 +289,9 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity 2021.1.17f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zlib.CF">
+      <HintPath>Assets\SimpleZip\Plugins\Ionic.Zlib.CF.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Maps.Proto">
       <HintPath>Assets\GoogleMaps\PPlugins\Google.Maps.Proto.dll</HintPath>
     </Reference>

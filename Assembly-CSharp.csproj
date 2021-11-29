@@ -69,7 +69,9 @@
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIToggle.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\UIStorageSlot.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UISavedOption.cs" />
+    <Compile Include="Assets\SimpleZip\Zip.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIScrollBar.cs" />
+    <Compile Include="Assets\Scripts\Tools\FileManager.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\02_Fundamentals\Scripts\UI\SearchByIdDialog.cs" />
     <Compile Include="Assets\Scripts\Test\URLImage.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UITextList.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Assets\GoogleMaps\Examples\URPExample\Scripts\SateliteHudUpdater.cs" />
     <Compile Include="Assets\Scripts\Test\DisableTest.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\RoadLattice\Scripts\RoadLatticeTools.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\FWUpdate\FileItem.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\Other\LookAtTarget.cs" />
     <Compile Include="Assets\Scripts\Giant_EBike_Tool\WheelSizeView.cs" />
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenFOV.cs" />
@@ -150,9 +153,11 @@
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\EditTimePreview\Scripts\EditTimePreviewExample.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Intersections\Scripts\TrafficSystem.cs" />
     <Compile Include="Assets\Scripts\Giant_EBike_Tool\RawDataView.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\FWUpdate\FWUpdateView.cs" />
     <Compile Include="Assets\NGUI\Scripts\Internal\ActiveAnimation.cs" />
     <Compile Include="Assets\Scripts\Giant_EBike_Tool\ShimanoView.cs" />
     <Compile Include="Assets\Scripts\Giant_EBike_Tool\OneButtonTestView.cs" />
+    <Compile Include="Assets\Scripts\Test\DFUTest.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\MoreStyling\Scripts\BuildingSquashing.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\MoreStyling\Scripts\NineSlicing.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\02_Fundamentals\Scripts\UI\MapsServiceView.cs" />
@@ -228,6 +233,7 @@
     <Compile Include="Assets\GoogleMaps\Examples\SharedAssets\Scripts\MeshCleaner.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\SharedAssets\Scripts\FloatingOriginUpdater.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UISpriteData.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\FWUpdate\DFUView.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UICamera.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\Other\Tutorial5.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UISpriteCollection.cs" />
@@ -278,6 +284,7 @@
     <Compile Include="Assets\GoogleMaps\Examples\01_GettingStarted\Scripts\BasicExample.cs" />
     <Compile Include="Assets\XCharts\Scripts\RadarChart.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\03_MapsStyling\Scripts\ModeledStructureConfigView.cs" />
+    <Compile Include="Assets\Scripts\Tools\Unzip.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\MoreStyling\Scripts\Squasher.cs" />
     <Compile Include="Assets\NGUI\Scripts\Tweening\AnimatedAlpha.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
@@ -304,6 +311,7 @@
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenVolume.cs" />
     <Compile Include="Assets\NGUI\Scripts\Internal\NGUITools.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\Other\ExampleDragDropItem.cs" />
+    <Compile Include="Assets\SimpleZip\Example.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\URPExample\Scripts\SetMeshSortingOrder.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\System\InvStat.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\03_MapsStyling\Scripts\MapsStylingEditorView.cs" />
@@ -364,7 +372,6 @@
     <Compile Include="Assets\NGUI\Scripts\Internal\NGUIDebug.cs" />
     <Compile Include="Assets\Scripts\Setting\ServerSetting.cs" />
     <Compile Include="Assets\NGUI\Scripts\Tweening\TweenRotation.cs" />
-    <Compile Include="Assets\Scripts\Test\DFUTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\GoogleMaps\Examples\SharedAssets\Shaders\ScrollingTextureShader.shader" />
@@ -393,6 +400,7 @@
     <None Include="Assets\GoogleMaps\Examples\URPExample\Materials\GoogleURPBaseMap.shader.txt" />
     <None Include="Assets\NGUI\RResources\Shaders\Unlit - Transparent Packed 2.shader" />
     <None Include="Assets\NGUI\ReadMe - 2020.2.2.txt" />
+    <None Include="Assets\SimpleZip\Plugins\Ionic.Zlib.CF.dll" />
     <None Include="Assets\NGUI\RResources\Shaders\Unlit - Premultiplied Colored 2.shader" />
     <None Include="Assets\GoogleMaps\Examples\03_MapsStyling\Shaders\noise.cginc" />
     <None Include="Assets\NGUI\RResources\Shaders\Unlit - Transparent Colored 2.shader" />
@@ -416,6 +424,7 @@
     <None Include="Assets\GoogleMaps\Examples\04_Advanced\Intersections\Shaders\Intersection.shader" />
     <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
     <None Include="Assets\NGUI\Examples\Shaders\Refractive.shader" />
+    <None Include="Assets\SimpleZip\License.txt" />
     <None Include="Assets\NGUI\Examples\Shaders\Unlit - Masked Colored.shader" />
     <None Include="Assets\NGUI\Examples\Atlases\SciFi\SciFi Font - Normal.txt" />
     <None Include="Assets\GoogleMaps\PPlugins\Google.Protobuf.dll" />
@@ -433,6 +442,7 @@
     <None Include="Assets\GoogleMaps\Examples\URPExample\ReadmeURP.txt" />
     <None Include="Assets\NGUI\RResources\Shaders\Unlit - Text (TextureClip).shader" />
     <None Include="Assets\NGUI\Examples\Shaders\Unlit - Additive Colored.shader" />
+    <None Include="Assets\SimpleZip\Readme.txt" />
     <None Include="Assets\NGUI\RResources\Shaders\Unlit - Text 1.shader" />
     <None Include="Assets\GoogleMaps\RResources\BaseMapColor.shader" />
     <None Include="Assets\NGUI\RResources\Shaders\Unlit - Transparent Colored 1.shader" />
@@ -659,6 +669,9 @@
     </Reference>
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity 2021.1.17f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zlib.CF">
+      <HintPath>Assets\SimpleZip\Plugins\Ionic.Zlib.CF.dll</HintPath>
     </Reference>
     <Reference Include="Google.Maps.Proto">
       <HintPath>Assets\GoogleMaps\PPlugins\Google.Maps.Proto.dll</HintPath>

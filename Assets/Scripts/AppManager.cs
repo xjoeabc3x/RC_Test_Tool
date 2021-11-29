@@ -17,6 +17,7 @@ public class AppManager : MonoSingletonExtend<AppManager>
         Permission.CoarseLocation,
         Permission.FineLocation,
         Permission.ExternalStorageWrite,
+        Permission.ExternalStorageRead
     };
 
     protected override void OnAwake()

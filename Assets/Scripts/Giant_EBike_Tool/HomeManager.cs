@@ -16,6 +16,10 @@ public class HomeManager : MonoBehaviour
     GameObject ButtonPrefab;
     [SerializeField, Header("[按鈕擺放位置]")]
     RectTransform ButtonPos;
+    [SerializeField, Header("[要移動的檔案目標資料夾]")]
+    string[] CopyFiles_Dir = new string[] { };
+    [SerializeField, Header("[要移動的檔案]")]
+    string[] CopyFiles = new string[] { };
 
     Dictionary<string, GameObject> ButtonDic = new Dictionary<string, GameObject>();
     private static Dictionary<string, List<string>> DeviceLogDic = new Dictionary<string, List<string>>();
@@ -48,6 +52,13 @@ public class HomeManager : MonoBehaviour
         RCToolPlugin.onReceiveDecodeRawData += RCToolPlugin_onReceiveDecodeRawData;
         RCToolPlugin.onReceiveEncodeRawData += RCToolPlugin_onReceiveEncodeRawData;
         RegistEncodeEvent(ParseCallBack_onReceiveEncodeParsedData);
+#if !UNITY_EDITOR
+        if (NeedCopyFile())
+        {
+            FileManager.Instance.CopyFile_StreamingToPersist(CopyFiles, CopyFiles_Dir);
+            //PlayerPrefs.SetInt("FWFileCopy", 1);
+        }
+#endif
         //Debug.Log(string.Format("\r\n[{0}]", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss:ffff")));
         //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,DB,10,0A,11,13,0A,0E,0A,00,00,00,00,00,00,00,00,0E,F1");
         //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,DB,10,00,00,00,00,00,00,00,00,00,00,00,00,00,00,02,1C");
@@ -78,7 +89,7 @@ public class HomeManager : MonoBehaviour
         if (callback != null)
             onReceiveDecodeParsedData.Invoke(callback);
     }
-    #region [註冊事件]
+#region [註冊事件]
     /// <summary>
     /// 註冊要接收解碼解析後的事件
     /// </summary>
@@ -107,8 +118,16 @@ public class HomeManager : MonoBehaviour
     {
         onReceiveEncodeParsedData.RemoveListener(function);
     }
-    #endregion
-    #region --Functions--
+#endregion
+#region --Functions--
+    private bool NeedCopyFile()
+    {
+        if (Directory.Exists(Path.Combine(Application.persistentDataPath, "FW")))
+        {
+            return false;
+        }
+        return true;
+    }
 
     public void ButtonClicked(string address)
     {
@@ -229,9 +248,9 @@ public class HomeManager : MonoBehaviour
         //Application.OpenURL(Path.Combine(Application.streamingAssetsPath, filename));
         Application.OpenURL("https://drive.google.com/file/d/1RKV6En1W4Iokgh-PW02O160OgSZWXops/view?usp=sharing");
     }
-    #endregion
+#endregion
 
-    #region --Events--
+#region --Events--
     private void RCToolPlugin_onRceiveDevice(string address, string name, string rssi)
     {
         if (!ButtonDic.ContainsKey(address))
@@ -262,8 +281,8 @@ public class HomeManager : MonoBehaviour
             }
         }
     }
-    #endregion
-    #region --Buttons--
+#endregion
+#region --Buttons--
     public void StartScan()
     {
         ClearButton();
@@ -283,5 +302,5 @@ public class HomeManager : MonoBehaviour
     {
         RCToolPlugin.StopScan();
     }
-    #endregion
+#endregion
 }

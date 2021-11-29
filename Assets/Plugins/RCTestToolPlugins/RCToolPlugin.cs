@@ -141,6 +141,12 @@ public class RCToolPlugin : MonoBehaviour
         Debug.Log(string.Format("On Unity StartDFU({0}, {1})...", address, filePath));
         _StartDFU(address, filePath);
     }
+
+    public static void AbortDFU()
+    {
+        Debug.Log("On Unity AbortDFU...");
+        _AbortDFU();
+    }
     /// <summary>
     /// ¶}©l±½´y
     /// </summary>
@@ -406,6 +412,15 @@ public class RCToolPlugin : MonoBehaviour
         using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
         {
             mjc.CallStatic("StartDFU", address, filepath);
+        }
+    }
+
+    private static void _AbortDFU()
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("AbortDFU");
         }
     }
 
