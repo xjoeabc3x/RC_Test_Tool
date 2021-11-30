@@ -70,7 +70,7 @@ public class HomeManager : MonoBehaviour
         string address = input.Split('|')[0];
         string Key = input.Split('|')[1];
         string Value = input.Split('|')[2];
-        if (Key == "23")
+        if (Key == "23" && !string.IsNullOrEmpty(Value))
         {
             AddNewRideRecord(address, Value);
         }
@@ -174,12 +174,10 @@ public class HomeManager : MonoBehaviour
         }
         if (RideRecordDic.ContainsKey(address))
         {
-            Debug.Log("AddNewRideRecord 123456");
             RideRecordDic[address].Add(result);
         }
         else
         {
-            Debug.Log("AddNewRideRecord 1234567890");
             RideRecordDic.Add(address, new List<string>() { result });
         }
     }
