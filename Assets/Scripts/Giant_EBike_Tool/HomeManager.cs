@@ -152,7 +152,7 @@ public class HomeManager : MonoBehaviour
 
     public static void AddNewRideRecord(string address, string content)
     {
-        Debug.Log("AddNewRideRecord :" + address + "|" + content);
+        //Debug.Log("AddNewRideRecord :" + address + "|" + content);
         //add time
         //parse time,speed[], trq[], cde[], acur[], trid[], trit[], hpw[], rsoc[], ecode[], carr[], curast[], odo[]
         //string.Format("\n[{0}] :{1}", DateTime.Now, data)
@@ -170,7 +170,7 @@ public class HomeManager : MonoBehaviour
                 result += string.Format(",{0},{1},{2},{3},{4},{5},{6},{7},,,,", datas[0], datas[1], datas[2], datas[3], datas[4], datas[5], datas[6], datas[7]);
                 break;
             default:
-                break;
+                return;
         }
         if (RideRecordDic.ContainsKey(address))
         {

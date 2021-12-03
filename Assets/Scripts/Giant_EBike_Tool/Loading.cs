@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,10 @@ public class Loading : MonoBehaviour
     public static Loading Instance = null;
     [SerializeField, Header("[Loading¾B¸n]")]
     GameObject LoadingMask;
+    [SerializeField, Header("[Invoke Button]")]
+    GameObject InvokeButton;
+    [SerializeField, Header("[Invoke Button Text]")]
+    Text InvokeButton_Text;
     //[SerializeField, Header("[°T®§¤å¦r]")]
     //Text InfoText;
 
@@ -43,6 +48,26 @@ public class Loading : MonoBehaviour
     {
         delay = 100000f;
         LoadingMask.SetActive(true);
+    }
+
+    public Action onClickButton;
+
+    public void ShowLoading(Action ButtonEvent, string ButtonText)
+    {
+        delay = 100000f;
+        LoadingMask.SetActive(true);
+        onClickButton = ButtonEvent;
+        InvokeButton_Text.text = (string.IsNullOrEmpty(ButtonText)) ? "" : ButtonText;
+        InvokeButton.SetActive(true);
+    }
+
+    public void OnClickButton()
+    {
+        onClickButton?.Invoke();
+        onClickButton = null;
+        HideLoading();
+        InvokeButton.SetActive(false);
+        InvokeButton_Text.text = "";
     }
 
     public void ShowLoading(float TimeInSec)

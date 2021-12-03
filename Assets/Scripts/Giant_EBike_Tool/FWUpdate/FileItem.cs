@@ -27,7 +27,8 @@ public class FileItem : MonoBehaviour
     {
         if (isOn)
         {
-            DFUView.Instance.CurrentFile = FullFileName;
+            DFUView.Instance.CurrentFile = DFUView.Instance.gameObject.activeInHierarchy ? FullFileName : DFUView.Instance.CurrentFile;
+            L2View.Instance.CurrentFile = L2View.Instance.gameObject.activeInHierarchy ? FullFileName : L2View.Instance.CurrentFile;
         }
     }
 

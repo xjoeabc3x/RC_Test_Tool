@@ -44,6 +44,8 @@ public class RCToolPlugin : MonoBehaviour
     /// 搜尋到的裝置列表, Key:address
     /// </summary>
     public static Dictionary<string, BLEDevice> Devices_Dic = new Dictionary<string, BLEDevice>();
+
+    #region [事件宣告]
     /// <summary>
     /// 搜尋事件
     /// </summary>
@@ -79,6 +81,17 @@ public class RCToolPlugin : MonoBehaviour
     /// </summary>
     public delegate void EventType_DFUError(string address, string errorcode, string errortype, string msg);
     public static EventType_DFUError onReceiveDFUError;
+    /// <summary>
+    /// L2更新訊息
+    /// </summary>
+    public delegate void EventType_L2Msg(string address, string msg);
+    public static EventType_L2Msg onReceiveL2Msg;
+    /// <summary>
+    /// L2更新錯誤
+    /// </summary>
+    public delegate void EventType_L2Error(string address, string errormsg);
+    public static EventType_L2Error onReceiveL2Error;
+    #endregion
 
     //初始化
     private void Awake()
@@ -146,6 +159,18 @@ public class RCToolPlugin : MonoBehaviour
     {
         Debug.Log("On Unity AbortDFU...");
         _AbortDFU();
+    }
+
+    public static void StartL2(string address, string type, string filePath)
+    {
+        if (string.IsNullOrEmpty(address) || string.IsNullOrEmpty(type) || string.IsNullOrEmpty(filePath))
+            return;
+        _StartL2(address, type, filePath);
+    }
+
+    public static void AbortL2()
+    {
+        _AbortL2();
     }
     /// <summary>
     /// 開始掃描
@@ -383,6 +408,24 @@ public class RCToolPlugin : MonoBehaviour
         onReceiveDFUError(info[0], info[1], info[2], info[3]);
     }
 
+    public void L2_UpdateMsg(string str)
+    {
+        Debug.Log("On Unity  L2_UpdateMsg:" + str);
+        if (string.IsNullOrEmpty(str) || str.Split('|').Length < 2)
+            return;
+        string[] info = str.Split('|');
+        onReceiveL2Msg(info[0], info[1]);
+    }
+
+    public void L2_UpdateError(string str)
+    {
+        Debug.Log("On Unity  L2_UpdateError:" + str);
+        if (string.IsNullOrEmpty(str) || str.Split('|').Length < 2)
+            return;
+        string[] info = str.Split('|');
+        onReceiveL2Error(info[0], info[1]);
+    }
+
     #endregion
 
     #region [APIs : Unity call Plugin]
@@ -421,6 +464,24 @@ public class RCToolPlugin : MonoBehaviour
         using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
         {
             mjc.CallStatic("AbortDFU");
+        }
+    }
+
+    private static void _StartL2(string address, string func, string filePath)
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("StartL2", address, func, filePath);
+        }
+    }
+
+    private static void _AbortL2()
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("AbortL2");
         }
     }
 
@@ -495,6 +556,10 @@ public class RCToolPlugin : MonoBehaviour
     private static void _Destroy(){}
     // 開始新的DFU更新
     private static void _StartDFU(string address, string filepath){}
+
+    private static void _StartL2(string address, string type, string filePath){}
+
+    private static void _AbortL2(){}
     // 開始掃描
     private static void _StartScan(){}
     // 停止掃描

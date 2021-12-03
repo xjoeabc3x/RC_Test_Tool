@@ -1267,6 +1267,8 @@ namespace ParseRCCallback
                     return "R3";
                 case "20180321000":
                     return "R4";
+                case "20180321004":
+                    return "R4";
                 case "20180830007":
                     return "R7";
                 case "20190826009":
