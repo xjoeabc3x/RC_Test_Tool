@@ -109,13 +109,13 @@ public class RCToolPlugin : MonoBehaviour
         _Init();
     }
     //指令延遲
-    private float senddelay = 0.05f;
+    private float senddelay = 0.1f;
     private void Update()
     {
         SendDataWithDelay();
     }
     /// <summary>
-    /// 每0.5秒送一次指令,有callback即送下一個
+    /// 每0.1秒送一次指令,有callback即送下一個
     /// </summary>
     private void SendDataWithDelay()
     {
@@ -130,7 +130,7 @@ public class RCToolPlugin : MonoBehaviour
                 SendInfo info = WaitToSend.Dequeue();
                 Debug.Log("OnUnity SendDataWithDelay :" + info.data);
                 _SendData(info.Address, info.data, info.Key);
-                senddelay = 0.05f;
+                senddelay = 0.1f;
             }
         }
     }
@@ -349,7 +349,6 @@ public class RCToolPlugin : MonoBehaviour
         Debug.Log("OnReceiveEncodeRawData:" + str);
         string[] info = str.Split('|');
         onReceiveEncodeRawData(info[0], info[1]);
-        IsFCcallback(str);
     }
     /// <summary>
     /// 接收到裝置回傳訊息(解密)

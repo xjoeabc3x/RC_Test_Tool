@@ -7811,10 +7811,10 @@ RectTransform:
   m_Father: {fileID: 210574146}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -151.73589, y: -0.0000038146973}
-  m_SizeDelta: {x: 103.472, y: 100}
+  m_AnchorMin: {x: -0.5167494, y: -0.02231311}
+  m_AnchorMax: {x: 0.0003003798, y: 1.022313}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &177633344
 MonoBehaviour:
@@ -8971,18 +8971,18 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: ONE ANT
       m_Image: {fileID: 0}
-    - m_Text: ONE JPN
+    - m_Text: ONE BLE
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1492360207}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1492360211}
+        m_TargetAssemblyTypeName: L2View, Assembly-CSharp
+        m_MethodName: SearchFile
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -12529,10 +12529,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1492360207}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: 
-        m_Mode: 6
+      - m_Target: {fileID: 1492360211}
+        m_TargetAssemblyTypeName: L2View, Assembly-CSharp
+        m_MethodName: SearchFile
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -15286,10 +15286,10 @@ RectTransform:
   m_Father: {fileID: 210574146}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 151.7359, y: -0.0000038146973}
-  m_SizeDelta: {x: 103.472, y: 100}
+  m_AnchorMin: {x: 0.9997002, y: -0.02231311}
+  m_AnchorMax: {x: 2.1340196, y: 1.022313}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &340013218
 MonoBehaviour:
@@ -15324,7 +15324,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '[E0]'
+  m_Text: '[E0]SG'
 --- !u!222 &340013219
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16317,7 +16317,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: v1.2.1_beta
+  m_Text: v1.2.1
 --- !u!222 &367134288
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16379,7 +16379,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: L2 Test
+          m_StringArgument: Add L2 protocol
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &370148984
@@ -17371,7 +17371,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: 0
 --- !u!222 &402392514
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19199,139 +19199,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 421203829}
-  m_CullTransparentMesh: 1
---- !u!1 &424870412
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 424870413}
-  - component: {fileID: 424870416}
-  - component: {fileID: 424870415}
-  - component: {fileID: 424870414}
-  m_Layer: 5
-  m_Name: Start (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &424870413
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424870412}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 541164589}
-  m_Father: {fileID: 1492360208}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5231481, y: 0.013425052}
-  m_AnchorMax: {x: 0.7546296, y: 0.06581536}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &424870414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424870412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 424870415}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1492360211}
-        m_TargetAssemblyTypeName: L2View, Assembly-CSharp
-        m_MethodName: StartL2_Test
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: FW/Remote_OnOff/rmnfswxxapp_20210910000.bin
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &424870415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424870412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &424870416
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424870412}
   m_CullTransparentMesh: 1
 --- !u!1 &425075080
 GameObject:
@@ -25448,85 +25315,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &541164588
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 541164589}
-  - component: {fileID: 541164591}
-  - component: {fileID: 541164590}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &541164589
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 541164588}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 424870413}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &541164590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 541164588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Start20210910000
---- !u!222 &541164591
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 541164588}
-  m_CullTransparentMesh: 1
 --- !u!1 &543929326
 GameObject:
   m_ObjectHideFlags: 0
@@ -34609,7 +34397,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.10398147, y: 0.23916823}
   m_AnchorMax: {x: 0.4497222, y: 0.29155856}
-  m_AnchoredPosition: {x: 501, y: 642.001}
+  m_AnchoredPosition: {x: 501, y: 642.00104}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &753271670
@@ -43649,6 +43437,25 @@ MonoBehaviour:
   - FW/SG10S
   - FW/Remote_OnOff
   - FW/Remote_CT
+  - FW/New_EVO
+  - FW/Remote_Sport
+  - FW/Remote_2in1
+  - FW/BBSS
+  - FW/CAN
+  - FW/ONE
+  - FW/ONE_BLE
+  - FW/ONE_ANT
+  - FW/ONE_JPN
+  - FW/EVO
+  - FW/EVO_45
+  - FW/EVO_Pro
+  - FW/EVO_S5
+  - FW/EVO_JPN
+  - FW/Charge_S5
+  - FW/UI_BLE/R3
+  - FW/UI_BLE/R4
+  - FW/UI_BLE/R7
+  - FW/UI_BLE/R9
   CopyFiles:
   - FW/SG10Y/sg10yxxxapp_20200910008.zip
   - FW/SG10Y/sg10yxxxapp_20201127000.zip
@@ -43684,6 +43491,102 @@ MonoBehaviour:
   - FW/Remote_CT/rmctywxxapp_20210806000.bin
   - FW/Remote_CT/rmctywxxapp_20210811000.bin
   - FW/Remote_CT/rmctywxxapp_20211122000.bin
+  - FW/New_EVO/dpevowxxapp_20200908000.bin
+  - FW/New_EVO/dpevowxxapp_20200914000.bin
+  - FW/New_EVO/dpevowxxapp_20210229000.bin
+  - FW/New_EVO/dpevowxxapp_20210322000.bin
+  - FW/New_EVO/dpevowxxapp_20210330000.bin
+  - FW/New_EVO/dpevowxxapp_20210616000.bin
+  - FW/New_EVO/dpevowxxapp_20210804000.bin
+  - FW/New_EVO/dpevowxxapp_20211122000.bin
+  - FW/Remote_Sport/rmsptwxxapp_20200915000.BIN
+  - FW/Remote_Sport/rmsptwxxapp_20200915001.BIN
+  - FW/Remote_Sport/rmsptwxxapp_20210731000.bin
+  - FW/Remote_2in1/rm2in1wxxapp_20201104000.bin
+  - FW/Remote_2in1/rm2in1wxxapp_20210224001.bin
+  - FW/Remote_2in1/rm2in1wxxapp_20210514001.bin
+  - FW/Remote_2in1/rm2in1wxxapp_20210715001.bin
+  - FW/Remote_2in1/rm2in1wxxapp_20211118001.bin
+  - FW/BBSS/ssmcuasxapp_20200709000.bin
+  - FW/BBSS/ssmcuasxapp_20201216000.bin
+  - FW/BBSS/ssmcuasxapp_20210618000.bin
+  - FW/BBSS/ssmcuasxapp_20210625000.bin
+  - FW/BBSS/ssmcuasxapp_20210701000.bin
+  - FW/BBSS/ssmcuasxapp_20210727000.bin
+  - FW/CAN/dumcusdfapp_20200219000.BIN
+  - FW/CAN/dumcusdfapp_20200707000.BIN
+  - FW/CAN/dumcusdfapp_20201219000.BIN
+  - FW/CAN/dumcusdfapp_20210703000.BIN
+  - FW/Charge_S5/uimcucs5app_20200321000.BIN
+  - FW/Charge_S5/uimcucs5app_20201208000.BIN
+  - FW/Charge_S5/uimcucs5app_20210105000.BIN
+  - FW/Charge_S5/uimcucs5app_20210514000.bin
+  - FW/Charge_S5/uimcucs5app_20210524000.bin
+  - FW/Charge_S5/uimcucs5app_20210702000.BIN
+  - FW/Charge_S5/uimcucs5app_20210817000.BIN
+  - FW/Charge_S5/uimcucs5app_20211118000.BIN
+  - FW/EVO/uimcuevoapp_20200608000.bin
+  - FW/EVO/uimcuevoapp_20210106000.bin
+  - FW/EVO/uimcuevoapp_20210519000.bin
+  - FW/EVO/uimcuevoapp_20210702000.bin
+  - FW/EVO/uimcuevoapp_20210821000.bin
+  - FW/EVO/uimcuevoapp_20211206000.bin
+  - FW/EVO_45/uimcue45app_20200118000.bin
+  - FW/EVO_JPN/uimcuejpapp_20200608000.bin
+  - FW/EVO_JPN/uimcuejpapp_20210106000.bin
+  - FW/EVO_JPN/uimcuejpapp_20210519000.bin
+  - FW/EVO_Pro/uimcuepoapp_20210519000.bin
+  - FW/EVO_Pro/uimcuepoapp_20210702000.bin
+  - FW/EVO_Pro/uimcuepoapp_20210821000.bin
+  - FW/EVO_Pro/uimcuepoapp_20211206000.bin
+  - FW/EVO_S5/uimcues5app_20210106000.bin
+  - FW/EVO_S5/uimcues5app_20210519000.bin
+  - FW/EVO_S5/uimcues5app_20210702000.bin
+  - FW/EVO_S5/uimcues5app_20210821000.bin
+  - FW/EVO_S5/uimcues5app_20211206000.bin
+  - FW/ONE/uimcuoneapp_20200304000.bin
+  - FW/ONE/uimcuoneapp_20200921000.bin
+  - FW/ONE/uimcuoneapp_20201127000.bin
+  - FW/ONE/uimcuoneapp_20210120000.bin
+  - FW/ONE/uimcuoneapp_20210309000.bin
+  - FW/ONE/uimcuoneapp_20210512000.bin
+  - FW/ONE/uimcuoneapp_20210520000.bin
+  - FW/ONE/uimcuoneapp_20210622030.bin
+  - FW/ONE/uimcuoneapp_20210705000.bin
+  - FW/ONE/uimcuoneapp_20210707000.bin
+  - FW/ONE/uimcuoneapp_20211014000.bin
+  - FW/ONE/uimcuoneapp_20211102000.bin
+  - FW/ONE/uimcuoneapp_20211125000.bin
+  - FW/ONE_ANT/uimcuobaapp_20200806000.bin
+  - FW/ONE_ANT/uimcuobaapp_20200921000.bin
+  - FW/ONE_ANT/uimcuobaapp_20200922000.bin
+  - FW/ONE_ANT/uimcuobaapp_20200922002.bin
+  - FW/ONE_ANT/uimcuobaapp_20201127000.bin
+  - FW/ONE_ANT/uimcuobaapp_20210120000.bin
+  - FW/ONE_ANT/uimcuobaapp_20210309000.bin
+  - FW/ONE_ANT/uimcuobaapp_20210512000.bin
+  - FW/ONE_ANT/uimcuobaapp_20210520000.bin
+  - FW/ONE_ANT/uimcuobaapp_20210621032.bin
+  - FW/ONE_ANT/uimcuobaapp_20210702000.bin
+  - FW/ONE_ANT/uimcuobaapp_20210705000.bin
+  - FW/ONE_ANT/uimcuobaapp_20211014000.bin
+  - FW/ONE_ANT/uimcuobaapp_20211102000.bin
+  - FW/ONE_ANT/uimcuobaapp_20211125000.bin
+  - FW/ONE_BLE/uimcuoneapp_20181228000.bin
+  - FW/ONE_BLE/uimcuoneapp_20190924000.bin
+  - FW/ONE_BLE/uimcuoneapp_20191231000.bin
+  - FW/ONE_BLE/uimcuoneapp_20200103000.bin
+  - FW/ONE_BLE/uimcuoneapp_20200221000.bin
+  - FW/ONE_BLE/uimcuoneapp_20200304000.bin
+  - FW/ONE_BLE/uimcuoneapp_20211102000.bin
+  - FW/ONE_JPN/uimcuojpapp_20200806000.bin
+  - FW/ONE_JPN/uimcuojpapp_20201127000.bin
+  - FW/ONE_JPN/uimcuojpapp_20210512000.bin
+  - FW/ONE_JPN/uimcuojpapp_20210520000.bin
+  - FW/UI_BLE/R3/uibleapp_20160812003.bin
+  - FW/UI_BLE/R4/uibleapp_20180321000.bin
+  - FW/UI_BLE/R7/uibleapp_20180830007.bin
+  - FW/UI_BLE/R9/uibleapp_20190826009.bin
 --- !u!1 &1002700482
 GameObject:
   m_ObjectHideFlags: 0
@@ -48312,8 +48215,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1492360211}
         m_TargetAssemblyTypeName: L2View, Assembly-CSharp
-        m_MethodName: StartL2_Test
-        m_Mode: 5
+        m_MethodName: StartL2
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -58961,7 +58864,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.10398147, y: 0.23916823}
   m_AnchorMax: {x: 0.4497222, y: 0.29155856}
-  m_AnchoredPosition: {x: 501, y: 796.0009}
+  m_AnchoredPosition: {x: 501, y: 796.001}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1395940407
@@ -63585,7 +63488,6 @@ RectTransform:
   - {fileID: 204469745}
   - {fileID: 1868842047}
   - {fileID: 1123641605}
-  - {fileID: 424870413}
   - {fileID: 1612358104}
   m_Father: {fileID: 492614373}
   m_RootOrder: 5
@@ -63646,8 +63548,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentFile: 
-  TypeChoose: {fileID: 0}
-  MCUChoose: {fileID: 0}
+  FileListPos: {fileID: 1039639179}
+  FileItemPrefab: {fileID: 5878911133119414063, guid: 299be9aa649d3324bab31fdb848f2f28, type: 3}
+  TypeChoose: {fileID: 281412475}
+  MCUChoose: {fileID: 204469746}
+  toggleGroup: {fileID: 1039639180}
 --- !u!1 &1496635636
 GameObject:
   m_ObjectHideFlags: 0
@@ -68038,7 +67943,7 @@ RectTransform:
   m_Children:
   - {fileID: 1851260874}
   m_Father: {fileID: 1492360208}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.24537037, y: 0.07825805}
   m_AnchorMax: {x: 0.47685185, y: 0.13064836}
@@ -86695,7 +86600,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: 0
 --- !u!222 &2047461047
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -87011,7 +86916,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: 0
 --- !u!222 &2052043719
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ public class FileManager : MonoSingletonExtend<FileManager>
         {
             if (string.IsNullOrEmpty(de))
                 continue;
-            if (!Directory.Exists(de))
+            if (!Directory.Exists(Path.Combine(Application.persistentDataPath, de)))
             {
                 Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, de));
             }
@@ -33,11 +33,13 @@ public class FileManager : MonoSingletonExtend<FileManager>
                 continue;
             UnityWebRequest request = new UnityWebRequest(Path.Combine(Application.streamingAssetsPath, fi));
             request.downloadHandler = new DownloadHandlerBuffer();
-            request.timeout = 5;
+            request.timeout = 60;
+            Debug.Log("_CopyFile_StreamingToPersist :" + Path.Combine(Application.streamingAssetsPath, fi));
             yield return request.SendWebRequest();
             byte[] datas = request.downloadHandler.data;
             File.WriteAllBytes(Path.Combine(Application.persistentDataPath, fi), datas);
             request.Dispose();
+            Debug.Log("_CopyFile_StreamingToPersist :Write done." + Path.Combine(Application.persistentDataPath, fi));
         }
     }
 }

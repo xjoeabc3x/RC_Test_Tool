@@ -173,10 +173,10 @@ public class ChoosedDeviceManager : MonoBehaviour
     {
         //{23},[BLEver]會送到這裡
         Debug.Log("After parse callback (ParseCallBack_onReceiveEncodeParsedData):" + callback);
-        if (!string.IsNullOrEmpty(callback))
-        {
-            AddNewCallback(callback);
-        }
+        //if (!string.IsNullOrEmpty(callback))
+        //{
+        //    AddNewCallback(callback);
+        //}
     }
 
     //停用時
@@ -353,7 +353,7 @@ public class ChoosedDeviceManager : MonoBehaviour
             }
             if (callback_dic.TryGetValue("D4", out str))
             {
-                //DU,BATT,SBATT,RMO_1,RMO_2,DSP,S_FD,S_RD,S_SWitchShifter
+                //DU, BATT, SBATT, RMO_1, RMO_2, DSP, S_FD, S_RD, S_SWitchShifter
                 string[] data = str.Split(',');
                 info.exist_DU = data[0];
                 info.exist_BATT = data[1];

@@ -62,6 +62,7 @@ public class HomeManager : MonoBehaviour
         //Debug.Log(string.Format("\r\n[{0}]", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss:ffff")));
         //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,DB,10,0A,11,13,0A,0E,0A,00,00,00,00,00,00,00,00,0E,F1");
         //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,DB,10,00,00,00,00,00,00,00,00,00,00,00,00,00,00,02,1C");
+        //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,D4,02,AB,02,00,00,00,00,00,00,00,00,00,00,00,00,02,0F");
     }
 
     private void ParseCallBack_onReceiveEncodeParsedData(string input)

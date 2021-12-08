@@ -15,7 +15,7 @@ public class FileItem : MonoBehaviour
     private void OnEnable()
     {
         tg.onValueChanged.AddListener(ToggleChanged);
-        tg.group = DFUView.Instance.toggleGroup;
+        tg.group = GetTG();
     }
 
     private void OnDisable()
@@ -27,9 +27,20 @@ public class FileItem : MonoBehaviour
     {
         if (isOn)
         {
-            DFUView.Instance.CurrentFile = DFUView.Instance.gameObject.activeInHierarchy ? FullFileName : DFUView.Instance.CurrentFile;
-            L2View.Instance.CurrentFile = L2View.Instance.gameObject.activeInHierarchy ? FullFileName : L2View.Instance.CurrentFile;
+            if (DFUView.Instance != null)
+                DFUView.Instance.CurrentFile = DFUView.Instance.gameObject.activeInHierarchy ? FullFileName : DFUView.Instance.CurrentFile;
+            if (L2View.Instance != null)
+                L2View.Instance.CurrentFile = L2View.Instance.gameObject.activeInHierarchy ? FullFileName : L2View.Instance.CurrentFile;
         }
+    }
+
+    private ToggleGroup GetTG()
+    {
+        if (DFUView.Instance != null && DFUView.Instance.gameObject.activeInHierarchy)
+            return DFUView.Instance.toggleGroup;
+        if (L2View.Instance != null && L2View.Instance.gameObject.activeInHierarchy)
+            return L2View.Instance.toggleGroup;
+        return null;
     }
 
     public void SetTittle(string Name)

@@ -66,8 +66,6 @@ public class Loading : MonoBehaviour
         onClickButton?.Invoke();
         onClickButton = null;
         HideLoading();
-        InvokeButton.SetActive(false);
-        InvokeButton_Text.text = "";
     }
 
     public void ShowLoading(float TimeInSec)
@@ -87,6 +85,7 @@ public class Loading : MonoBehaviour
     public void HideLoading()
     {
         LoadingMask.SetActive(false);
-        //InfoText.text = "";
+        InvokeButton.SetActive(false);
+        InvokeButton_Text.text = "";
     }
 }
