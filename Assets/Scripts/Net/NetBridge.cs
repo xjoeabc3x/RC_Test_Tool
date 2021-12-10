@@ -103,7 +103,7 @@ public class NetBridge : MonoSingletonExtend<NetBridge>
                         Debug.Log("-- NetBridge : status 0, code : " + request.error);
                     }
                 }
-                catch (System.Exception e)
+                catch
                 {
                     request.error = content;
                 }

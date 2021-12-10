@@ -91,6 +91,16 @@ public class RCToolPlugin : MonoBehaviour
     /// </summary>
     public delegate void EventType_L2Error(string address, string errormsg);
     public static EventType_L2Error onReceiveL2Error;
+    /// <summary>
+    /// L1更新訊息
+    /// </summary>
+    public delegate void EventType_L1Msg(string address, string msg);
+    public static EventType_L1Msg onReceiveL1Msg;
+    /// <summary>
+    /// L1更新錯誤
+    /// </summary>
+    public delegate void EventType_L1Error(string address, string errormsg);
+    public static EventType_L1Error onReceiveL1Error;
     #endregion
 
     //初始化
@@ -107,15 +117,16 @@ public class RCToolPlugin : MonoBehaviour
             return;
         }
         _Init();
+        StartScan();
     }
     //指令延遲
-    private float senddelay = 0.1f;
+    private float senddelay = 0.05f;
     private void Update()
     {
         SendDataWithDelay();
     }
     /// <summary>
-    /// 每0.1秒送一次指令,有callback即送下一個
+    /// 每0.05秒送一次指令,有callback即送下一個
     /// </summary>
     private void SendDataWithDelay()
     {
@@ -130,7 +141,7 @@ public class RCToolPlugin : MonoBehaviour
                 SendInfo info = WaitToSend.Dequeue();
                 Debug.Log("OnUnity SendDataWithDelay :" + info.data);
                 _SendData(info.Address, info.data, info.Key);
-                senddelay = 0.1f;
+                senddelay = 0.05f;
             }
         }
     }
@@ -171,6 +182,18 @@ public class RCToolPlugin : MonoBehaviour
     public static void AbortL2()
     {
         _AbortL2();
+    }
+
+    public static void StartL1(string address, string type, string filePath)
+    {
+        if (string.IsNullOrEmpty(address) || string.IsNullOrEmpty(type) || string.IsNullOrEmpty(filePath))
+            return;
+        _StartL1(address, type, filePath);
+    }
+
+    public static void AbortL1()
+    {
+        _AbortL1();
     }
     /// <summary>
     /// 開始掃描
@@ -425,6 +448,24 @@ public class RCToolPlugin : MonoBehaviour
         onReceiveL2Error(info[0], info[1]);
     }
 
+    public void L1_UpdateMsg(string str)
+    {
+        Debug.Log("On Unity  L1_UpdateMsg:" + str);
+        if (string.IsNullOrEmpty(str) || str.Split('|').Length < 2)
+            return;
+        string[] info = str.Split('|');
+        onReceiveL1Msg(info[0], info[1]);
+    }
+
+    public void L1_UpdateError(string str)
+    {
+        Debug.Log("On Unity  L1_UpdateError:" + str);
+        if (string.IsNullOrEmpty(str) || str.Split('|').Length < 2)
+            return;
+        string[] info = str.Split('|');
+        onReceiveL1Error(info[0], info[1]);
+    }
+
     #endregion
 
     #region [APIs : Unity call Plugin]
@@ -481,6 +522,24 @@ public class RCToolPlugin : MonoBehaviour
         using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
         {
             mjc.CallStatic("AbortL2");
+        }
+    }
+
+    private static void _StartL1(string address, string func, string filePath)
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("StartL1", address, func, filePath);
+        }
+    }
+
+    private static void _AbortL1()
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("AbortL1");
         }
     }
 
@@ -559,6 +618,10 @@ public class RCToolPlugin : MonoBehaviour
     private static void _StartL2(string address, string type, string filePath){}
 
     private static void _AbortL2(){}
+
+    private static void _StartL1(string address, string type, string filePath){}
+
+    private static void _AbortL1(){}
     // 開始掃描
     private static void _StartScan(){}
     // 停止掃描

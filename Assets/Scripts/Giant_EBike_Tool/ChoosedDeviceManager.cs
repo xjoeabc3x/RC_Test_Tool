@@ -173,10 +173,10 @@ public class ChoosedDeviceManager : MonoBehaviour
     {
         //{23},[BLEver]會送到這裡
         Debug.Log("After parse callback (ParseCallBack_onReceiveEncodeParsedData):" + callback);
-        //if (!string.IsNullOrEmpty(callback))
-        //{
-        //    AddNewCallback(callback);
-        //}
+        if (!string.IsNullOrEmpty(callback))
+        {
+            AddNewCallback(callback);
+        }
     }
 
     //停用時

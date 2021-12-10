@@ -9,8 +9,8 @@ using System.Data;
 
 public class AppManager : MonoSingletonExtend<AppManager>
 {
-    public delegate void Event_AndroidBackButton();
-    public static event Event_AndroidBackButton AndroidBackButton;
+    //public delegate void Event_AndroidBackButton();
+    //public static event Event_AndroidBackButton AndroidBackButton;
 
     private static string[] askPermissions = new string[]
     { 

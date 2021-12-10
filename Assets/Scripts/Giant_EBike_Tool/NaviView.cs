@@ -89,19 +89,24 @@ public class NaviView : MonoBehaviour
 
     private bool InputValueOK()
     {
-        if (int.Parse(NextAct_input.text) > 65535 || int.Parse(NextAct_input.text) < 0)
+        if (!RCToolPlugin.IsConnected(ChoosedDeviceManager.DeviceAddress))
         {
-            Toast.Instance.ShowToast("Input Error.");
+            Toast.Instance.ShowToast("Device is not connected.");
             return false;
         }
-        if (float.Parse(GoalDis_input.text) > 6553.5f || float.Parse(GoalDis_input.text) < 0)
+        if (string.IsNullOrEmpty(NextAct_input.text) || int.Parse(NextAct_input.text) > 65535 || int.Parse(NextAct_input.text) < 0)
         {
-            Toast.Instance.ShowToast("Input Error.");
+            Toast.Instance.ShowToast("Distance from next point input Error.");
             return false;
         }
-        if (int.Parse(GoalTime_input.text) > 65535 || int.Parse(GoalTime_input.text) < 0)
+        if (string.IsNullOrEmpty(GoalDis_input.text) || float.Parse(GoalDis_input.text) > 6553.5f || float.Parse(GoalDis_input.text) < 0)
         {
-             Toast.Instance.ShowToast("Input Error.");
+            Toast.Instance.ShowToast("Distance from destination input Error.");
+            return false;
+        }
+        if (string.IsNullOrEmpty(GoalTime_input.text) || int.Parse(GoalTime_input.text) > 65535 || int.Parse(GoalTime_input.text) < 0)
+        {
+             Toast.Instance.ShowToast("Time to destination input Error.");
             return false;
         }
         return true;

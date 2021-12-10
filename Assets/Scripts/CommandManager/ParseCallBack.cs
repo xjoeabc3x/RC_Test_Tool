@@ -12,7 +12,36 @@ namespace ParseRCCallback
     {
         //package counter超過14byte計數(還剩下幾個package要接收)
         //private static int packagecounter = 0;
-        private static Dictionary<string, int> packagecounter = new Dictionary<string, int>();
+        private class DevicePakCount
+        {
+            //09
+            public int i09 = 0;
+            //0A
+            public int i0A = 0;
+            //32
+            public int i32 = 0;
+            //D1
+            public int iD1 = 0;
+            //D2
+            public int iD2 = 0;
+            //D3
+            public int iD3 = 0;
+            //DB
+            public int iDB = 0;
+        }
+
+        public class DeviceDataCache
+        {
+            public string[] s09 = new string[] { };
+            public string[] s0A = new string[] { };
+            public string[] s32 = new string[] { };
+            public string[] sD1 = new string[] { };
+            public string[] sD2 = new string[] { };
+            public string[] sD3 = new string[] { };
+            public string[] sDB = new string[] { };
+        }
+
+        private static Dictionary<string, DevicePakCount> packagecounter = new Dictionary<string, DevicePakCount>();
 
         public static string Parse_Decode(string address, string datas)
         {
@@ -50,7 +79,7 @@ namespace ParseRCCallback
             {
                 if (data.Length >= 20 && data[1] == "21")
                 {
-                    packagecounter[address] = PackageCompute(address, data[3]);
+                    packagecounter[address] = PackageCompute(address, data[2], data[3]);
                     switch (((byte)int.Parse(data[2], NumberStyles.HexNumber)) & 0xFF)
                     {//{ "02", "05", "09", "32", "12", "0A", "D4", "D1", "D2", "D3", "0D", "13", "0E", "37", "38", "39", "DD" }
                         case 0x01:
@@ -209,7 +238,7 @@ namespace ParseRCCallback
 
         //Callback暫存
         //public static string[] DataCache = null;
-        public static Dictionary<string, string[]> DataCache = new Dictionary<string, string[]>();
+        private static Dictionary<string, DeviceDataCache> DataCache = new Dictionary<string, DeviceDataCache>();
         /// <summary>
         /// [01]Service Platform連線訊息
         /// </summary>
@@ -283,19 +312,19 @@ namespace ParseRCCallback
             string DUFW = "";
             string evymc = "";
             string SN = "";
-            switch (packagecounter[address])
+            switch (packagecounter[address].i09)
             {
                 //最後一包
                 case 1:
                     //添加新的
-                    DataCache[address] = AddNewDatas(DataCache[address], GetAES(input));
+                    DataCache[address].s09 = AddNewDatas(DataCache[address].s09, GetAES(input));
                     //判斷馬達
                     //解析
-                    DUFW_MD = GetASCIItoString(DataCache[address], 0, 2);
-                    DUHW_MD = GetASCIItoString(DataCache[address], 8, 11);
-                    DUFW = GetYamahaFWver(DataCache[address][4], DataCache[address][5], DataCache[address][6], DataCache[address][7]);
-                    evymc = GetRCID(DataCache[address]);
-                    SN = int.Parse(DataCache[address][17] + DataCache[address][16] + DataCache[address][15], NumberStyles.HexNumber).ToString();
+                    DUFW_MD = GetASCIItoString(DataCache[address].s09, 0, 2);
+                    DUHW_MD = GetASCIItoString(DataCache[address].s09, 8, 11);
+                    DUFW = GetYamahaFWver(DataCache[address].s09[4], DataCache[address].s09[5], DataCache[address].s09[6], DataCache[address].s09[7]);
+                    evymc = GetRCID(DataCache[address].s09);
+                    SN = int.Parse(DataCache[address].s09[17] + DataCache[address].s09[16] + DataCache[address].s09[15], NumberStyles.HexNumber).ToString();
                     switch (DUFW_MD)
                     {
                         case "0SC":
@@ -312,11 +341,11 @@ namespace ParseRCCallback
                             break;
                         case "1RB":
                             //DU4,6
-                            DUType = DU4orDU6(DataCache[address]);
+                            DUType = DU4orDU6(DataCache[address].s09);
                             break;
                         case "1RC":
                             //DU4,6
-                            DUType = DU4orDU6(DataCache[address]);
+                            DUType = DU4orDU6(DataCache[address].s09);
                             break;
                         case "0SG":
                             DUType = "DU5 JPN-BIC PW-SE";
@@ -360,24 +389,24 @@ namespace ParseRCCallback
                         case "EP8": //Shimano
                             DUFW_MD = "EP800";
                             DUType = "DU16 EP8";
-                            DUFW = GetShimanoFWver(DataCache[address][5], DataCache[address][6], DataCache[address][7]);
+                            DUFW = GetShimanoFWver(DataCache[address].s09[5], DataCache[address].s09[6], DataCache[address].s09[7]);
                             break;
                         default:
                             Debug.Log("Unknow DU_Firmware.");
                             break;
                     }
                     //清空暫存
-                    DataCache = null;
+                    DataCache[address].s09 = new string[] { };
                     //packagecounter歸零
-                    packagecounter[address] = 0;
+                    packagecounter[address].i09 = 0;
                     return string.Format("{0},{1},{2},{3},{4},{5}", DUType, DUFW_MD, DUHW_MD, DUFW, evymc, SN);
                 //第一包
                 case 2:
                     //作暫存
-                    DataCache[address] = GetAES(input);
+                    DataCache[address].s09 = GetAES(input);
                     return "09_wait";
                 default:
-                    Debug.Log("[09] parse Error." + packagecounter[address]);
+                    Debug.Log("[09] parse Error." + packagecounter[address].i09);
                     return "";
             }
         }
@@ -394,34 +423,34 @@ namespace ParseRCCallback
         /// <returns>stct,lstc,fstc,baac,paac,caac,naac,taac,eaac</returns>
         private static string Parse_0A(string address, string input)
         {
-            switch (packagecounter[address])
+            switch (packagecounter[address].i0A)
             {
                 //最後一包
                 case 1:
                     //添加新的
-                    DataCache[address] = AddNewDatas(DataCache[address], GetAES(input));
+                    DataCache[address].s0A = AddNewDatas(DataCache[address].s0A, GetAES(input));
                     //解析
-                    string stct = CombineByteToInt(DataCache[address][1] + "," + DataCache[address][0]).ToString();
-                    string lstc = CombineByteToInt(DataCache[address][3] + "," + DataCache[address][2]).ToString() + "hr";
-                    string fstc = CombineByteToInt(DataCache[address][5] + "," + DataCache[address][4]).ToString() + "km";
-                    string baac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address][7] + "," + DataCache[address][6])) / 10);
-                    string paac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address][9] + "," + DataCache[address][8])) / 10);
-                    string caac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address][11] + "," + DataCache[address][10])) / 10);
-                    string naac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address][13] + "," + DataCache[address][12])) / 10);
-                    string taac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address][15] + "," + DataCache[address][14])) / 10);
-                    string eaac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address][17] + "," + DataCache[address][16])) / 10);
+                    string stct = CombineByteToInt(DataCache[address].s0A[1] + "," + DataCache[address].s0A[0]).ToString();
+                    string lstc = CombineByteToInt(DataCache[address].s0A[3] + "," + DataCache[address].s0A[2]).ToString() + "hr";
+                    string fstc = CombineByteToInt(DataCache[address].s0A[5] + "," + DataCache[address].s0A[4]).ToString() + "km";
+                    string baac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address].s0A[7] + "," + DataCache[address].s0A[6])) / 10);
+                    string paac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address].s0A[9] + "," + DataCache[address].s0A[8])) / 10);
+                    string caac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address].s0A[11] + "," + DataCache[address].s0A[10])) / 10);
+                    string naac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address].s0A[13] + "," + DataCache[address].s0A[12])) / 10);
+                    string taac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address].s0A[15] + "," + DataCache[address].s0A[14])) / 10);
+                    string eaac = string.Format("{0:0.00}A", ((decimal)CombineByteToInt(DataCache[address].s0A[17] + "," + DataCache[address].s0A[16])) / 10);
                     //清空暫存
-                    DataCache = null;
+                    DataCache[address].s0A = new string[] { };
                     //packagecounter歸零
-                    packagecounter[address] = 0;
+                    packagecounter[address].i0A = 0;
                     return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}", stct, lstc, fstc, baac, paac, caac, naac, taac, eaac);
                 //第一包
                 case 2:
                     //作暫存
-                    DataCache[address] = GetAES(input);
+                    DataCache[address].s0A = GetAES(input);
                     return "0A_wait";
                 default:
-                    Debug.Log("[0A] parse Error." + packagecounter[address]);
+                    Debug.Log("[0A] parse Error." + packagecounter[address].i0A);
                     return "";
             }
         }
@@ -660,27 +689,27 @@ namespace ParseRCCallback
         /// <returns>車架號碼</returns>
         private static string Parse_32(string address, string input)
         {
-            switch (packagecounter[address])
+            switch (packagecounter[address].i32)
             {
                 //最後一包
                 case 1:
                     //添加新的
-                    DataCache[address] = AddNewDatas(DataCache[address], GetAES(input));
+                    DataCache[address].s32 = AddNewDatas(DataCache[address].s32, GetAES(input));
                     //解析
                     string result = "";
                     for (int i = 0; i < 18; i++)
                     {
-                        result += (char)(int.Parse(DataCache[address][i], NumberStyles.HexNumber));
+                        result += (char)(int.Parse(DataCache[address].s32[i], NumberStyles.HexNumber));
                     }
                     //清空暫存
-                    DataCache = null;
+                    DataCache[address].s32 = new string[] { };
                     //packagecounter歸零
-                    packagecounter[address] = 0;
+                    packagecounter[address].i32 = 0;
                     return result;
                 //第一包
                 case 2:
                     //作暫存
-                    DataCache[address] = GetAES(input);
+                    DataCache[address].s32 = GetAES(input);
                     return "32_wait";
                 default:
                     return "";
@@ -794,26 +823,26 @@ namespace ParseRCCallback
         /// <returns>remote_type,fw_ver,hw_ver,pic_icon,pic_navi,pic_number,pic_eu_language,pic_tra_chinese,pic_sim_chinese,pic_jpn,pic_korea</returns>
         private static string Parse_D1(string address, string input)
         {
-            switch (packagecounter[address])
+            switch (packagecounter[address].iD1)
             {
                 //最後一包
                 case 1:
                     //添加新的
-                    DataCache[address] = AddNewDatas(DataCache[address], GetAES(input));
+                    DataCache[address].sD1 = AddNewDatas(DataCache[address].sD1, GetAES(input));
                     //解析
-                    string remote_type = GetRemoteType(DataCache[address][4]);
+                    string remote_type = GetRemoteType(DataCache[address].sD1[4]);
                     string fw_ver = "";
-                    string icon = ByteToInt_string(DataCache[address][9], 3);
-                    string navi = ByteToInt_string(DataCache[address][10], 3);
-                    string number = ByteToInt_string(DataCache[address][11], 3);
-                    string eu_lan = ByteToInt_string(DataCache[address][12], 3);
-                    string tra_chi = ByteToInt_string(DataCache[address][13], 3);
-                    string sim_chi = ByteToInt_string(DataCache[address][14], 3);
-                    string jpn = ByteToInt_string(DataCache[address][15], 3);
-                    string korea = ByteToInt_string(DataCache[address][16], 3);
+                    string icon = ByteToInt_string(DataCache[address].sD1[9], 3);
+                    string navi = ByteToInt_string(DataCache[address].sD1[10], 3);
+                    string number = ByteToInt_string(DataCache[address].sD1[11], 3);
+                    string eu_lan = ByteToInt_string(DataCache[address].sD1[12], 3);
+                    string tra_chi = ByteToInt_string(DataCache[address].sD1[13], 3);
+                    string sim_chi = ByteToInt_string(DataCache[address].sD1[14], 3);
+                    string jpn = ByteToInt_string(DataCache[address].sD1[15], 3);
+                    string korea = ByteToInt_string(DataCache[address].sD1[16], 3);
                     //fw_ver
-                    string fwv = string.Format("2{0}{1}{2:00}{3}", ByteToInt_string(DataCache[address][2], 3), ByteToInt_string(DataCache[address][1], 2)
-                        , BitChoose_int(DataCache[address][0], 3, 7), ByteToInt_string(DataCache[address][3], 3));
+                    string fwv = string.Format("2{0}{1}{2:00}{3}", ByteToInt_string(DataCache[address].sD1[2], 3), ByteToInt_string(DataCache[address].sD1[1], 2)
+                        , BitChoose_int(DataCache[address].sD1[0], 3, 7), ByteToInt_string(DataCache[address].sD1[3], 3));
                     switch (remote_type)
                     {
                         case "Remote-CT":
@@ -827,17 +856,17 @@ namespace ParseRCCallback
                             break;
                     }
                     //hw_ver
-                    string hw_ver = string.Format("2{0}{1:00}{2:00000}", ByteToInt_string(DataCache[address][6], 3), BitChoose_int(DataCache[address][5], 4, 7)
-                        , CombineByteToInt(DataCache[address][8] + "," + DataCache[address][7]));
+                    string hw_ver = string.Format("2{0}{1:00}{2:00000}", ByteToInt_string(DataCache[address].sD1[6], 3), BitChoose_int(DataCache[address].sD1[5], 4, 7)
+                        , CombineByteToInt(DataCache[address].sD1[8] + "," + DataCache[address].sD1[7]));
                     //清空暫存
-                    DataCache = null;
+                    DataCache[address].sD1 = new string[] { };
                     //packagecounter歸零
-                    packagecounter[address] = 0;
+                    packagecounter[address].iD1 = 0;
                     return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}", remote_type, fw_ver, hw_ver, icon, navi, number, eu_lan, tra_chi, sim_chi, jpn, korea);
                 //第一包
                 case 2:
                     //作暫存
-                    DataCache[address] = GetAES(input);
+                    DataCache[address].sD1 = GetAES(input);
                     return "D1_wait";
                 default:
                     return null;
@@ -850,26 +879,26 @@ namespace ParseRCCallback
         /// <returns>remote_type,fw_ver,hw_ver,pic_icon,pic_navi,pic_number,pic_eu_language,pic_tra_chinese,pic_sim_chinese,pic_jpn,pic_korea</returns>
         private static string Parse_D2(string address, string input)
         {
-            switch (packagecounter[address])
+            switch (packagecounter[address].iD2)
             {
                 //最後一包
                 case 1:
                     //添加新的
-                    DataCache[address] = AddNewDatas(DataCache[address], GetAES(input));
+                    DataCache[address].sD2 = AddNewDatas(DataCache[address].sD2, GetAES(input));
                     //解析
-                    string remote_type = GetRemoteType(DataCache[address][4]);
+                    string remote_type = GetRemoteType(DataCache[address].sD2[4]);
                     string fw_ver = "";
-                    string icon = ByteToInt_string(DataCache[address][9], 3);
-                    string navi = ByteToInt_string(DataCache[address][10], 3);
-                    string number = ByteToInt_string(DataCache[address][11], 3);
-                    string eu_lan = ByteToInt_string(DataCache[address][12], 3);
-                    string tra_chi = ByteToInt_string(DataCache[address][13], 3);
-                    string sim_chi = ByteToInt_string(DataCache[address][14], 3);
-                    string jpn = ByteToInt_string(DataCache[address][15], 3);
-                    string korea = ByteToInt_string(DataCache[address][16], 3);
+                    string icon = ByteToInt_string(DataCache[address].sD2[9], 3);
+                    string navi = ByteToInt_string(DataCache[address].sD2[10], 3);
+                    string number = ByteToInt_string(DataCache[address].sD2[11], 3);
+                    string eu_lan = ByteToInt_string(DataCache[address].sD2[12], 3);
+                    string tra_chi = ByteToInt_string(DataCache[address].sD2[13], 3);
+                    string sim_chi = ByteToInt_string(DataCache[address].sD2[14], 3);
+                    string jpn = ByteToInt_string(DataCache[address].sD2[15], 3);
+                    string korea = ByteToInt_string(DataCache[address].sD2[16], 3);
                     //fw_ver
-                    string fwv = string.Format("2{0}{1}{2:00}{3}", ByteToInt_string(DataCache[address][2], 3), ByteToInt_string(DataCache[address][1], 2)
-                        , BitChoose_int(DataCache[address][0], 3, 7), ByteToInt_string(DataCache[address][3], 3));
+                    string fwv = string.Format("2{0}{1}{2:00}{3}", ByteToInt_string(DataCache[address].sD2[2], 3), ByteToInt_string(DataCache[address].sD2[1], 2)
+                        , BitChoose_int(DataCache[address].sD2[0], 3, 7), ByteToInt_string(DataCache[address].sD2[3], 3));
                     switch (remote_type)
                     {
                         case "Remote ON/OFF":
@@ -877,17 +906,17 @@ namespace ParseRCCallback
                             break;
                     }
                     //hw_ver
-                    string hw_ver = string.Format("2{0}{1:00}{2:00000}", ByteToInt_string(DataCache[address][6], 3), BitChoose_int(DataCache[address][5], 4, 7)
-                        , CombineByteToInt(DataCache[address][8] + "," + DataCache[address][7]));
+                    string hw_ver = string.Format("2{0}{1:00}{2:00000}", ByteToInt_string(DataCache[address].sD2[6], 3), BitChoose_int(DataCache[address].sD2[5], 4, 7)
+                        , CombineByteToInt(DataCache[address].sD2[8] + "," + DataCache[address].sD2[7]));
                     //清空暫存
-                    DataCache = null;
+                    DataCache[address].sD2 = new string[] { };
                     //packagecounter歸零
-                    packagecounter[address] = 0;
+                    packagecounter[address].iD2 = 0;
                     return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}", remote_type, fw_ver, hw_ver, icon, navi, number, eu_lan, tra_chi, sim_chi, jpn, korea);
                 //第一包
                 case 2:
                     //作暫存
-                    DataCache[address] = GetAES(input);
+                    DataCache[address].sD2 = GetAES(input);
                     return "D2_wait";
                 default:
                     return null;
@@ -900,26 +929,26 @@ namespace ParseRCCallback
         /// <returns></returns>
         private static string Parse_D3(string address, string input)
         {
-            switch (packagecounter[address])
+            switch (packagecounter[address].iD3)
             {
                 //最後一包
                 case 1:
                     //添加新的
-                    DataCache[address] = AddNewDatas(DataCache[address], GetAES(input));
+                    DataCache[address].sD3 = AddNewDatas(DataCache[address].sD3, GetAES(input));
                     //解析
-                    string display_type = GetRemoteType(DataCache[address][4]);
+                    string display_type = GetRemoteType(DataCache[address].sD3[4]);
                     string fw_ver = "";
-                    string icon = ByteToInt_string(DataCache[address][9], 3);
-                    string navi = ByteToInt_string(DataCache[address][10], 3);
-                    string number = ByteToInt_string(DataCache[address][11], 3);
-                    string eu_lan = ByteToInt_string(DataCache[address][12], 3);
-                    string tra_chi = ByteToInt_string(DataCache[address][13], 3);
-                    string sim_chi = ByteToInt_string(DataCache[address][14], 3);
-                    string jpn = ByteToInt_string(DataCache[address][15], 3);
-                    string korea = ByteToInt_string(DataCache[address][16], 3);
+                    string icon = ByteToInt_string(DataCache[address].sD3[9], 3);
+                    string navi = ByteToInt_string(DataCache[address].sD3[10], 3);
+                    string number = ByteToInt_string(DataCache[address].sD3[11], 3);
+                    string eu_lan = ByteToInt_string(DataCache[address].sD3[12], 3);
+                    string tra_chi = ByteToInt_string(DataCache[address].sD3[13], 3);
+                    string sim_chi = ByteToInt_string(DataCache[address].sD3[14], 3);
+                    string jpn = ByteToInt_string(DataCache[address].sD3[15], 3);
+                    string korea = ByteToInt_string(DataCache[address].sD3[16], 3);
                     //fw_ver
-                    string fwv = string.Format("2{0}{1}{2:00}{3}", ByteToInt_string(DataCache[address][2], 3), ByteToInt_string(DataCache[address][1], 2)
-                        , BitChoose_int(DataCache[address][0], 3, 7), ByteToInt_string(DataCache[address][3], 3));
+                    string fwv = string.Format("2{0}{1}{2:00}{3}", ByteToInt_string(DataCache[address].sD3[2], 3), ByteToInt_string(DataCache[address].sD3[1], 2)
+                        , BitChoose_int(DataCache[address].sD3[0], 3, 7), ByteToInt_string(DataCache[address].sD3[3], 3));
                     switch (display_type)
                     {
                         case "New Evo":
@@ -927,17 +956,17 @@ namespace ParseRCCallback
                             break;
                     }
                     //hw_ver
-                    string hw_ver = string.Format("2{0}{1:00}{2:00000}", ByteToInt_string(DataCache[address][6], 3), BitChoose_int(DataCache[address][5], 4, 7)
-                        , CombineByteToInt(DataCache[address][8] + "," + DataCache[address][7]));
+                    string hw_ver = string.Format("2{0}{1:00}{2:00000}", ByteToInt_string(DataCache[address].sD3[6], 3), BitChoose_int(DataCache[address].sD3[5], 4, 7)
+                        , CombineByteToInt(DataCache[address].sD3[8] + "," + DataCache[address].sD3[7]));
                     //清空暫存
-                    DataCache = null;
+                    DataCache[address].sD3 = new string[] { };
                     //packagecounter歸零
-                    packagecounter[address] = 0;
+                    packagecounter[address].iD3 = 0;
                     return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}", display_type, fw_ver, hw_ver, icon, navi, number, eu_lan, tra_chi, sim_chi, jpn, korea);
                 //第一包
                 case 2:
                     //作暫存
-                    DataCache[address] = GetAES(input);
+                    DataCache[address].sD3 = GetAES(input);
                     return "D3_wait";
                 default:
                     return null;
@@ -1061,12 +1090,12 @@ namespace ParseRCCallback
         /// <returns>PF/GA,EPFW,EPSN(yyyymmddxxxxx),vcmax,vcmin,tmp1,tmp2</returns>
         private static string Parse_DB(string address, string input)
         {
-            switch (packagecounter[address])
+            switch (packagecounter[address].iDB)
             {
                 //最後一包
                 case 1:
                     //添加新的
-                    DataCache[address] = AddNewDatas(DataCache[address], GetAES(input));
+                    DataCache[address].sDB = AddNewDatas(DataCache[address].sDB, GetAES(input));
                     //解析
                     //Byte 0 = 0x42(ASCII: “B”) 且Byte 1 = 0x53 (ASCII: “S”)時，代表為嘉普的電池(TREND POWER)，其餘皆為松下電池(Panasonic)
                     string EPVer = "";
@@ -1076,13 +1105,13 @@ namespace ParseRCCallback
                     string MinV = "";
                     int Tmp1 = 0;
                     int Tmp2 = 0;
-                    if (DataCache[address][0] == "42" && DataCache[address][1] == "53")
+                    if (DataCache[address].sDB[0] == "42" && DataCache[address].sDB[1] == "53")
                     {
-                        return GetASCIItoString(DataCache[address], 0, 15); //SN id
+                        return GetASCIItoString(DataCache[address].sDB, 0, 15); //SN id
                     }
                     else
                     {
-                        switch (int.Parse(DataCache[address][0], NumberStyles.HexNumber))
+                        switch (int.Parse(DataCache[address].sDB[0], NumberStyles.HexNumber))
                         {
                             case 0:
                                 EPVer = "PF";
@@ -1094,31 +1123,31 @@ namespace ParseRCCallback
                                 EPVer = "Reserved";
                                 break;
                         }
-                        EPFW = int.Parse(DataCache[address][1], NumberStyles.HexNumber).ToString();
-                        EPSN = string.Format("2{0:000}{1:00}{2:00}{3:00000}", int.Parse(DataCache[address][2], NumberStyles.HexNumber),
-                            int.Parse(DataCache[address][3], NumberStyles.HexNumber), int.Parse(DataCache[address][4], NumberStyles.HexNumber), 
-                            int.Parse(DataCache[address][6] + DataCache[address][5], NumberStyles.HexNumber));
-                        MaxV = int.Parse(DataCache[address][8] + DataCache[address][7], NumberStyles.HexNumber).ToString();
-                        MinV = int.Parse(DataCache[address][10] + DataCache[address][9], NumberStyles.HexNumber).ToString();
-                        Tmp1 = int.Parse(DataCache[address][11], NumberStyles.HexNumber);
+                        EPFW = int.Parse(DataCache[address].sDB[1], NumberStyles.HexNumber).ToString();
+                        EPSN = string.Format("2{0:000}{1:00}{2:00}{3:00000}", int.Parse(DataCache[address].sDB[2], NumberStyles.HexNumber),
+                            int.Parse(DataCache[address].sDB[3], NumberStyles.HexNumber), int.Parse(DataCache[address].sDB[4], NumberStyles.HexNumber), 
+                            int.Parse(DataCache[address].sDB[6] + DataCache[address].sDB[5], NumberStyles.HexNumber));
+                        MaxV = int.Parse(DataCache[address].sDB[8] + DataCache[address].sDB[7], NumberStyles.HexNumber).ToString();
+                        MinV = int.Parse(DataCache[address].sDB[10] + DataCache[address].sDB[9], NumberStyles.HexNumber).ToString();
+                        Tmp1 = int.Parse(DataCache[address].sDB[11], NumberStyles.HexNumber);
                         if (Tmp1 > 127)
                             Tmp1 -= 256;
-                        Tmp2 = int.Parse(DataCache[address][12], NumberStyles.HexNumber);
+                        Tmp2 = int.Parse(DataCache[address].sDB[12], NumberStyles.HexNumber);
                         if (Tmp2 > 127)
                             Tmp2 -= 256;
                     }
                     
                     //清空暫存
-                    DataCache = null;
+                    DataCache[address].sDB = new string[] { };
                     //packagecounter歸零
-                    packagecounter[address] = 0;
+                    packagecounter[address].iDB = 0;
 
                     //EPVer,PF/GA,EPFW,EPSN(yyyymmddxxxxx),vcmax,vcmin,tmp1,tmp2
                     return string.Format("{0},{1},{2},{3},{4},{5},{6}", EPVer, EPFW, EPSN, MaxV, MinV, Tmp1, Tmp2);
                 //第一包
                 case 2:
                     //作暫存
-                    DataCache[address] = GetAES(input);
+                    DataCache[address].sDB = GetAES(input);
                     return "DB_wait";
                 default:
                     Debug.Log("[DB] parse Error." + packagecounter[address]);
@@ -1161,7 +1190,7 @@ namespace ParseRCCallback
         {
             string[] aes = GetAES(input);
             string Device = "";
-            string Index = "";
+            //string Index = "";
             string Model = "";
             string Major = "";
             string Minor = "";
@@ -1285,11 +1314,11 @@ namespace ParseRCCallback
         {
             if (DataCache == null)
             {
-                DataCache = new Dictionary<string, string[]>();
+                DataCache = new Dictionary<string, DeviceDataCache>();
             }
             if (!DataCache.ContainsKey(address))
             {
-                DataCache.Add(address, null);
+                DataCache.Add(address, new DeviceDataCache());
             }
         }
         /// <summary>
@@ -1592,26 +1621,151 @@ namespace ParseRCCallback
         /// </summary>
         /// <param name="hexstring">16進制字串</param>
         /// <returns></returns>
-        private static int PackageCompute(string address, string hexstring)
+        private static DevicePakCount PackageCompute(string address, string type, string hexstring)
         {
             if (!packagecounter.ContainsKey(address))
             {
-                packagecounter.Add(address, 0);
+                packagecounter.Add(address, new DevicePakCount());
             }
-            if (packagecounter[address] <= 0)
+
+            switch (type)
             {
-                if (string.IsNullOrEmpty(hexstring))
-                    return 0;
-                //byte to int
-                int total = int.Parse(hexstring, NumberStyles.HexNumber);
-                int result = total / 14;
-                if (total % 14 != 0 && result != 0)
-                    result += 1;
-                return result;
+                case "09":
+                    if (packagecounter[address].i09 <= 0)
+                    {
+                        if (string.IsNullOrEmpty(hexstring))
+                            return packagecounter[address];
+                        //byte to int
+                        int total = int.Parse(hexstring, NumberStyles.HexNumber);
+                        int result = total / 14;
+                        if (total % 14 != 0 && result != 0)
+                            result += 1;
+                        packagecounter[address].i09 = result;
+                        return packagecounter[address];
+                    }
+                    else if (packagecounter[address].i09 > 0)
+                    {
+                        packagecounter[address].i09 -= 1;
+                        return packagecounter[address];
+                    }
+                    break;
+                case "0A":
+                    if (packagecounter[address].i0A <= 0)
+                    {
+                        if (string.IsNullOrEmpty(hexstring))
+                            return packagecounter[address];
+                        //byte to int
+                        int total = int.Parse(hexstring, NumberStyles.HexNumber);
+                        int result = total / 14;
+                        if (total % 14 != 0 && result != 0)
+                            result += 1;
+                        packagecounter[address].i0A = result;
+                        return packagecounter[address];
+                    }
+                    else if (packagecounter[address].i0A > 0)
+                    {
+                        packagecounter[address].i0A -= 1;
+                        return packagecounter[address];
+                    }
+                    break;
+                case "32":
+                    if (packagecounter[address].i32 <= 0)
+                    {
+                        if (string.IsNullOrEmpty(hexstring))
+                            return packagecounter[address];
+                        //byte to int
+                        int total = int.Parse(hexstring, NumberStyles.HexNumber);
+                        int result = total / 14;
+                        if (total % 14 != 0 && result != 0)
+                            result += 1;
+                        packagecounter[address].i32 = result;
+                        return packagecounter[address];
+                    }
+                    else if (packagecounter[address].i32 > 0)
+                    {
+                        packagecounter[address].i32 -= 1;
+                        return packagecounter[address];
+                    }
+                    break;
+                case "D1":
+                    if (packagecounter[address].iD1 <= 0)
+                    {
+                        if (string.IsNullOrEmpty(hexstring))
+                            return packagecounter[address];
+                        //byte to int
+                        int total = int.Parse(hexstring, NumberStyles.HexNumber);
+                        int result = total / 14;
+                        if (total % 14 != 0 && result != 0)
+                            result += 1;
+                        packagecounter[address].iD1 = result;
+                        return packagecounter[address];
+                    }
+                    else if (packagecounter[address].iD1 > 0)
+                    {
+                        packagecounter[address].iD1 -= 1;
+                        return packagecounter[address];
+                    }
+                    break;
+                case "D2":
+                    if (packagecounter[address].iD2 <= 0)
+                    {
+                        if (string.IsNullOrEmpty(hexstring))
+                            return packagecounter[address];
+                        //byte to int
+                        int total = int.Parse(hexstring, NumberStyles.HexNumber);
+                        int result = total / 14;
+                        if (total % 14 != 0 && result != 0)
+                            result += 1;
+                        packagecounter[address].iD2 = result;
+                        return packagecounter[address];
+                    }
+                    else if (packagecounter[address].iD2 > 0)
+                    {
+                        packagecounter[address].iD2 -= 1;
+                        return packagecounter[address];
+                    }
+                    break;
+                case "D3":
+                    if (packagecounter[address].iD3 <= 0)
+                    {
+                        if (string.IsNullOrEmpty(hexstring))
+                            return packagecounter[address];
+                        //byte to int
+                        int total = int.Parse(hexstring, NumberStyles.HexNumber);
+                        int result = total / 14;
+                        if (total % 14 != 0 && result != 0)
+                            result += 1;
+                        packagecounter[address].iD3 = result;
+                        return packagecounter[address];
+                    }
+                    else if (packagecounter[address].iD3 > 0)
+                    {
+                        packagecounter[address].iD3 -= 1;
+                        return packagecounter[address];
+                    }
+                    break;
+                case "DB":
+                    if (packagecounter[address].iDB <= 0)
+                    {
+                        if (string.IsNullOrEmpty(hexstring))
+                            return packagecounter[address];
+                        //byte to int
+                        int total = int.Parse(hexstring, NumberStyles.HexNumber);
+                        int result = total / 14;
+                        if (total % 14 != 0 && result != 0)
+                            result += 1;
+                        packagecounter[address].iDB = result;
+                        return packagecounter[address];
+                    }
+                    else if (packagecounter[address].iDB > 0)
+                    {
+                        packagecounter[address].iDB -= 1;
+                        return packagecounter[address];
+                    }
+                    break;
             }
-            if (packagecounter[address] > 0)
-                return (packagecounter[address] -= 1);
-            return 0;
+            Debug.LogError("PackageCompute error. return null.");
+            return packagecounter[address];
         }
         /// <summary>
         /// 把Hex字串轉為ASCII字串

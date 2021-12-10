@@ -63,6 +63,10 @@ public class HomeManager : MonoBehaviour
         //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,DB,10,0A,11,13,0A,0E,0A,00,00,00,00,00,00,00,00,0E,F1");
         //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,DB,10,00,00,00,00,00,00,00,00,00,00,00,00,00,00,02,1C");
         //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,D4,02,AB,02,00,00,00,00,00,00,00,00,00,00,00,00,02,0F");
+        //FC,21,09,12,30,50,42,30,18,11,19,41,58,30,50,42,30,7A,0E,4B
+        //FC,21,09,12,C6,02,00,00,00,00,00,00,00,00,00,00,00,00,04,B1
+        //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,09,12,30,50,42,30,18,11,19,41,58,30,50,42,30,7A,0E,4B");
+        //RCToolPlugin_onReceiveDecodeRawData("test", "FC,21,09,12,C6,02,00,00,00,00,00,00,00,00,00,00,00,00,04,B1");
     }
 
     private void ParseCallBack_onReceiveEncodeParsedData(string input)
