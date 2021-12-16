@@ -36,7 +36,7 @@ public class RawDataView : MonoBehaviour
     {
         foreach (GameObject obj in CallbackObj_List)
         {
-            Destroy(obj);
+            DestroyImmediate(obj);
         }
         CallbackObj_List.Clear();
     }
@@ -49,6 +49,7 @@ public class RawDataView : MonoBehaviour
         CallbackText.text = string.Format("{0}", input);
         newtext.transform.SetAsFirstSibling();
         CallbackObj_List.Add(newtext);
+        CheckCallbackCount();
     }
 
     public void AddDecodeCallback(string address, string data)
@@ -59,7 +60,17 @@ public class RawDataView : MonoBehaviour
         CallbackText.text = string.Format("{0}", input);
         newtext.transform.SetAsFirstSibling();
         CallbackObj_List.Add(newtext);
+        CheckCallbackCount();
         HomeManager.AddNewLog(address, string.Format("\n[{0}] :{1}", DateTime.Now, data));
+    }
+
+    private void CheckCallbackCount()
+    {
+        if (CallbackObj_List.Count > 500)
+        {
+            DestroyImmediate(CallbackObj_List[0]);
+            CallbackObj_List.RemoveAt(0);
+        }
     }
 
     public void SendCustomCMD()

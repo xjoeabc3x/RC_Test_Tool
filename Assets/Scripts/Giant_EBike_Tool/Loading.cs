@@ -13,8 +13,6 @@ public class Loading : MonoBehaviour
     GameObject InvokeButton;
     [SerializeField, Header("[Invoke Button Text]")]
     Text InvokeButton_Text;
-    //[SerializeField, Header("[°T®§¤å¦r]")]
-    //Text InfoText;
 
     private void Awake()
     {
@@ -72,15 +70,7 @@ public class Loading : MonoBehaviour
     {
         delay = TimeInSec;
         LoadingMask.SetActive(true);
-        //StopCoroutine("_ShowLoading");
-        //StartCoroutine("_ShowLoading", TimeInSec);
     }
-
-    //private IEnumerator _ShowLoading(float TimeInSec)
-    //{
-    //    yield return new WaitForSecondsRealtime(TimeInSec);
-    //    HideLoading();
-    //}
 
     public void HideLoading()
     {

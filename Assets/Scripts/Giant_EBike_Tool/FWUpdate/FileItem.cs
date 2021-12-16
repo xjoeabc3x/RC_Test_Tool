@@ -31,6 +31,8 @@ public class FileItem : MonoBehaviour
                 DFUView.Instance.CurrentFile = DFUView.Instance.gameObject.activeInHierarchy ? FullFileName : DFUView.Instance.CurrentFile;
             if (L2View.Instance != null)
                 L2View.Instance.CurrentFile = L2View.Instance.gameObject.activeInHierarchy ? FullFileName : L2View.Instance.CurrentFile;
+            if (L1View.Instance != null)
+                L1View.Instance.CurrentFile = L1View.Instance.gameObject.activeInHierarchy ? FullFileName : L1View.Instance.CurrentFile;
         }
     }
 
@@ -40,6 +42,8 @@ public class FileItem : MonoBehaviour
             return DFUView.Instance.toggleGroup;
         if (L2View.Instance != null && L2View.Instance.gameObject.activeInHierarchy)
             return L2View.Instance.toggleGroup;
+        if (L1View.Instance != null && L1View.Instance.gameObject.activeInHierarchy)
+            return L1View.Instance.toggleGroup;
         return null;
     }
 

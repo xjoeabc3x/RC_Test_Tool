@@ -226,6 +226,7 @@
     <Compile Include="Assets\NGUI\Scripts\Internal\PropertyBinding.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\02_Fundamentals\Scripts\Updaters\SearchByPlaceIdUpdater.cs" />
     <Compile Include="Assets\Scripts\Tools\ColliderCheckManager.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\FWUpdate\L1View.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIEventTrigger.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Miscellaneous\Scripts\PrivateRoads.cs" />
     <Compile Include="Assets\Scripts\Tools\ColliderChecker.cs" />
