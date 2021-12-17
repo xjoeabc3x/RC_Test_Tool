@@ -12811,6 +12811,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: 12 Remote_On/Off App
       m_Image: {fileID: 0}
+    - m_Text: 05 CAN ISP
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -16710,7 +16712,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: v1.2.3_Beta
+  m_Text: v1.2.3
 --- !u!222 &367134288
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -35546,7 +35548,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.10398147, y: 0.23916823}
   m_AnchorMax: {x: 0.4497222, y: 0.29155856}
-  m_AnchoredPosition: {x: 501, y: 642.00134}
+  m_AnchoredPosition: {x: 501, y: 642.0014}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &753271670
@@ -44967,6 +44969,7 @@ MonoBehaviour:
   - FW/EVO_45/L1
   - FW/EVO_JPN/L1
   - FW/Charge_S5/L1
+  - FW/CAN/ISP
   CopyFiles:
   - FW/SG10Y/sg10yxxxapp_20200910008.zip
   - FW/SG10Y/sg10yxxxapp_20201127000.zip
@@ -45131,6 +45134,9 @@ MonoBehaviour:
   - FW/EVO_45/L1/uimcue45app_20181121000.BIN
   - FW/ONE_BLE/L1/uimcuoneapp_20180515000.bin
   - FW/ONE_BLE/L1/uimcuoneapp_20180729000.bin
+  - FW/CAN/ISP/dumcusdfisp_20200219000.bin
+  - FW/CAN/ISP/dumcusdfisp_20200707000.bin
+  - FW/CAN/ISP/dumcusdfisp_20201219000.bin
 --- !u!1 &1002700482
 GameObject:
   m_ObjectHideFlags: 0
@@ -61276,7 +61282,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.10398147, y: 0.23916823}
   m_AnchorMax: {x: 0.4497222, y: 0.29155856}
-  m_AnchoredPosition: {x: 501, y: 796.0013}
+  m_AnchoredPosition: {x: 501, y: 796.00134}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1395940407

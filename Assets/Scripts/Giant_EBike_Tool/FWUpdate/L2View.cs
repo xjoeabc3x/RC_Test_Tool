@@ -119,6 +119,10 @@ public class L2View : MonoBehaviour
                 CurrentType = "12";
                 GetFileItems("FW/Remote_OnOff");
                 break;
+            case 8: //CAN ISP
+                CurrentType = "";
+                GetFileItems("FW/CAN/ISP");
+                break;
         }
     }
 
