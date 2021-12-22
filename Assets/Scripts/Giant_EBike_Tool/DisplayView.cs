@@ -436,16 +436,16 @@ public class DisplayView : MonoBehaviour
         switch (currentPage)
         {
             case 1:
-                evoset.Main1 = id;
+                evoset.Left1 = id;
                 break;
             case 2:
-                evoset.Main2 = id;
+                evoset.Left2 = id;
                 break;
             case 3:
-                evoset.Main3 = id;
+                evoset.Left3 = id;
                 break;
             case 4:
-                evoset.Main4 = id;
+                evoset.Left4 = id;
                 break;
         }
     }
@@ -455,16 +455,16 @@ public class DisplayView : MonoBehaviour
         switch (currentPage)
         {
             case 1:
-                evoset.Main1 = id;
+                evoset.Right1 = id;
                 break;
             case 2:
-                evoset.Main2 = id;
+                evoset.Right2 = id;
                 break;
             case 3:
-                evoset.Main3 = id;
+                evoset.Right3 = id;
                 break;
             case 4:
-                evoset.Main4 = id;
+                evoset.Right4 = id;
                 break;
         }
     }
@@ -488,12 +488,15 @@ public class EVOSet
     public int Main1 = 0;
     public int Left1 = 0;
     public int Right1 = 0;
+
     public int Main2 = 0;
     public int Left2 = 0;
     public int Right2 = 0;
+
     public int Main3 = 0;
     public int Left3 = 0;
     public int Right3 = 0;
+
     public int Main4 = 0;
     public int Left4 = 0;
     public int Right4 = 0;

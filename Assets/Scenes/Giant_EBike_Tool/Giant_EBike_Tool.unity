@@ -11780,7 +11780,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 49.99991, y: 0}
+  m_AnchoredPosition: {x: 49.999924, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &254625623
@@ -16712,7 +16712,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: v1.2.3
+  m_Text: v1.2.4
 --- !u!222 &367134288
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16774,7 +16774,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Add "L1" protocol
+          m_StringArgument: Bug Fixed, Add CAN isp File
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &370148984
@@ -32917,7 +32917,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -49.99991, y: 0}
+  m_AnchoredPosition: {x: -49.999924, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &705884682
@@ -35548,7 +35548,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.10398147, y: 0.23916823}
   m_AnchorMax: {x: 0.4497222, y: 0.29155856}
-  m_AnchoredPosition: {x: 501, y: 642.0014}
+  m_AnchoredPosition: {x: 501, y: 642.0015}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &753271670
@@ -45137,6 +45137,7 @@ MonoBehaviour:
   - FW/CAN/ISP/dumcusdfisp_20200219000.bin
   - FW/CAN/ISP/dumcusdfisp_20200707000.bin
   - FW/CAN/ISP/dumcusdfisp_20201219000.bin
+  - FW/CAN/ISP/dumcusdfisp_20210703000.BIN
 --- !u!1 &1002700482
 GameObject:
   m_ObjectHideFlags: 0
@@ -55581,7 +55582,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 16
+  m_Text: 15
 --- !u!222 &1258672800
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -61282,7 +61283,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.10398147, y: 0.23916823}
   m_AnchorMax: {x: 0.4497222, y: 0.29155856}
-  m_AnchoredPosition: {x: 501, y: 796.00134}
+  m_AnchoredPosition: {x: 501, y: 796.00146}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1395940407
@@ -66704,7 +66705,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -128.77997}
+  m_AnchoredPosition: {x: 0, y: -128.77995}
   m_SizeDelta: {x: 0, y: -257.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1517949312
@@ -81607,7 +81608,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 16
+  m_Text: 17
 --- !u!222 &1872741973
 CanvasRenderer:
   m_ObjectHideFlags: 0

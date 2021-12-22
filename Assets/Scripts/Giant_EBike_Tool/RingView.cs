@@ -178,7 +178,7 @@ public class RingView : MonoBehaviour
         }
         if (Key == "DE")
         {
-            Toast.Instance.ShowToast("[DE] Set Finished.");
+            Toast.Instance.ShowToast("[DE] Set Finished :" + Value);
         }
     }
 

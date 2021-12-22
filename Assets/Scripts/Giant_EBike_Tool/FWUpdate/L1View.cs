@@ -128,6 +128,14 @@ public class L1View : MonoBehaviour
                         break;
                 }
                 break;
+            case 1:
+                CurrentType = "F0";
+                GetFileItems("FW/UI_BLE/R3");
+                break;
+            case 2:
+                CurrentType = "F0";
+                GetFileItems("FW/UI_BLE/R4");
+                break;
         }
     }
 

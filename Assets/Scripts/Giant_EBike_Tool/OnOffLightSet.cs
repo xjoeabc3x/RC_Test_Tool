@@ -57,6 +57,10 @@ public class OnOffLightSet : MonoBehaviour
             else if (callback_dic.ContainsKey(Key))
                 callback_dic[Key] = Value;
         }
+        if (Key == "DA")
+        {
+            Toast.Instance.ShowToast("[DA] Set Finished :" + Value);
+        }
     }
     string current_low = "01";
     string current_high = "01";

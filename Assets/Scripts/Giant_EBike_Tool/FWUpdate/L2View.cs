@@ -120,8 +120,16 @@ public class L2View : MonoBehaviour
                 GetFileItems("FW/Remote_OnOff");
                 break;
             case 8: //CAN ISP
-                CurrentType = "";
+                CurrentType = "05";
                 GetFileItems("FW/CAN/ISP");
+                break;
+            case 9: //F0 UI-BLE-R7
+                CurrentType = "F0";
+                GetFileItems("FW/UI_BLE/R7");
+                break;
+            case 10: //F0 UI-BLE-R9
+                CurrentType = "F0";
+                GetFileItems("FW/UI_BLE/R9");
                 break;
         }
     }
@@ -159,13 +167,27 @@ public class L2View : MonoBehaviour
             Toast.Instance.ShowToast("Something go wrong.");
             return;
         }
-        RCToolPlugin.StartL2(ChoosedDeviceManager.DeviceAddress, CurrentType, CurrentFile);
-        Loading.Instance.ShowLoading(_AbortL2, "Cancel");
+        if (CurrentType == "F0") //BLE
+        {
+            RCToolPlugin.StartV2(ChoosedDeviceManager.DeviceAddress, CurrentType, CurrentFile);
+            Loading.Instance.ShowLoading(_AbortV2, "Cancel");
+        }
+        else
+        {
+            RCToolPlugin.StartL2(ChoosedDeviceManager.DeviceAddress, CurrentType, CurrentFile);
+            Loading.Instance.ShowLoading(_AbortL2, "Cancel");
+        }
     }
 
     private void _AbortL2()
     {
         RCToolPlugin.AbortL2();
+        Loading.Instance.HideLoading();
+    }
+
+    private void _AbortV2()
+    {
+        RCToolPlugin.AbortV2();
         Loading.Instance.HideLoading();
     }
 

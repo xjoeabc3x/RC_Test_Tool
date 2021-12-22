@@ -195,6 +195,18 @@ public class RCToolPlugin : MonoBehaviour
     {
         _AbortL1();
     }
+
+    public static void StartV2(string address, string type, string filePath)
+    {
+        if (string.IsNullOrEmpty(address) || string.IsNullOrEmpty(type) || string.IsNullOrEmpty(filePath))
+            return;
+        _StartV2(address, type, filePath);
+    }
+
+    public static void AbortV2()
+    {
+        _AbortV2();
+    }
     /// <summary>
     /// ¶}©l±½´y
     /// </summary>
@@ -543,6 +555,24 @@ public class RCToolPlugin : MonoBehaviour
         }
     }
 
+    private static void _StartV2(string address, string func, string filePath)
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("StartV2", address, func, filePath);
+        }
+    }
+
+    private static void _AbortV2()
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("AbortV2");
+        }
+    }
+
     private static void _StartScan()
     {
         AndroidJNI.AttachCurrentThread();
@@ -622,6 +652,10 @@ public class RCToolPlugin : MonoBehaviour
     private static void _StartL1(string address, string type, string filePath){}
 
     private static void _AbortL1(){}
+
+    private static void _StartV2(string address, string type, string filePath){}
+
+    private static void _AbortV2(){}
     // ¶}©l±½´y
     private static void _StartScan(){}
     // °±¤î±½´y
