@@ -4964,7 +4964,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1134224717}
+      - m_Target: {fileID: 2100425463}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -4974,7 +4974,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 474174005}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -4988,7 +4988,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2100425463}
+      - m_Target: {fileID: 1134224717}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -4998,7 +4998,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &107100533
 MonoBehaviour:
@@ -11780,7 +11780,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 49.999924, y: 0}
+  m_AnchoredPosition: {x: 49.99991, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &254625623
@@ -12812,6 +12812,8 @@ MonoBehaviour:
     - m_Text: 12 Remote_On/Off App
       m_Image: {fileID: 0}
     - m_Text: 05 CAN ISP
+      m_Image: {fileID: 0}
+    - m_Text: F0 UI-BLE R4
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -16712,7 +16714,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: v1.2.4
+  m_Text: v1.2.5_Beta
 --- !u!222 &367134288
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16774,7 +16776,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Bug Fixed, Add CAN isp File
+          m_StringArgument: UI-BLE test
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &370148984
@@ -32917,7 +32919,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -49.999924, y: 0}
+  m_AnchoredPosition: {x: -49.99991, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &705884682
@@ -35548,7 +35550,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.10398147, y: 0.23916823}
   m_AnchorMax: {x: 0.4497222, y: 0.29155856}
-  m_AnchoredPosition: {x: 501, y: 642.0015}
+  m_AnchoredPosition: {x: 501, y: 642.0016}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &753271670
@@ -61283,7 +61285,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.10398147, y: 0.23916823}
   m_AnchorMax: {x: 0.4497222, y: 0.29155856}
-  m_AnchoredPosition: {x: 501, y: 796.00146}
+  m_AnchoredPosition: {x: 501, y: 796.0015}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1395940407
@@ -63687,6 +63689,7 @@ MonoBehaviour:
   - {fileID: 810003304}
   - {fileID: 1146006931}
   ToDoListButton: {fileID: 1899512395}
+  BackButton: {fileID: 2100425463}
   AutoBikeDetail: {fileID: 1233051378}
 --- !u!1 &1434197588
 GameObject:
@@ -66705,7 +66708,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -128.77995}
+  m_AnchoredPosition: {x: 0, y: -128.77997}
   m_SizeDelta: {x: 0, y: -257.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1517949312
@@ -78528,6 +78531,8 @@ MonoBehaviour:
   m_Options:
     m_Options:
     - m_Text: 01 UI-MCU
+      m_Image: {fileID: 0}
+    - m_Text: F0 UI-BLE R9
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

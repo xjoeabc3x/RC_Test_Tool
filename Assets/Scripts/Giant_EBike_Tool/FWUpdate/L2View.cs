@@ -125,12 +125,12 @@ public class L2View : MonoBehaviour
                 break;
             case 9: //F0 UI-BLE-R7
                 CurrentType = "F0";
-                GetFileItems("FW/UI_BLE/R7");
+                GetFileItems("FW/UI_BLE/R4");
                 break;
-            case 10: //F0 UI-BLE-R9
-                CurrentType = "F0";
-                GetFileItems("FW/UI_BLE/R9");
-                break;
+            //case 10: //F0 UI-BLE-R9
+            //    CurrentType = "F0";
+            //    GetFileItems("FW/UI_BLE/R9");
+            //    break;
         }
     }
 

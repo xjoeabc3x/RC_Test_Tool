@@ -74,6 +74,7 @@ public class TuningView : MonoBehaviour
         if (NotTuningDU(DUType))
         {
             Toast.Instance.ShowToast("Not supported DU.");
+            ChoosedDeviceManager.Instance.SetBackButtonState(true);
             ChoosedDeviceManager.Instance.CloseChildPages();
             return;
         }

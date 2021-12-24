@@ -120,6 +120,8 @@ public class ChoosedDeviceManager : MonoBehaviour
     List<GameObject> ChildPages = new List<GameObject>();
     [SerializeField, Header("[功能表按鈕]")]
     GameObject ToDoListButton;
+    [SerializeField, Header("[返回按鈕]")]
+    GameObject BackButton;
     [SerializeField, Header("[自動讀取開關]")]
     Toggle AutoBikeDetail;
     //標題
@@ -602,6 +604,11 @@ public class ChoosedDeviceManager : MonoBehaviour
         {
             ChildPages[i].SetActive(false);
         }
+    }
+
+    public void SetBackButtonState(bool state)
+    {
+        BackButton.SetActive(state);
     }
 
     public static BikeDetail GetBikeDetail(string address)
