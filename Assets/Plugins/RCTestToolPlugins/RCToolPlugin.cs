@@ -117,6 +117,7 @@ public class RCToolPlugin : MonoBehaviour
             return;
         }
         _Init();
+        StopScan();
         StartScan();
     }
     //«ü¥O©µ¿ð

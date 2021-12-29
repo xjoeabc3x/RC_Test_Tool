@@ -229,13 +229,18 @@ public class RingView : MonoBehaviour
 
     public void SetRing()
     {
-        for (int i = 0; i < ButtonPos.Count; i++)
+        //for (int i = 0; i < ButtonPos.Count; i++)
+        //{
+        //    if (ButtonPos[i].childCount <= 0)
+        //    {
+        //        Toast.Instance.ShowToast("Empty not allowed.");
+        //        return;
+        //    }
+        //}
+        if (!RCToolPlugin.IsConnected(ChoosedDeviceManager.DeviceAddress))
         {
-            if (ButtonPos[i].childCount <= 0)
-            {
-                Toast.Instance.ShowToast("Empty not allowed.");
-                return;
-            }
+            Toast.Instance.ShowToast("Device is not connected.");
+            return;
         }
         StartCoroutine("_SetRing");
     }
@@ -250,7 +255,7 @@ public class RingView : MonoBehaviour
         //default:0x04
         if (callback_dic.ContainsKey("DD"))
         {
-            Debug.Log("_SetRing :" + callback_dic["DD"]);
+            //Debug.Log("_SetRing :" + callback_dic["DD"]);
             string[] data = callback_dic["DD"].Split(',');
             if (data[0] != "0" || data[1] != "0")
             {

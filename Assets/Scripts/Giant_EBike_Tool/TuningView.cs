@@ -71,6 +71,13 @@ public class TuningView : MonoBehaviour
     {
         //§PÂ_¤£¥iTuning DU
         string DUType = ChoosedDeviceManager.GetBikeDetail(ChoosedDeviceManager.DeviceAddress).DUType;
+        if (string.IsNullOrEmpty(DUType) || DUType == "null")
+        {
+            Toast.Instance.ShowToast("Need to Get Bike Detail first.");
+            ChoosedDeviceManager.Instance.SetBackButtonState(true);
+            ChoosedDeviceManager.Instance.CloseChildPages();
+            return;
+        }
         if (NotTuningDU(DUType))
         {
             Toast.Instance.ShowToast("Not supported DU.");

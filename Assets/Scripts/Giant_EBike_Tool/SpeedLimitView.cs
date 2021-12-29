@@ -36,8 +36,8 @@ public class SpeedLimitView : MonoBehaviour
 
     private void Sync_C0(string data)
     {
-        SpeedLimit_toggle.isOn = (data.Split(',')[0] == "0")? true : false;
-        Unit_toggle.isOn = (data.Split(',')[1] == "0") ? true : false;
+        SpeedLimit_toggle.isOn = !(data.Split(',')[0] == "0");
+        Unit_toggle.isOn = !(data.Split(',')[1] == "0");
     }
 
     private void OnDisable()
