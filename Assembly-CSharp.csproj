@@ -112,6 +112,7 @@
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Miscellaneous\Scripts\LatLngPrefabStampingExample.cs" />
     <Compile Include="Assets\Scripts\CommandManager\ParseCallBack.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIDragDropContainer.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\TrackerView.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\URPExample\Scripts\CameraSelector.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Intersections\Scripts\Intersections.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\04_Advanced\Miscellaneous\Scripts\Minimap.cs" />

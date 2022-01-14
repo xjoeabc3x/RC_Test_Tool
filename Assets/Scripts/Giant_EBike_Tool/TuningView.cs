@@ -70,8 +70,17 @@ public class TuningView : MonoBehaviour
     private void Init()
     {
         //§PÂ_¤£¥iTuning DU
-        string DUType = ChoosedDeviceManager.GetBikeDetail(ChoosedDeviceManager.DeviceAddress).DUType;
-        if (string.IsNullOrEmpty(DUType) || DUType == "null")
+        ChoosedDeviceManager.BikeDetail bikeDetail = ChoosedDeviceManager.GetBikeDetail(ChoosedDeviceManager.DeviceAddress);
+        if (bikeDetail == null)
+        {
+            Toast.Instance.ShowToast("Need to Get Bike Detail first.");
+            ChoosedDeviceManager.Instance.SetBackButtonState(true);
+            ChoosedDeviceManager.Instance.CloseChildPages();
+            return;
+        }
+        string DUType = bikeDetail.DUType;
+        string RCType = bikeDetail.RCType;
+        if (string.IsNullOrEmpty(DUType) || DUType == "null" || string.IsNullOrEmpty(RCType) || RCType == "null")
         {
             Toast.Instance.ShowToast("Need to Get Bike Detail first.");
             ChoosedDeviceManager.Instance.SetBackButtonState(true);
@@ -81,6 +90,14 @@ public class TuningView : MonoBehaviour
         if (NotTuningDU(DUType))
         {
             Toast.Instance.ShowToast("Not supported DU.");
+            ChoosedDeviceManager.Instance.SetBackButtonState(true);
+            ChoosedDeviceManager.Instance.CloseChildPages();
+            return;
+        }
+
+        if (NotTuningRC(RCType))
+        {
+            Toast.Instance.ShowToast("Not supported RC.");
             ChoosedDeviceManager.Instance.SetBackButtonState(true);
             ChoosedDeviceManager.Instance.CloseChildPages();
             return;
@@ -197,6 +214,19 @@ public class TuningView : MonoBehaviour
         }
     }
 
+    public static bool NotTuningRC(string RCType)
+    {
+        switch (RCType)
+        {
+            case "RideControl EVO JPN":
+                return true;
+            case "RideControl ONE JPN":
+                return true;
+            default:
+                return false;
+        }
+    }
+
     private void SetTuningButtonText(string DUType)
     {
         string[] str = GetTuningButtonText(DUType);
@@ -211,25 +241,65 @@ public class TuningView : MonoBehaviour
         switch (DUType)
         {
             case "DU2 PCB-BIC PW-X":
-                return new string[15] { "300", "350", "360", "200", "250", "300", "175", "200", "250", "125", "150", "175", "50", "75", "100" };
+                return new string[15] { "300", "350", "360", 
+                    "200", "250", "300", 
+                    "175", "200", "250", 
+                    "125", "150", "175", 
+                    "50", "75", "100" };
             case "DU3 CAN-BIC2 PW-SE":
-                return new string[15] { "250", "300", "350", "175", "200", "250", "125", "150", "175", "75", "100", "125", "50", "75", "-" };
+                return new string[15] { "250", "300", "350", 
+                    "175", "200", "250", "125", "150", "175", "75", "100", "125", "50", "75", "-" };
             case "DU4 Comfort-BIC":
-                return new string[15] { "250", "300", "-", "150", "175", "200", "100", "125", "150", "75", "100", "-", "50", "75", "-" };
+                return new string[15] { "250", "300", "-", 
+                    "150", "175", "200", 
+                    "100", "125", "150", 
+                    "75", "100", "-", 
+                    "50", "75", "-" };
             case "DU4 Comfort-BIC PW-TE":
-                return new string[15] { "250", "300", "-", "150", "175", "200", "100", "125", "150", "75", "100", "-", "50", "75", "-" };
+                return new string[15] { "250", "300", "-", 
+                    "150", "175", "200", 
+                    "100", "125", "150", 
+                    "75", "100", "-", 
+                    "50", "75", "-" };
             case "DU6 Comfort-BIC2 PW ST":
-                return new string[15] { "250", "300", "350", "175", "200", "250", "125", "150", "175", "75", "100", "125", "50", "75", "-" };
+                return new string[15] { "250", "300", "350", 
+                    "175", "200", "250", 
+                    "125", "150", "175", 
+                    "75", "100", "125", 
+                    "50", "75", "-" };
             case "DU7 PCB-BIC2 PW-X2":
-                return new string[15] { "300", "350", "360", "200", "250", "300", "175", "200", "250", "125", "150", "175", "50", "75", "100" };
+                return new string[15] { "300", "350", "360", 
+                    "200", "250", "300", "175", "200", "250", "125", "150", "175", "50", "75", "100" };
             case "DU10 ICB-BIC standard":
-                return new string[15] { "250", "300", "-", "150", "175", "200", "100", "125", "150", "75", "100", "-", "50", "75", "-" };
+                return new string[15] { "250", "300", "-", 
+                    "150", "175", "200", 
+                    "100", "125", "150", 
+                    "75", "100", "-", 
+                    "50", "75", "-" };
             case "DU11 ICB-BIC coaster":
-                return new string[15] { "250", "300", "-", "150", "175", "200", "100", "125", "150", "75", "100", "-", "50", "75", "-" };
+                return new string[15] { "250", "300", "-", 
+                    "150", "175", "200", 
+                    "100", "125", "150", 
+                    "75", "100", "-", 
+                    "50", "75", "-" };
             case "DU15 PCB BIC3":
-                return new string[15] { "300", "350", "400", "200", "250", "300", "150", "175", "200", "100", "125", "150", "50", "75", "100" };
+                return new string[15] { "300", "350", "400", 
+                    "200", "250", "300", 
+                    "150", "175", "200", 
+                    "100", "125", "150", 
+                    "50", "75", "100" };
             case "DU16 EP8":
-                return new string[15] { "9", "10", "11", "7", "8", "9", "5", "6", "7", "3", "4", "5", "1", "2", "3" };
+                return new string[15] { "9", "10", "11", 
+                    "7", "8", "9", 
+                    "5", "6", "7", 
+                    "3", "4", "5", 
+                    "1", "2", "3" };
+            case "DU20":
+                return new string[15] { "250", "300", "350",
+                    "175", "200", "250",
+                    "125", "150", "175",
+                    "75", "100", "125",
+                    "50", "75", "-" };
             default:
                 return new string[15] { "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" };
         }

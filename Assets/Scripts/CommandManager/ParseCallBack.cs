@@ -325,7 +325,7 @@ namespace ParseRCCallback
                     DUFW = GetYamahaFWver(DataCache[address].s09[4], DataCache[address].s09[5], DataCache[address].s09[6], DataCache[address].s09[7]);
                     evymc = GetRCID(DataCache[address].s09);
                     SN = int.Parse(DataCache[address].s09[17] + DataCache[address].s09[16] + DataCache[address].s09[15], NumberStyles.HexNumber).ToString();
-                    switch (DUFW_MD)
+                    switch (DUFW_MD.ToUpper())
                     {
                         case "0SC":
                             DUType = "DU1 CAN-BIC PW-SE";
@@ -391,8 +391,11 @@ namespace ParseRCCallback
                             DUType = "DU16 EP8";
                             DUFW = GetShimanoFWver(DataCache[address].s09[5], DataCache[address].s09[6], DataCache[address].s09[7]);
                             break;
+                        case "3MA":
+                            DUType = "DU20";
+                            break;
                         default:
-                            Debug.Log("Unknow DU_Firmware.");
+                            Debug.Log("Unknow DU_Firmware :" + DUFW_MD);
                             break;
                     }
                     //²MªÅ¼È¦s

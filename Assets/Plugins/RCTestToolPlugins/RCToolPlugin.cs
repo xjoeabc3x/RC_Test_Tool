@@ -101,11 +101,21 @@ public class RCToolPlugin : MonoBehaviour
     /// </summary>
     public delegate void EventType_L1Error(string address, string errormsg);
     public static EventType_L1Error onReceiveL1Error;
+    /// <summary>
+    /// Tracker訊息
+    /// </summary>
+    public delegate void EventType_TrackerMsg(string address, string msg);
+    public static EventType_TrackerMsg onReceiveTrackerMsg;
+    /// <summary>
+    /// Tracker錯誤
+    /// </summary>
+    public delegate void EventType_TrackerError(string address, string errormsg);
+    public static EventType_TrackerError onReceiveTrackerError;
     #endregion
 
     //初始化
     private void Awake()
-	{
+    {
         if (Instance == null)
         {
             Instance = this;
@@ -207,6 +217,26 @@ public class RCToolPlugin : MonoBehaviour
     public static void AbortV2()
     {
         _AbortV2();
+    }
+
+    public static void GetTrackerFile(string address, string savePath, int RootDir, int ChildDir, int FileID)
+    {
+        _GetTrackerFile(address, savePath, RootDir, ChildDir, FileID);
+    }
+
+    public static void AbortGetTrackerFile()
+    {
+        _AbortGetTrackerFile();
+    }
+
+    public static void WriteTrackerFile(string address, string filePath, int RootDir, int ChildDir)
+    {
+        _WriteTrackerFile(address, filePath, RootDir, ChildDir);
+    }
+
+    public static void AbortWriteTrackerFile()
+    {
+        _AbortWriteTrackerFile();
     }
     /// <summary>
     /// 開始掃描
@@ -479,6 +509,24 @@ public class RCToolPlugin : MonoBehaviour
         onReceiveL1Error(info[0], info[1]);
     }
 
+    public void TrackerMsg(string str)
+    {
+        Debug.Log("On Unity TrackerMsg:" + str);
+        if (string.IsNullOrEmpty(str) || str.Split('|').Length < 2)
+        return;
+        string[] info = str.Split('|');
+        onReceiveTrackerMsg(info[0], info[1]);
+    }
+
+    public void TrackerError(string str)
+    {
+        Debug.Log("On Unity TrackerError:" + str);
+        if (string.IsNullOrEmpty(str) || str.Split('|').Length < 2)
+            return;
+        string[] info = str.Split('|');
+        onReceiveTrackerError(info[0], info[1]);
+    }
+
     #endregion
 
     #region [APIs : Unity call Plugin]
@@ -574,6 +622,42 @@ public class RCToolPlugin : MonoBehaviour
         }
     }
 
+    private static void _GetTrackerFile(string address, string savePath, int RootDir, int ChildDir, int FileID)
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("GetTrackerFile", address, savePath, RootDir, ChildDir, FileID);
+        }
+    }
+
+    private static void _AbortGetTrackerFile()
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("AbortGetTrackerFile");
+        }
+    }
+
+    private static void _WriteTrackerFile(string address, string filePath, int RootDir, int ChildDir)
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("WriteTrackerFile", address, filePath, RootDir, ChildDir);
+        }
+    }
+
+    private static void _AbortWriteTrackerFile()
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("AbortWriteTrackerFile");
+        }
+    }
+
     private static void _StartScan()
     {
         AndroidJNI.AttachCurrentThread();
@@ -628,15 +712,15 @@ public class RCToolPlugin : MonoBehaviour
         }
     }
 
-    //private static byte[] _Encode(string input, string key_num)
-    //{
-    //    AndroidJNI.AttachCurrentThread();
-    //    using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
-    //    {
-    //        string output = mjc.CallStatic<string>("Encode", input, key_num);
-    //        return ByteString_To_ByteArr(output);
-    //    }
-    //}
+//private static byte[] _Encode(string input, string key_num)
+//{
+//    AndroidJNI.AttachCurrentThread();
+//    using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+//    {
+//        string output = mjc.CallStatic<string>("Encode", input, key_num);
+//        return ByteString_To_ByteArr(output);
+//    }
+//}
 
 #elif UNITY_EDITOR
     // 初始化藍牙
@@ -657,6 +741,14 @@ public class RCToolPlugin : MonoBehaviour
     private static void _StartV2(string address, string type, string filePath){}
 
     private static void _AbortV2(){}
+
+    private static void _GetTrackerFile(string address, string savePath, int RootDir, int ChildDir, int FileID){}
+
+    private static void _AbortGetTrackerFile(){}
+
+    private static void _WriteTrackerFile(string address, string filePath, int RootDir, int ChildDir){}
+
+    private static void _AbortWriteTrackerFile(){}
     // 開始掃描
     private static void _StartScan(){}
     // 停止掃描
@@ -672,13 +764,13 @@ public class RCToolPlugin : MonoBehaviour
     //// 資料加密(停用)
     //private static byte[] _Encode(string input, string key_num){}
 #endif
-    #endregion
+#endregion
 
-    #region [General Function]
-    /// <summary>
-    /// 把byte array轉為字串(0x5A -> 5A), 以逗號區隔
-    /// </summary>
-    public static string ByteArr_To_ByteString(byte[] bytes)
+#region [General Function]
+/// <summary>
+/// 把byte array轉為字串(0x5A -> 5A), 以逗號區隔
+/// </summary>
+public static string ByteArr_To_ByteString(byte[] bytes)
     {
         if (bytes == null || bytes.Length <= 0)
         {
