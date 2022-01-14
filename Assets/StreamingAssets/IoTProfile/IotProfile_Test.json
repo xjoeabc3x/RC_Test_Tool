@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "deviceType": "Tracker 10",
+  "serviceTermTimestemp": 6511651141,
+  "countryCode": "TW",
+  "broker": {
+    "endpoint": "a15r1me2vo62g5-ats.iot.ap-southeast-2.amazonaws.com",
+    "port": 8883
+  },
+  "serverType": "SIT",
+  "certificates": {
+    "publicKey": "**AES-128 CBC**",
+    "privateKey": "**AES-128 CBC**",
+    "certificate": "**AES-128 CBC**"
+  }
+}
