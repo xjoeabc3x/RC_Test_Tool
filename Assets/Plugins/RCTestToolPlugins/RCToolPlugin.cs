@@ -238,6 +238,26 @@ public class RCToolPlugin : MonoBehaviour
     {
         _AbortWriteTrackerFile();
     }
+
+    public static void GetTrackerSyncFile(string address, int RootDir, int ChildDir)
+    {
+        _GetTrackerSyncFile(address, RootDir, ChildDir);
+    }
+
+    public static void AbortGetTrackerSyncFile()
+    {
+        _AbortGetTrackerSyncFile();
+    }
+
+    public static void WriteTrackerSyncFile(string address, int RootDir, int ChildDir, int FileID)
+    {
+        _WriteTrackerSyncFile(address, RootDir, ChildDir, FileID);
+    }
+
+    public static void AbortWriteTrackerSyncFile()
+    {
+        _AbortWriteTrackerSyncFile();
+    }
     /// <summary>
     /// 開始掃描
     /// </summary>
@@ -658,6 +678,42 @@ public class RCToolPlugin : MonoBehaviour
         }
     }
 
+    private static void _GetTrackerSyncFile(string address, int RootDir, int ChildDir)
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("GetTrackerUnsyncFiles", address, RootDir, ChildDir);
+        }
+    }
+
+    private static void _AbortGetTrackerSyncFile()
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("AbortGetTrackerUnsyncFiles");
+        }
+    }
+
+    private static void _WriteTrackerSyncFile(string address, int RootDir, int ChildDir, int FileID)
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("WriteTrackerUnsyncFiles", address, RootDir, ChildDir, FileID);
+        }
+    }
+
+    private static void _AbortWriteTrackerSyncFile()
+    {
+        AndroidJNI.AttachCurrentThread();
+        using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+        {
+            mjc.CallStatic("AbortWriteTrackerUnsyncFiles");
+        }
+    }
+
     private static void _StartScan()
     {
         AndroidJNI.AttachCurrentThread();
@@ -712,15 +768,15 @@ public class RCToolPlugin : MonoBehaviour
         }
     }
 
-//private static byte[] _Encode(string input, string key_num)
-//{
-//    AndroidJNI.AttachCurrentThread();
-//    using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
-//    {
-//        string output = mjc.CallStatic<string>("Encode", input, key_num);
-//        return ByteString_To_ByteArr(output);
-//    }
-//}
+    //private static byte[] _Encode(string input, string key_num)
+    //{
+    //    AndroidJNI.AttachCurrentThread();
+    //    using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
+    //    {
+    //        string output = mjc.CallStatic<string>("Encode", input, key_num);
+    //        return ByteString_To_ByteArr(output);
+    //    }
+    //}
 
 #elif UNITY_EDITOR
     // 初始化藍牙
@@ -741,6 +797,14 @@ public class RCToolPlugin : MonoBehaviour
     private static void _StartV2(string address, string type, string filePath){}
 
     private static void _AbortV2(){}
+
+    private static void _GetTrackerSyncFile(string address, int RootDir, int ChildDir){}
+
+    private static void _AbortGetTrackerSyncFile(){}
+
+    private static void _WriteTrackerSyncFile(string address, int RootDir, int ChildDir, int FileID){}
+
+    private static void _AbortWriteTrackerSyncFile(){}
 
     private static void _GetTrackerFile(string address, string savePath, int RootDir, int ChildDir, int FileID){}
 
@@ -764,13 +828,13 @@ public class RCToolPlugin : MonoBehaviour
     //// 資料加密(停用)
     //private static byte[] _Encode(string input, string key_num){}
 #endif
-#endregion
+    #endregion
 
-#region [General Function]
-/// <summary>
-/// 把byte array轉為字串(0x5A -> 5A), 以逗號區隔
-/// </summary>
-public static string ByteArr_To_ByteString(byte[] bytes)
+    #region [General Function]
+    /// <summary>
+    /// 把byte array轉為字串(0x5A -> 5A), 以逗號區隔
+    /// </summary>
+    public static string ByteArr_To_ByteString(byte[] bytes)
     {
         if (bytes == null || bytes.Length <= 0)
         {

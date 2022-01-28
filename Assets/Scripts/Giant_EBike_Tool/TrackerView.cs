@@ -20,6 +20,8 @@ public class TrackerView : MonoBehaviour
 
     private void OnReceiveTrackerMsg(string address, string msg)
     {
+        Debug.Log(string.Format("OnReceiveTrackerMsg :add:{0}, msg:{1}", address, msg));
+        Toast.Instance.ShowToast(string.Format("address:{0}, msg:{1}", address, msg));
         if (msg.ToLower().Contains("complete"))
         {
             Loading.Instance.HideLoading();
@@ -28,8 +30,8 @@ public class TrackerView : MonoBehaviour
 
     private void OnReceiveTrackerError(string address, string errorMsg)
     {
-        Debug.Log(string.Format("RCToolPlugin_onReceiveL2Error :add:{0}, msg:{1}", address, errorMsg));
-        Toast.Instance.ShowToast(string.Format("address:{0}, msg:{1}", address, errorMsg));
+        Debug.Log(string.Format("OnReceiveTrackerError :add:{0}, msg:{1}", address, errorMsg));
+        Toast.Instance.ShowToast(string.Format("address:{0}, ErrorMsg:{1}", address, errorMsg));
         if (errorMsg.ToLower().Contains("fail"))
         {
             AbortGeteSimProfile();
@@ -92,7 +94,7 @@ public class TrackerView : MonoBehaviour
             Toast.Instance.ShowToast("Device is not connected.");
             return;
         }
-        RCToolPlugin.WriteTrackerFile(ChoosedDeviceManager.DeviceAddress, Path.Combine(Application.persistentDataPath, "IotProfile_Test.json"), 
+        RCToolPlugin.WriteTrackerFile(ChoosedDeviceManager.DeviceAddress, Path.Combine(Application.persistentDataPath, "IoTProfile/IotProfile_Test.json"), 
             0, 1);
         Loading.Instance.ShowLoading(AbortWriteIotProfile, "Cancel");
     }
