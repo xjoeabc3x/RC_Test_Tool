@@ -155,36 +155,52 @@ public class HomeManager : MonoBehaviour
         }
     }
 
+    private static string part1Cache = "";
+    private static string part2Cache = "";
+
     public static void AddNewRideRecord(string address, string content)
     {
+        if (AppManager.RECDelay >= 0)
+            return;
         //Debug.Log("AddNewRideRecord :" + address + "|" + content);
         //add time
         //parse time,speed[], trq[], cde[], acur[], trid[], trit[], hpw[], rsoc[], ecode[], carr[], curast[], odo[]
         //string.Format("\n[{0}] :{1}", DateTime.Now, data)
         string[] datas = content.Split(',');
-        string result = string.Format("\r\n[{0}]", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss:ffff"));
+        //string result = string.Format("\r\n[{0}]", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss:ffff"));
         switch (datas.Length)
         {
-            case 2: //5 ecode,carr
-                result += string.Format(",,,,,,,,,{0},{1},,", datas[0], datas[1]);
+            case 2: //5 ecode,carr rc index 2
+                part2Cache = string.Format(",{0},{1},,", datas[0], datas[1]);
                 break;
-            case 4: //8
-                result += string.Format(",,,,,,,,,{0},{1},{2},{3}", datas[0], datas[1], datas[2], datas[3]);
+            case 4: //8 sg index 2
+                part2Cache = string.Format(",{0},{1},{2},{3}", datas[0], datas[1], datas[2], datas[3]);
                 break;
-            case 8: //17
-                result += string.Format(",{0},{1},{2},{3},{4},{5},{6},{7},,,,", datas[0], datas[1], datas[2], datas[3], datas[4], datas[5], datas[6], datas[7]);
+            case 8: //17 index 1
+                part1Cache = string.Format("\r\n[{0}],{1},{2},{3},{4},{5},{6},{7},{8}", DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss:ffff")
+                    , datas[0], datas[1], datas[2], datas[3], datas[4], datas[5], datas[6], datas[7]);
                 break;
             default:
                 return;
         }
+
+        if (string.IsNullOrEmpty(part1Cache) || string.IsNullOrEmpty(part2Cache))
+            return;
+        string result = part1Cache + part2Cache;
+        part1Cache = "";
+        part2Cache = "";
         if (RideRecordDic.ContainsKey(address))
         {
             RideRecordDic[address].Add(result);
+            //Toast.Instance.ShowToast("ADD");
         }
         else
         {
             RideRecordDic.Add(address, new List<string>() { result });
+            //Toast.Instance.ShowToast("ADD");
         }
+        if (AppManager.RECInterval > 0)
+            AppManager.RECDelay = AppManager.RECInterval;
     }
 
     private static void SaveLog(string address)
@@ -196,7 +212,7 @@ public class HomeManager : MonoBehaviour
                 //save Logs
                 string str = ChoosedDeviceManager.GetBikeDetail_Log(address);
                 string date = DateTime.Now.ToString().Replace('/', '_');
-                string path = Path.Combine(Application.persistentDataPath, string.Format("{0}-{1}.txt", address.Replace(':', '_'), date));
+                string path = Path.Combine(Application.persistentDataPath, string.Format("LogFile/{0}-{1}.txt", address.Replace(':', '_'), date));
                 //File.Create(path);
                 for (int i = 0; i < DeviceLogDic[address].Count; i++)
                 {
@@ -227,7 +243,7 @@ public class HomeManager : MonoBehaviour
                 //time,speed[], trq[], cde[], acur[], trid[], trit[], hpw[], rsoc[], ecode[], carr[], curast[], odo[]
                 str += "\r\n\r\nTime(ms),Speed(km/hr),Trq(Nm),Cadance(RPM),Motor Current(A),Trid(km),Trit(min),Human Power(W),Battery(%),Ecode,carr(km),Current Assist,DU ODO(km)";
                 string date = DateTime.Now.ToString().Replace('/', '_');
-                string path = Path.Combine(Application.persistentDataPath, string.Format("REC_{0}-{1}.csv", address.Replace(':', '_'), date));
+                string path = Path.Combine(Application.persistentDataPath, string.Format("RideRecord/REC_{0}-{1}.csv", address.Replace(':', '_'), date));
                 //File.Create(path);
                 for (int i = 0; i < RideRecordDic[address].Count; i++)
                 {

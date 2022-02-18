@@ -239,24 +239,24 @@ public class RCToolPlugin : MonoBehaviour
         _AbortWriteTrackerFile();
     }
 
-    public static void GetTrackerSyncFile(string address, int RootDir, int ChildDir)
+    public static void GetTrackerUnsyncFiles(string address, int RootDir, int ChildDir)
     {
-        _GetTrackerSyncFile(address, RootDir, ChildDir);
+        _GetTrackerUnsyncFiles(address, RootDir, ChildDir);
     }
 
-    public static void AbortGetTrackerSyncFile()
+    public static void AbortGetTrackerUnsyncFiles()
     {
-        _AbortGetTrackerSyncFile();
+        _AbortGetTrackerUnsyncFiles();
     }
 
-    public static void WriteTrackerSyncFile(string address, int RootDir, int ChildDir, int FileID)
+    public static void WriteTrackerUnsyncFiles(string address, int RootDir, int ChildDir, int FileID, int Flag)
     {
-        _WriteTrackerSyncFile(address, RootDir, ChildDir, FileID);
+        _WriteTrackerUnsyncFiles(address, RootDir, ChildDir, FileID, Flag);
     }
 
-    public static void AbortWriteTrackerSyncFile()
+    public static void AbortWriteTrackerUnsyncFiles()
     {
-        _AbortWriteTrackerSyncFile();
+        _AbortWriteTrackerUnsyncFiles();
     }
     /// <summary>
     /// ¶}©l±½´y
@@ -678,7 +678,7 @@ public class RCToolPlugin : MonoBehaviour
         }
     }
 
-    private static void _GetTrackerSyncFile(string address, int RootDir, int ChildDir)
+    private static void _GetTrackerUnsyncFiles(string address, int RootDir, int ChildDir)
     {
         AndroidJNI.AttachCurrentThread();
         using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
@@ -687,7 +687,7 @@ public class RCToolPlugin : MonoBehaviour
         }
     }
 
-    private static void _AbortGetTrackerSyncFile()
+    private static void _AbortGetTrackerUnsyncFiles()
     {
         AndroidJNI.AttachCurrentThread();
         using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
@@ -696,16 +696,16 @@ public class RCToolPlugin : MonoBehaviour
         }
     }
 
-    private static void _WriteTrackerSyncFile(string address, int RootDir, int ChildDir, int FileID)
+    private static void _WriteTrackerUnsyncFiles(string address, int RootDir, int ChildDir, int FileID, int Flag)
     {
         AndroidJNI.AttachCurrentThread();
         using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))
         {
-            mjc.CallStatic("WriteTrackerUnsyncFiles", address, RootDir, ChildDir, FileID);
+            mjc.CallStatic("WriteTrackerUnsyncFiles", address, RootDir, ChildDir, FileID, Flag);
         }
     }
 
-    private static void _AbortWriteTrackerSyncFile()
+    private static void _AbortWriteTrackerUnsyncFiles()
     {
         AndroidJNI.AttachCurrentThread();
         using (AndroidJavaClass mjc = new AndroidJavaClass("com.giant.RCTestTool.BluetoothLeService.UnityPlugins"))

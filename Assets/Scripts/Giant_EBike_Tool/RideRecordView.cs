@@ -6,6 +6,10 @@ using ParseRCCallback;
 
 public class RideRecordView : MonoBehaviour
 {
+    [SerializeField, Header("[取樣間隔]")]
+    MySlider RecordInterval;
+    [SerializeField, Header("[取樣間隔_Unit]")]
+    Text RecordInterval_Unit;
     [SerializeField, Header("[速度]")]
     Slider Speed;
     [SerializeField, Header("[速度_Unit]")]
@@ -54,11 +58,26 @@ public class RideRecordView : MonoBehaviour
     private void OnEnable()
     {
         HomeManager.RegistEncodeEvent(OnReceiveEncodeParse);
+        RecordInterval.onPointUpEvent += RecordInterval_onPointUpEvent;
+        RecordInterval.value = AppManager.RECInterval;
+        UpdateIntervalText();
+    }
+
+    private void RecordInterval_onPointUpEvent()
+    {
+        AppManager.RECInterval = (int)RecordInterval.value;
+        UpdateIntervalText();
+    }
+
+    public void UpdateIntervalText()
+    {
+        RecordInterval_Unit.text = RecordInterval.value + " sec";
     }
 
     private void OnDisable()
     {
         HomeManager.UnRegistEncodeEvent(OnReceiveEncodeParse);
+        RecordInterval.onPointUpEvent -= RecordInterval_onPointUpEvent;
     }
 
     private void OnReceiveEncodeParse(string callback) //address|key|value

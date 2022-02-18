@@ -35,6 +35,21 @@ public class AppManager : MonoSingletonExtend<AppManager>
         //Debug.Log(System.Linq.);
     }
 
+    private void Update()
+    {
+        RecordDelay();
+    }
+
+    public static int RECInterval = 0;
+    public static float RECDelay = -1f;
+    private void RecordDelay()
+    {
+        if (RECDelay >= 0)
+        {
+            RECDelay -= Time.deltaTime * 1;
+        }
+    }
+
     private void OnDestroy()
     {
         RCToolPlugin.Destroy();

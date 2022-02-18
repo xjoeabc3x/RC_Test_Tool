@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
@@ -10,7 +8,6 @@ public class TrackerView : MonoBehaviour
     GameObject itemPrefab;
     [SerializeField, Header("[FileList Pos]")]
     Transform FileListPos;
-
 
     private void OnEnable()
     {

@@ -235,6 +235,7 @@
     <Compile Include="Assets\Scripts\Giant_EBike_Tool\FrameNameView.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\SharedAssets\Scripts\MeshCleaner.cs" />
     <Compile Include="Assets\GoogleMaps\Examples\SharedAssets\Scripts\FloatingOriginUpdater.cs" />
+    <Compile Include="Assets\Scripts\Giant_EBike_Tool\TrackerView_LogFile.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UISpriteData.cs" />
     <Compile Include="Assets\Scripts\Giant_EBike_Tool\FWUpdate\DFUView.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UICamera.cs" />
